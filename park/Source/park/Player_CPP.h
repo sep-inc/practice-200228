@@ -138,6 +138,7 @@ private:
 	void SlidingMotionCheck();
 	void RollingMotionCheck();
 	void BoostMotionCheck();
+	void AimingMotionCheck();
 
 	AnimType standby_anim;
 	AnimType play_anim;
@@ -149,6 +150,7 @@ private:
 	bool roll_end_frag;
 	bool wall_jump_frag;
 	bool reset_frag;
+	bool aiming_frag;
 
 	float speed;
 	float boost;
