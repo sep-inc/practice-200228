@@ -79,6 +79,8 @@ public:
 	bool GetInvisible_frag() { return invisible_frag; }
 	UFUNCTION(BlueprintPure, Category = "Player")
 	bool GetReset_frag() { return reset_frag; }
+	UFUNCTION(BlueprintPure, Category = "Player")
+	bool GetAiming_frag() { return aiming_frag; }
 
 	UFUNCTION(BlueprintPure, Category = "Player")
 	AnimType GetPlay_anim() { return play_anim; }
@@ -104,10 +106,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetInvisible_frag(bool in) { invisible_frag = in; }
 	UFUNCTION(BlueprintCallable, Category = "Player")
+	void SetRoll_frag(bool in) { roll_frag = in; }
+	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetRoll_end_frag(bool in) { roll_end_frag = in; }
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetWall_jump_frag(bool in) { wall_jump_frag = in; }
-
+	UFUNCTION(BlueprintCallable, Category = "Player")
+	void SetAiming_frag(bool in) { aiming_frag = in; }
 
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetPlay_anim(AnimType in) { play_anim = in; }
@@ -147,6 +152,7 @@ private:
 	bool boost_frag;
 	bool game_over_frag;
 	bool invisible_frag;
+	bool roll_frag;
 	bool roll_end_frag;
 	bool wall_jump_frag;
 	bool reset_frag;
@@ -161,6 +167,44 @@ private:
 	float game_over_wait_time;
 	float wall_jump_wait_time_r;
 	float wall_jump_wait_time_l;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float MaxWaitTime;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float DefaultMaxSpeed;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float AimingMaxSpeed;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float BoostMaxSpeed;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float BoostAddVar;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float JumpMotionPoint2;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float JumpMotionPoint3;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float JumpMotionWaitTime;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float SlidingMotionPoint2;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float SlidingMotionPoint3;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float SlidingMotionWaitTime;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float RollingMotionPoint2;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float RollingMotionPoint3;
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float RollingMotionWaitTime;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float BoostMotionPoint;
+
+	UPROPERTY(EditAnywhere, Category = "Player")
+	float AimingMotionPoint;
 
 	int64 score;
 
