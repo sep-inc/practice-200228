@@ -9,5 +9,19 @@ public class park : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
-	}
+        PrivateDependencyModuleNames.AddRange(
+        new string[]
+        {
+            "CoreUObject",
+            "Engine",
+            "Slate",
+            "SlateCore",
+            "UnrealEd",
+            "Blutility",
+            "UMG",
+            "UMGEditor"
+		    // ... add private dependencies that you statically link with here ...
+    	}
+        );
+    }
 }
