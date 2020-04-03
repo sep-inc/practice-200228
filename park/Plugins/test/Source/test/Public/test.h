@@ -8,10 +8,13 @@
 
 class FToolBarBuilder;
 class FMenuBuilder;
+class UClass;
+class UEditorUtilityWidgetBlueprint;
 
 class FtestModule : public IModuleInterface
 {
 public:
+	//FtestModule();
 
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
