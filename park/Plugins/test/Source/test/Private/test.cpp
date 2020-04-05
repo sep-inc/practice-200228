@@ -74,7 +74,7 @@ void FtestModule::StartupModule()
 	
 	{
 		TSharedPtr<FExtender> ToolbarExtender = MakeShareable(new FExtender);
-		ToolbarExtender->AddToolBarExtension("Settings", EExtensionHook::After, PluginCommands, FToolBarExtensionDelegate::CreateRaw(this, &FtestModule::AddToolbarExtension));
+		ToolbarExtender->AddToolBarExtension("File", EExtensionHook::After, PluginCommands, FToolBarExtensionDelegate::CreateRaw(this, &FtestModule::AddToolbarExtension));
 		
 		LevelEditorModule.GetToolBarExtensibilityManager()->AddExtender(ToolbarExtender);
 	}
