@@ -8,6 +8,9 @@
 #include "Editor/Blutility/Public/IBlutilityModule.h"
 #include "Editor/Blutility/Classes/EditorUtilityWidgetBlueprint.h"
 #include "Editor/Blutility/Public/EditorUtilitySubsystem.h"
+#include "Misc/FileHelper.h"
+#include "Serialization/JsonReader.h"
+#include "Serialization/JsonSerializer.h"
 
 //AssetTypeActions_EditorUtilityWidgetBlueprint.cpp内にある、ExecuteRun()を移植しただけ。
 
@@ -93,4 +96,66 @@ void UTestBlueprintFunctionLibrary::RunWidget(UWidgetBlueprint* Blueprint)
 			TSharedRef<SDockTab> NewDockTab = LevelEditorTabManager->InvokeTab(RegistrationName);
 		}
 	}
+}
+
+FString UTestBlueprintFunctionLibrary::FileCreate(FString file_name, FString in) {
+	
+	if (FFileHelper::SaveStringToFile(in, *(FPaths::GameContentDir() + file_name + FString(".json")))) {
+		return (FString)FPaths::GameDir() + file_name + FString(".json");
+		
+	}
+	return FString("null");
+}
+
+TSharedPtr<FJsonObject> UTestBlueprintFunctionLibrary::LoadJsonObject(FString file_name) {
+	//フルパス生成
+	const FString JsonFullPath = FPaths::GameContentDir().Append(file_name).Append(TEXT(".json"));
+
+	//エラー処理
+	auto LoadError = [&JsonFullPath]()
+
+	{
+
+		UE_LOG(LogTemp, Error, TEXT("Failed LoadJson : %s"), *JsonFullPath);
+
+		return nullptr;
+
+	};
+
+
+	FString loadFileString;
+	if (FFileHelper::LoadFileToString(loadFileString, *JsonFullPath) == false)
+
+	{
+
+		LoadError();
+
+	}
+
+	const auto JsonReader = TJsonReaderFactory<TCHAR>::Create(loadFileString);
+
+	TSharedPtr<FJsonObject> jsonObject = MakeShareable(new FJsonObject());
+
+
+
+	if (FJsonSerializer::Deserialize(JsonReader, jsonObject) && jsonObject.IsValid())
+
+	{
+
+		return jsonObject;
+
+	}
+
+	return LoadError();
+}
+
+int UTestBlueprintFunctionLibrary::GetJsonValueinteger(FString file_name, FString field_name) {
+
+	const TSharedPtr<FJsonObject> JsonObject = LoadJsonObject(file_name);
+	if (JsonObject.IsValid() == false)
+	{
+		return false;
+	}
+
+	return JsonObject->GetIntegerField(field_name);
 }

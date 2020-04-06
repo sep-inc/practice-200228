@@ -19,7 +19,8 @@ public class park : ModuleRules
             "UnrealEd",
             "Blutility",
             "UMG",
-            "UMGEditor"
+            "UMGEditor",
+            "Json"
 		    // ... add private dependencies that you statically link with here ...
     	}
         );

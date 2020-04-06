@@ -1,0 +1,12 @@
+[
+    {
+        "datetime": 1586162730,
+        "file": "1586162730.json",
+        "url": "https://api.test.mod.io/v1/me/ratings/?game_id=456"
+    },
+    {
+        "datetime": 1586162730,
+        "file": "1586162730.json",
+        "url": "https://api.test.mod.io/v1/me/subscribed/?game_id=456"
+    }
+]

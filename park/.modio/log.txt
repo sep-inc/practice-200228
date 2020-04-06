@@ -1,0 +1,42 @@
+[1586162714] [LOG] Initializing SDK
+[1586162714] [LOG] .modio/ directory created at C:/git3/park/
+[1586162714] [LOG] v0.12.9 DEV
+[1586162714] [LOG] Installing downloaded mods...
+[1586162714] [LOG] Checking installed mod cache data...
+[1586162714] [LOG] Finished checking installed mod cache data...
+[1586162714] [LOG] Finished installing downloaded mods
+[1586162714] [LOG] Loading mod events data...
+[1586162714] [LOG] No mod events data found, downloading from the beginning.
+[1586162714] [LOG] Loading authentication data...
+[1586162714] [LOG] Authentication token found. You are logged in.
+[1586162714] [LOG] No user events data found, downloading from the beginning.
+[1586162714] [LOG] Curl initialized
+[1586162714] [LOG] Checking installed mod cache data...
+[1586162714] [LOG] Finished checking installed mod cache data...
+[1586162714] [LOG] Checking downloaded mods data...
+[1586162714] [LOG] Finished checking downloaded mods data...
+[1586162714] [LOG] Clearing old cache files...
+[1586162714] [LOG] C:/git3/park/.modio/cache/1586161375.json removed
+[1586162714] [LOG] C:/git3/park/.modio/cache/1586161376.json removed
+[1586162714] [LOG] Finished clearing old cache files.
+[1586162714] [LOG] GET: https://api.test.mod.io/v1/me/?api_key=0acd6cab3fa96a6b9e694a33b989186b
+[1586162714] [LOG] GET: https://api.test.mod.io/v1/me/ratings/?game_id=456&api_key=0acd6cab3fa96a6b9e694a33b989186b
+[1586162714] [LOG] GET: https://api.test.mod.io/v1/me/subscribed/?game_id=456&api_key=0acd6cab3fa96a6b9e694a33b989186b
+[1586162714] [LOG] Checking if all installed mods are updated...
+[1586162714] [LOG] No mods installed. Skipping check.
+[1586162714] [LOG] SDK Initialized
+[1586162730] [LOG] X-RateLimit-Remaining: 117
+[1586162730] [LOG] Json request Finished. Response code: 200
+[1586162730] [LOG] Current user updated sucessfully.
+[1586162730] [LOG] X-RateLimit-Remaining: 117
+[1586162730] [LOG] Json request Finished. Response code: 200
+[1586162730] [LOG] Current user ratings retrieved sucessfully.
+[1586162730] [LOG] Polling user events
+[1586162730] [LOG] GET: https://api.test.mod.io/v1/me/events?game_id=456&id-gt=0&api_key=0acd6cab3fa96a6b9e694a33b989186b
+[1586162730] [LOG] X-RateLimit-Remaining: 117
+[1586162730] [LOG] Json request Finished. Response code: 200
+[1586162730] [LOG] Current user subscriptions retrieved sucessfully.
+[1586162730] [LOG] You are subscribed to the following mods: 
+[1586162730] [LOG] X-RateLimit-Remaining: 116
+[1586162730] [LOG] Json request Finished. Response code: 200
+[1586162730] [LOG] User events polled 
