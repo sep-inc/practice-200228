@@ -3,6 +3,7 @@ Library
 obj
 .vs
 .modio
+.pdb
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 park.sln
