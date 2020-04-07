@@ -12,6 +12,7 @@
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 
+
 //AssetTypeActions_EditorUtilityWidgetBlueprint.cpp内にある、ExecuteRun()を移植しただけ。
 
 void UTestBlueprintFunctionLibrary::RunEditorUtilityWidget(UWidgetBlueprint* Blueprint)
@@ -46,6 +47,7 @@ void UTestBlueprintFunctionLibrary::RunEditorUtilityWidget(UWidgetBlueprint* Blu
 			//}
 			
 			TSharedRef<SDockTab> NewDockTab = LevelEditorTabManager->InvokeTab(RegistrationName);
+			
 		}
 	}
 
@@ -100,8 +102,8 @@ void UTestBlueprintFunctionLibrary::RunWidget(UWidgetBlueprint* Blueprint)
 
 FString UTestBlueprintFunctionLibrary::FileCreate(FString file_name, FString in) {
 	
-	if (FFileHelper::SaveStringToFile(in, *(FPaths::GameContentDir() + file_name + FString(".json")))) {
-		return (FString)FPaths::GameDir() + file_name + FString(".json");
+	if (FFileHelper::SaveStringToFile(in, *(FPaths::GameContentDir() + FString("Mod/") + file_name + FString(".json")))) {
+		return (FString)FPaths::GameDir() + FString("Mod/") + file_name + FString(".json");
 		
 	}
 	return FString("null");
@@ -109,7 +111,7 @@ FString UTestBlueprintFunctionLibrary::FileCreate(FString file_name, FString in)
 
 TSharedPtr<FJsonObject> UTestBlueprintFunctionLibrary::LoadJsonObject(FString file_name) {
 	//フルパス生成
-	const FString JsonFullPath = FPaths::GameContentDir().Append(file_name).Append(TEXT(".json"));
+	const FString JsonFullPath = FPaths::GameContentDir().Append(TEXT("Mod/")).Append(file_name).Append(TEXT(".json"));
 
 	//エラー処理
 	auto LoadError = [&JsonFullPath]()
