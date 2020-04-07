@@ -2,6 +2,7 @@ Logs
 Library
 obj
 .vs
+.modio
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
 park.sln
