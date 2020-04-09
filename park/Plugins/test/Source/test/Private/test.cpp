@@ -146,7 +146,6 @@ void FtestModule::PluginButtonClicked()
 	EditorUtilitySubsystem->SpawnAndRegisterTab(euwb);
 
 
-
 	//const UEditorUtilityWidget* CDO = (UEditorUtilityWidget*)sc->GeneratedClass->GetDefaultObject();
 	//if (CDO->ShouldAutoRunDefaultAction())
 	//{

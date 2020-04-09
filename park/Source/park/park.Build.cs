@@ -8,21 +8,21 @@ public class park : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
-        PrivateDependencyModuleNames.AddRange(
-        new string[]
-        {
-            "CoreUObject",
-            "Engine",
-            "Slate",
-            "SlateCore",
-            "UnrealEd",
-            "Blutility",
-            "UMG",
-            "UMGEditor",
-            "Json"
-		    // ... add private dependencies that you statically link with here ...
-    	}
-        );
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "DLCTest", "test" });
+     //   PrivateDependencyModuleNames.AddRange(
+     //   new string[]
+     //   {
+     //       "CoreUObject",
+     //       "Engine",
+     //       "Slate",
+     //       "SlateCore",
+     //       //"UnrealEd",
+     //       //"Blutility",
+     //       "UMG",
+     //       //"UMGEditor",
+     //       "Json"
+		   // // ... add private dependencies that you statically link with here ...
+    	//}
+     //   );
     }
 }

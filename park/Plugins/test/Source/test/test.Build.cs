@@ -26,6 +26,9 @@ public class test : ModuleRules
 			new string[]
 			{
 				"Core",
+                "CoreUObject",
+                
+                "Json"
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -42,8 +45,10 @@ public class test : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+                "PakFile",
 				// ... add private dependencies that you statically link with here ...	
                 "Blutility",
+                "UnrealEd",
                 "UMG",
                 "UMGEditor"
             }

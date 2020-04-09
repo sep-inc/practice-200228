@@ -1,0 +1,80 @@
+{
+	"GatherableTextData": [],
+	"Thumbnails": {},
+	"Exports": {
+		"PackageMetaData": {
+			"__Class": "Class /Script/CoreUObject.MetaData",
+			"__ObjectFlags": 2,
+			"__bNotForClient": true,
+			"__bNotForServer": true,
+			"__Value": {
+				"Properties": [
+					{
+						"Tag": {
+							"Name": "None"
+						}
+					}
+				],
+				"ObjectMetaDataMap": [],
+				"RootMetaDataMap": [
+					[
+						"PackageLocalizationNamespace",
+						"C38F7C7A45133B904044E7931730F990"
+					]
+				]
+			}
+		}
+	},
+	"Summary": {
+		"Tag": -1641380927,
+		"LegacyFileVersion": -7,
+		"LegacyUE3Version": 864,
+		"FileVersionUE4": 518,
+		"FileVersionLicenseeUE4": 0,
+		"CustomVersions": [
+			{
+				"Key": "E4B068EDF49442E9A231DA0B2E46BB41",
+				"Version": 37
+			}
+		],
+		"TotalHeaderSize": 0,
+		"FolderName": "None",
+		"PackageFlags": 0,
+		"NameCount": 0,
+		"NameOffset": 0,
+		"LocalizationId": "C38F7C7A45133B904044E7931730F990",
+		"GatherableTextDataCount": 0,
+		"GatherableTextDataOffset": 0,
+		"ExportCount": 1,
+		"ExportOffset": 0,
+		"ImportCount": 2,
+		"ImportOffset": 0,
+		"DependsOffset": 0,
+		"SoftPackageReferencesCount": 0,
+		"SoftPackageReferencesOffset": 0,
+		"SearchableNamesOffset": 0,
+		"ThumbnailTableOffset": 0,
+		"Guid": "5D8CB6B54BF43A72AD941C99968B5D10",
+		"PersistentGuid": "00000000000000000000000000000000",
+		"OwnerPersistentGuid": "00000000000000000000000000000000",
+		"GenerationCount": 1,
+		"Generations": [
+			{
+				"ExportCount": 1,
+				"NameCount": 0
+			}
+		],
+		"SavedByEngineVersion": "4.24.3-11590370+++UE4+Release-4.24",
+		"CompatibleWithEngineVersion": "4.24.0-10570792+++UE4+Release-4.24",
+		"CompressionFlags": 0,
+		"CompressedChunks": [],
+		"PackageSource": 2057838640,
+		"AdditionalPackagesToCook": [],
+		"AssetRegistryDataOffset": 0,
+		"BulkDataStartOffset": 0,
+		"WorldTileInfoDataOffset": 0,
+		"ChunkIDs": [],
+		"PreloadDependencyCount": -1,
+		"PreloadDependencyOffset": 0
+	}
+}

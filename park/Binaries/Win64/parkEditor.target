@@ -57,6 +57,14 @@
 			"Type": "SymbolFile"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/DLCTest/Binaries/Win64/UE4Editor-DLCTest.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/DLCTest/Binaries/Win64/UE4Editor-DLCTest.pdb",
+			"Type": "SymbolFile"
+		},
+		{
 			"Path": "$(ProjectDir)/Plugins/test/Binaries/Win64/UE4Editor-test.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -2073,6 +2081,10 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/DLCTest/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(ProjectDir)/Plugins/test/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
@@ -2408,6 +2420,10 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Marketplace/BlueprintJson/BlueprintJson.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/DLCTest/DLCTest.uplugin",
 			"Type": "UFS"
 		},
 		{
