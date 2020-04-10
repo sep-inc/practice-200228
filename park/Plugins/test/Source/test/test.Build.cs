@@ -18,8 +18,9 @@ public class test : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[] {
 				// ... add other private include paths required here ...
-			}
-			);
+                "Json"
+            }
+            );
 			
 		
 		PublicDependencyModuleNames.AddRange(
@@ -27,8 +28,7 @@ public class test : ModuleRules
 			{
 				"Core",
                 "CoreUObject",
-                
-                "Json"
+               
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -37,7 +37,8 @@ public class test : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Projects",
+                "Core",
+                "Projects",
 				"InputCore",
 				"UnrealEd",
 				"LevelEditor",
@@ -45,12 +46,16 @@ public class test : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
-                "PakFile",
+                
 				// ... add private dependencies that you statically link with here ...	
                 "Blutility",
                 "UnrealEd",
                 "UMG",
-                "UMGEditor"
+                "UMGEditor",
+                 "DerivedDataCache",
+                "RSA",
+                "PakFile",
+                "Json"
             }
 			);
 

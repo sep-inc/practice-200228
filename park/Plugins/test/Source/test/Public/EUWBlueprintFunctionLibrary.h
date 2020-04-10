@@ -8,9 +8,14 @@
 #include "Dom/JsonObject.h"
 #include "EUWBlueprintFunctionLibrary.generated.h"
 
+//using FPakInputPair;
+
+//bool CreatePakFile(const TCHAR* Filename, TArray<FPakInputPair>& FilesToAdd, const FPakCommandLineParameters& CmdLineParameters, const FKeyChain& InKeyChain);
+
 /**
  * 
  */
+
 UCLASS()
 class TEST_API UEUWBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 {

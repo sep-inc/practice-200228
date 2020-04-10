@@ -1,0 +1,27 @@
+UE4 GITHUB
+https://github.com/EpicGames/UnrealEngine
+
+UE4の公式サイトでgithubとUe4のアカウントを接続する必要がある
+
+1813行目にpakファイル生成関数がある
+C:\Program Files\Epic Games\UE_4.24\Engine\Source\Developer\PakFileUtilities\Private\PakFileUtilities.cpp
+
+完全にアクセスできなくなっている
+
+pakファイルについて説明してる
+https://www.dazhuanlan.com/2019/09/26/5d8c840ed5ce9/
+
+pakファイルローダープラグイン
+https://unrealengine.com/marketplace/ja/product/pak-loader-plugin
+
+GConfigの使い方
+https://forums.unrealengine.com/development-discussion/c-gameplay-programming/1586327-gconfig-can-not-be-recognized-can-not-be-defined
+
+
+pakファイルの生成する関数らしきものを見つけたが
+完全に隠れているため呼び出せない
+ヘッダーを見るとpakファイルが正常か確認する奴は呼び出せそう
+
+EUWBlueprintFunctionLibraryに移植しようとしているが
+CreatePakWriterのFSignedArchiveWriterが未解決エラーを出す
+
