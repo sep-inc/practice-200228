@@ -65,6 +65,14 @@
 			"Type": "SymbolFile"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/MODToolbutton/Binaries/Win64/UE4Editor-MODToolbutton.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/MODToolbutton/Binaries/Win64/UE4Editor-MODToolbutton.pdb",
+			"Type": "SymbolFile"
+		},
+		{
 			"Path": "$(ProjectDir)/Plugins/test/Binaries/Win64/UE4Editor-test.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -2085,6 +2093,10 @@
 			"Type": "RequiredResource"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/MODToolbutton/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
 			"Path": "$(ProjectDir)/Plugins/test/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
@@ -2424,6 +2436,14 @@
 		},
 		{
 			"Path": "$(ProjectDir)/Plugins/DLCTest/DLCTest.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/MODToolbuttonContent/MODToolbuttonContent.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/MODToolbutton/MODToolbutton.uplugin",
 			"Type": "UFS"
 		},
 		{
