@@ -48,7 +48,7 @@ void UMODToolEditorUtilityWidgetCPP::GetPlayerPrame(int32 index, FString& var_ty
 
 		//FString kata = typeid(a).name();
 		if (type == "int") {
-			out1 = *(&player_param.start_var + 1 + index);
+			out1 = *((int32*)player_param.begin() + 1 + index);
 			var_type = type;
 		}
 		else if (type == "float") {
