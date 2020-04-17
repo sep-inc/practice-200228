@@ -39,9 +39,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static int GetJsonValueinteger(FString file_name, FString field_name);
 
+	//UFUNCTION(BlueprintCallable, Category = "EUW")
+	//static int ToInt64();
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	static int64 StringToInt64(FString in);
 
-
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	static FString int64ToString(int64 in);
 
 	/*UFUNCTION(BlueprintCallable, Category = "EUW")
 	static void CreatePackage2(UObject* obj, FString file_name);*/

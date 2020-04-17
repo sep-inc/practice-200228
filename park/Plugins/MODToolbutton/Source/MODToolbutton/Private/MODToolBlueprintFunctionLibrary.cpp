@@ -6,6 +6,7 @@
 #include "IPlatformFilePak.h"
 #include "MODToolBlueprintFunctionLibrary.h"
 #include <typeinfo>
+#include <string>
 
 FString UMODToolBlueprintFunctionLibrary::FileCreate(FString file_name, FString in) {
 
@@ -68,6 +69,19 @@ int UMODToolBlueprintFunctionLibrary::GetJsonValueinteger(FString file_name, FSt
 
 	return JsonObject->GetIntegerField(field_name);
 }
+
+int64 UMODToolBlueprintFunctionLibrary::StringToInt64(FString in) {
+	char* a = TCHAR_TO_ANSI(*in);
+	return std::stoll(a);
+}
+
+FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {
+	char a[1000];
+	sprintf(a, "%lld", in);
+	FString out = a;
+	return out;
+}
+
 //
 //int UMODToolBlueprintFunctionLibrary::GetPrameItemCount(EPrameType Twpe) {
 //
