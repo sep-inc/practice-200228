@@ -167,6 +167,30 @@ struct FMapParam : public FPrameBase {
 
 };
 
+USTRUCT(BlueprintType)
+struct FMapWaveParam{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 enemy1_id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 enemy2_id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 enemy3_id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 enemy4_id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 enemy5_id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 enemy6_id;
+};
+
+
 UENUM(BlueprintType)
 enum class EPrameType : uint8
 {
@@ -187,7 +211,9 @@ public:
 	void AddWeaponPrame(const char* name, const char* type, void* aa);
 	void AddMapPrame(const char* name, const char* type, void* aa);
 
-	
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void AddWave();
+
 
 	//ゲッター
 	UFUNCTION(BlueprintPure, Category = "EUW")
@@ -238,6 +264,10 @@ public:
 		return map_param.var_Type[index];
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	int32 GetMaxWaveNum() {
+		return map_wave_param.Num();
+	}
 
 	//パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -253,6 +283,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void GetMapPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
 		map_param.GetPrame(index, var_type, out1, out2, out3, out4);
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FMapWaveParam GetMapWavePrame(int32 index) {
+		return map_wave_param[index];
 	}
 
 	//最大パラメーターゲット
@@ -303,6 +338,12 @@ public:
 		map_param.SetPrame(index, in1, in2, in3, in4);
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetMapWavePrame(int32 index,FMapWaveParam in) {
+		map_wave_param[index] = in;
+	}
+
+
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 	FPlayerParam player_param;
 
@@ -312,6 +353,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 	FMapParam map_param;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
+	TArray<FMapWaveParam> map_wave_param;
 
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 	FPlayerParam player_param_max;
@@ -331,5 +374,6 @@ public:
 
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 	FMapParam map_param_min;
+
 
 };

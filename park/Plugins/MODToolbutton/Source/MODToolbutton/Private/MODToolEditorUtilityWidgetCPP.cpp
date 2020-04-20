@@ -30,6 +30,10 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddMapPrame(TO_STRING(test4), typeid(map_param.test4).name(), &map_param.test4);
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
+
+
+	map_wave_param.Add(FMapWaveParam());
+
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
@@ -65,99 +69,6 @@ void UMODToolEditorUtilityWidgetCPP::AddMapPrame(const char* name, const char* t
 	map_param_min.AddVar(name, type, (void*)min_address);
 }
 
-
-//int UMODToolEditorUtilityWidgetCPP::GetPrameItemCount(EPrameType Twpe) {
-//
-//	//switch (Twpe)
-//	//{
-//	//case EPrameType::Player:
-//	//	int size = sizeof(FUnitParam);
-//	//	FUnitParam s;
-//	//	while (true)
-//	//	{
-//	//		sizeof(*(&s + 1));
-//	//	}
-//
-//	//	break;
-//	//case EPrameType::Weapons:
-//	//	break;
-//	//case EPrameType::Map:
-//	//	break;
-//	//}
-//	return 0;
-//
-//
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::GetPlayerPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-//	player_param.GetPrame(index, var_type, out1, out2, out3, out4);
-//
-//	//if (player_param.var_name.Num() > index && index >= 0) {
-//	//	FString type = player_param.var_Type[index];
-//
-//	//	//prame.AddVar(TO_STRING(Damage), typeid(prame.Damage).name());	//const char* kata = typeid(a).name();
-//
-//	//	//FString kata = typeid(a).name();
-//	//	if (type == "int") {
-//	//		out1 = *((int32*)player_param.var_address[index]);
-//	//		var_type = type;
-//	//		return;
-//	//	}
-//	//	else if (type == "float") {
-//	//		out2 = *((float*)player_param.var_address[index]);
-//	//		var_type = type;
-//	//		return;
-//	//	}
-//	//	else if (type == "class FString") {
-//	//		out3 = *((FString*)player_param.var_address[index]);
-//	//		var_type = type;
-//	//		return;
-//	//	}
-//	//	else if (type == "__int64") {
-//	//		out4 = *((int64*)player_param.var_address[index]);
-//	//		var_type = type;
-//	//		return;
-//	//	}
-//
-//	//	var_type = type;
-//	//}
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::GetWeaponPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-//	weapon_param.GetPrame(index, var_type, out1, out2, out3, out4);
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::GetMapPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-//	map_param.GetPrame(index, var_type, out1, out2, out3, out4);
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::SetPlayerPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-//	player_param.SetPrame(index, in1, in2, in3, in4);
-//	//if (player_param.var_name.Num() > index && index >= 0) {
-//	//	FString type = player_param.var_Type[index];
-//
-//	//	//prame.AddVar(TO_STRING(Damage), typeid(prame.Damage).name());	//const char* kata = typeid(a).name();
-//
-//	//	//FString kata = typeid(a).name();
-//	//	if (type == "int") {
-//	//		*((int32*)player_param.var_address[index]) = in1;
-//	//		return;
-//	//	}
-//	//	else if (type == "float") {
-//	//		*((float*)player_param.var_address[index]) = in2;
-//	//		return;
-//	//	}
-//	//	else if (type == "class FString") {
-//	//		*((FString*)player_param.var_address[index]) = in3;
-//	//					return;
-//	//	}
-//	//}
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::SetWeaponPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-//	weapon_param.SetPrame(index, in1, in2, in3, in4);
-//}
-
-//void UMODToolEditorUtilityWidgetCPP::SetMapPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-//	map_param.SetPrame(index, in1, in2, in3, in4);
-//}
+void UMODToolEditorUtilityWidgetCPP::AddWave() {
+	map_wave_param.Add(FMapWaveParam());
+}
