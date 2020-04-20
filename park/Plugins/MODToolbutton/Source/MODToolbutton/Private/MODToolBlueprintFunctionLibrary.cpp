@@ -5,6 +5,7 @@
 #include "Serialization/JsonSerializer.h"
 #include "IPlatformFilePak.h"
 #include "MODToolBlueprintFunctionLibrary.h"
+#include "Math/NumericLimits.h"
 #include <typeinfo>
 #include <string>
 
@@ -71,8 +72,69 @@ int UMODToolBlueprintFunctionLibrary::GetJsonValueinteger(FString file_name, FSt
 }
 
 int64 UMODToolBlueprintFunctionLibrary::StringToInt64(FString in) {
-	char* a = TCHAR_TO_ANSI(*in);
-	return std::stoll(a);
+	if (!in.IsNumeric()) {
+		return 0;
+	}
+	
+	if (in[0] == TCHAR('-')) {
+		if (in.Len() > 1 && in.Len() <= 20) {
+			FString a = in.RightChop(1);
+			char* var = TCHAR_TO_ANSI(*a);
+			if (a.Len() == 19) {
+				FString var_max = "9223372036854775807";
+
+				for (int i = 0; i < 19; i++) {
+					char* inst = TCHAR_TO_ANSI(*a.Mid(i, 1));
+					char* inst2 = TCHAR_TO_ANSI(*var_max.Mid(i, 1));
+
+					int64 c = std::stoll(inst);
+					int64 b = std::stoll(inst2);
+					if (c == b) {
+						continue;
+					}
+					else if (c > b) {
+						return INT64_MIN;
+					}
+					else {
+						break;
+					}
+				}
+			}
+			return -(std::stoll(var));
+
+		}
+		return INT64_MIN;
+	}
+	else {
+		//char* a = TCHAR_TO_ANSI(*in);
+		//return std::stoll(a)
+		char* var = TCHAR_TO_ANSI(*in);
+		if (in.Len() <= 19) {
+			
+			if (in.Len() == 19) {
+				FString var_max = "9223372036854775807";
+
+				for (int i = 0; i < 19; i++) {
+					char* inst = TCHAR_TO_ANSI(*in.Mid(i,1));
+					char* inst2 = TCHAR_TO_ANSI(*var_max.Mid(i, 1));
+					
+					int64 c = std::stoll(inst);
+					int64 b = std::stoll(inst2);
+					if (c == b) {
+						continue;
+					}
+					else if (c > b) {
+						return INT64_MAX;
+					}
+					else {
+						break;
+					}
+				}
+			}
+			return std::stoll(var);
+		}
+		return INT64_MAX;
+	}
 }
 
 FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {

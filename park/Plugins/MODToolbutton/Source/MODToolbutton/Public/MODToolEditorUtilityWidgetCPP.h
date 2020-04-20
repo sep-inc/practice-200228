@@ -146,7 +146,7 @@ struct FMapParam : public FPrameBase {
 		int start;
 
 		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		float Health;
+			float Health;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		float Attack;
