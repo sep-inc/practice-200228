@@ -136,50 +136,5 @@ FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {
 	return out;
 }
 
-//
-//int UMODToolBlueprintFunctionLibrary::GetPrameItemCount(EPrameType Twpe) {
-//
-//	//switch (Twpe)
-//	//{
-//	//case EPrameType::Player:
-//	//	int size = sizeof(FUnitParam);
-//	//	FUnitParam s;
-//	//	while (true)
-//	//	{
-//	//		sizeof(*(&s + 1));
-//	//	}
-//
-//	//	break;
-//	//case EPrameType::Weapons:
-//	//	break;
-//	//case EPrameType::Map:
-//	//	break;
-//	//}
-//	return 0;
-//
-//
-//}
-//
-//FString UMODToolBlueprintFunctionLibrary::GetPlayerPrame(FPlayerParam prame, int32 index, int32& out1, float& out2, FString& out3) {
-//
-//	prame.AddVar(TO_STRING(Damage), typeid(prame.Damage).name());
-//	const float a = *(&prame.start_var + 1);
-//	//const char* kata = typeid(a).name();
-//
-//	FString kata = typeid(a).name();
-//	if (kata == "int") {
-//		out1 = a;
-//		return kata;
-//	}
-//	else if (kata == "float") {
-//		out2 = a;
-//		return kata;
-//	}
-//	else if (kata == "class FString") {
-//		//out3 = FString((char*)a);
-//		return kata;
-//	}
-//
-//	return kata;
-//}
+
 //

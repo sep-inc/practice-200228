@@ -8,6 +8,8 @@
 
 #include <typeinfo>
 
+
+
 UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddPlayerPrame(TO_STRING(Health), typeid(player_param.Health).name(), &player_param.Health);
 	AddPlayerPrame(TO_STRING(Attack), typeid(player_param.Attack).name(), &player_param.Attack);
@@ -30,12 +32,10 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddMapPrame(TO_STRING(test4), typeid(map_param.test4).name(), &map_param.test4);
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
-
-
-	
-
-
-
+	AddEnemyPrame(TO_STRING(id), typeid(enemy_param_measurement.id).name(), &enemy_param_measurement.id);
+	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
+	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
+	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
@@ -71,7 +71,37 @@ void UMODToolEditorUtilityWidgetCPP::AddMapPrame(const char* name, const char* t
 	map_param_min.AddVar(name, type, (void*)min_address);
 }
 
+void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char* type, void* aa) {
+	VarPra inst;
+	inst.name = name;
+	inst.type = type;
+
+	int64 byte_count = (int64)(aa)-(int64)(&enemy_param_measurement.start);
+	inst.byte_count = byte_count;
+
+	map_wave_param_addres.Add(inst);
+
+	int64 max_address = (int64)(&enemy_param_max.start) + byte_count;
+	int64 min_address = (int64)(&enemy_param_min.start) + byte_count;
+
+	enemy_param_max.AddVar(name, type, (void*)max_address);
+	enemy_param_min.AddVar(name, type, (void*)min_address);
+}
+
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
 	map_wave_param.Add(FMapWaveParam());
-	map_wave_param[map_wave_param.Num() - 1].enemy_id.Init(0,6);
+	int32 index_num = map_wave_param.Num() - 1;
+	map_wave_param[index_num].enemy.Init(FEnemyParam(),6);
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
+			int64 address = (int64)(&map_wave_param[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_wave_param[index_num].enemy[i].AddVar(
+				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
+				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
+				(void*)address
+				);
+		}
+	}
+
 }
