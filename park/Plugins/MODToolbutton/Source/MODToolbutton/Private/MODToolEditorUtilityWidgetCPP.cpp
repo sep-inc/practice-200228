@@ -32,7 +32,9 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 
 
 
-	map_wave_param.Add(FMapWaveParam());
+	
+
+
 
 }
 
@@ -71,4 +73,5 @@ void UMODToolEditorUtilityWidgetCPP::AddMapPrame(const char* name, const char* t
 
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
 	map_wave_param.Add(FMapWaveParam());
+	map_wave_param[map_wave_param.Num() - 1].enemy_id.Init(0,6);
 }

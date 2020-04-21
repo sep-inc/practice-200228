@@ -172,22 +172,8 @@ struct FMapWaveParam{
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 enemy1_id;
+		TArray<int32> enemy_id;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 enemy2_id;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 enemy3_id;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 enemy4_id;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 enemy5_id;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 enemy6_id;
 };
 
 
@@ -290,6 +276,11 @@ public:
 		return map_wave_param[index];
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	int32 GetMapWaveEnemyId(int32 wave,int32 index) {
+		return map_wave_param[wave - 1].enemy_id[index];
+	}
+
 	//最大パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void GetMaxPlayerPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
@@ -339,10 +330,14 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void SetMapWavePrame(int32 index,FMapWaveParam in) {
-		map_wave_param[index] = in;
+	void SetMapWavePrame(int32 Wave,FMapWaveParam in) {
+		map_wave_param[Wave - 1] = in;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetMapWaveEnemyId(int32 Wave, int32 index,int32 id) {
+		map_wave_param[Wave - 1].enemy_id[index] = id;
+	}
 
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 	FPlayerParam player_param;

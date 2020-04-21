@@ -75,66 +75,58 @@ int64 UMODToolBlueprintFunctionLibrary::StringToInt64(FString in) {
 	if (!in.IsNumeric()) {
 		return 0;
 	}
-	
+
+	int64 max_size = 0;
+	int32 digit = 0;
+	bool minus;
+	FString a;
+
 	if (in[0] == TCHAR('-')) {
-		if (in.Len() > 1 && in.Len() <= 20) {
-			FString a = in.RightChop(1);
-			char* var = TCHAR_TO_ANSI(*a);
-			if (a.Len() == 19) {
-				FString var_max = "9223372036854775807";
-
-				for (int i = 0; i < 19; i++) {
-					char* inst = TCHAR_TO_ANSI(*a.Mid(i, 1));
-					char* inst2 = TCHAR_TO_ANSI(*var_max.Mid(i, 1));
-
-					int64 c = std::stoll(inst);
-					int64 b = std::stoll(inst2);
-					if (c == b) {
-						continue;
-					}
-					else if (c > b) {
-						return INT64_MIN;
-					}
-					else {
-						break;
-					}
-				}
-			}
-			return -(std::stoll(var));
-
-		}
-		return INT64_MIN;
+		max_size = INT64_MIN;
+		digit = 20;
+		a = in.RightChop(1);
+		minus = true;
 	}
 	else {
-		//char* a = TCHAR_TO_ANSI(*in);
-		//return std::stoll(a)
-		char* var = TCHAR_TO_ANSI(*in);
-		if (in.Len() <= 19) {
-			
-			if (in.Len() == 19) {
-				FString var_max = "9223372036854775807";
-
-				for (int i = 0; i < 19; i++) {
-					char* inst = TCHAR_TO_ANSI(*in.Mid(i,1));
-					char* inst2 = TCHAR_TO_ANSI(*var_max.Mid(i, 1));
-					
-					int64 c = std::stoll(inst);
-					int64 b = std::stoll(inst2);
-					if (c == b) {
-						continue;
-					}
-					else if (c > b) {
-						return INT64_MAX;
-					}
-					else {
-						break;
-					}
-				}
-			}
-			return std::stoll(var);
-		}
-		return INT64_MAX;
+		max_size = INT64_MAX;
+		digit = 19;
+		a = in;
+		minus = false;
 	}
+
+	char* var = TCHAR_TO_ANSI(*a);
+
+	//桁数チェック
+	if (in.Len() < digit) {
+		return minus ? -(std::stoll(var)) : std::stoll(var);
+	}
+
+	if (a.Len() == 19) {
+		FString var_max = "9223372036854775807";
+
+		for (int i = 0; i < 19; i++) {
+			char* inst = TCHAR_TO_ANSI(*a.Mid(i, 1));
+			char* inst2 = TCHAR_TO_ANSI(*var_max.Mid(i, 1));
+
+			int64 c = std::stoll(inst);
+			int64 b = std::stoll(inst2);
+			if (c == b) {
+				continue;
+			}
+			else if (c > b) {
+				return INT64_MIN;
+			}
+			else {
+				break;
+			}
+		}
+		return minus ? -(std::stoll(var)) : std::stoll(var);
+	}
+	else {
+		return max_size;
+	}
+
+
 }
 
 FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {
