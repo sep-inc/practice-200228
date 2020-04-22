@@ -32,7 +32,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddMapPrame(TO_STRING(test4), typeid(map_param.test4).name(), &map_param.test4);
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
-	AddEnemyPrame(TO_STRING(id), typeid(enemy_param_measurement.id).name(), &enemy_param_measurement.id);
+	//AddEnemyPrame(TO_STRING(id), typeid(enemy_param_measurement.id).name(), &enemy_param_measurement.id);
 	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
 	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
 	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
