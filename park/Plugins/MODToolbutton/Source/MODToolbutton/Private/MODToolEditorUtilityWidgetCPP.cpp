@@ -36,6 +36,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
 	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
 	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
+
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
@@ -104,4 +105,25 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 		}
 	}
 
+}
+
+void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
+	int32 set_index = map_wave_param.Insert(FMapWaveParam(), index - 1);
+
+	map_wave_param[set_index].enemy.Init(FEnemyParam(), 6);
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
+			int64 address = (int64)(&map_wave_param[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_wave_param[set_index].enemy[i].AddVar(
+				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
+				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
+				(void*)address
+			);
+		}
+	}
+}
+
+void UMODToolEditorUtilityWidgetCPP::RemoveWave(int32 index) {
+	map_wave_param.RemoveAt(index - 1);
 }

@@ -229,6 +229,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void AddWave();
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void InsertWave(int32 index);
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void RemoveWave(int32 index);
 
 	//ÉQÉbÉ^Å[
 
