@@ -125,5 +125,8 @@ void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 }
 
 void UMODToolEditorUtilityWidgetCPP::RemoveWave(int32 index) {
+	if (index < 1 || index > map_wave_param.Num + 1) {
+		return;
+	}
 	map_wave_param.RemoveAt(index - 1);
 }
