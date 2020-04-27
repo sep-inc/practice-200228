@@ -205,6 +205,15 @@ enum class EPrameType : uint8
 	Map
 };
 
+UENUM(BlueprintType)
+enum class EMainWidgetName : uint8
+{
+	Parameter,
+	Map,
+	ModList,
+	MainMenu
+};
+
 struct VarPra
 {
 	FString name;
