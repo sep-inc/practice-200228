@@ -94,16 +94,16 @@ struct FPlayerParam : public FPrameBase{
 
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	float Health;
+	int32 Health;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	float Attack;
+	int32 Attack;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int64 Defense;
+	int32 Defense;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	float Speed;
+	int32 Speed;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	int32 int32_var;
@@ -196,6 +196,22 @@ struct FMapWaveParam{
 
 };
 
+UENUM(BlueprintType)
+enum class EUnDoType : uint8
+{
+	Prame,
+	Wave
+};
+
+UENUM(BlueprintType)
+enum class EVarType : uint8
+{
+	INT,
+	INT64,
+	FLOAT,
+	STRING
+};
+
 
 UENUM(BlueprintType)
 enum class EPrameType : uint8
@@ -204,6 +220,39 @@ enum class EPrameType : uint8
 	Weapons,
 	Map
 };
+
+USTRUCT(BlueprintType)
+struct FUnDoLog {
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	EUnDoType un_do_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	EPrameType prame_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	EVarType var_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 index;
+
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 INT_var;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int64 INT64_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float FLOAT_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FString STRING_type;
+
+};
+
+
 
 UENUM(BlueprintType)
 enum class EMainWidgetName : uint8
