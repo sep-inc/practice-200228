@@ -260,6 +260,7 @@ enum class EMainWidgetName : uint8
 	Parameter,
 	Map,
 	ModList,
+	AssetList,
 	MainMenu
 };
 
