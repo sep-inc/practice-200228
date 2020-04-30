@@ -225,11 +225,11 @@ USTRUCT(BlueprintType)
 struct FUnDoLog {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	EUnDoType un_do_type;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	//EUnDoType un_do_type;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	EPrameType prame_type;
+	//UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	//EPrameType prame_type;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	EVarType var_type;
