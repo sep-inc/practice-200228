@@ -264,6 +264,20 @@ enum class EMainWidgetName : uint8
 	MainMenu
 };
 
+UENUM(BlueprintType)
+enum class EFilterType : uint8
+{
+	All,
+	Blueprint,
+	Material,
+	WidgetBlueprint,
+	ParticleSystem,
+	World,
+	BlackboardData,
+	BehaviorTree,
+	NONE
+};
+
 struct VarPra
 {
 	FString name;
