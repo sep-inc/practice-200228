@@ -48,7 +48,8 @@ public:
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	static FString int64ToString(int64 in);
 
-
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	static TArray<FString> StringSort_Outint(TArray<FString> in);
 	/*UFUNCTION(BlueprintCallable, Category = "EUW")
 	static void CreatePackage2(UObject* obj, FString file_name);*/
 };

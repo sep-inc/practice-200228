@@ -137,5 +137,13 @@ FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {
 	return out;
 }
 
+TArray<FString> UMODToolBlueprintFunctionLibrary::StringSort_Outint(TArray<FString> in) {
+	TArray<FString> inst = in;
 
+	inst.Sort([](const FString& A, const FString& B) {
+		return A < B;
+		}
+	);
+	return inst;
+}
 //
