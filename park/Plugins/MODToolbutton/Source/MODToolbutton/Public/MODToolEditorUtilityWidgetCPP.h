@@ -275,6 +275,7 @@ enum class EFilterType : uint8
 	World,
 	BlackboardData,
 	BehaviorTree,
+	AnimBlueprint,
 	NONE
 };
 
