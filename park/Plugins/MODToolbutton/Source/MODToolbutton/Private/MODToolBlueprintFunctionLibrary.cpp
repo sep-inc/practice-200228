@@ -137,13 +137,51 @@ FString UMODToolBlueprintFunctionLibrary::int64ToString(int64 in) {
 	return out;
 }
 
-TArray<FString> UMODToolBlueprintFunctionLibrary::StringSort_Outint(TArray<FString> in) {
+TArray<int32> UMODToolBlueprintFunctionLibrary::StringSortDown_Outint(TArray<FString> in) {
 	TArray<FString> inst = in;
 
 	inst.Sort([](const FString& A, const FString& B) {
 		return A < B;
 		}
 	);
-	return inst;
+
+	TArray<int32> num;
+
+	for (int i = 0; i < in.Num(); i++) {
+		for (int j = 0; j < inst.Num(); j++) {
+			if (in[i] == inst[j] && in[i] != "" && inst[j] != "") {
+				in[i] = "";
+				inst[j] = "";
+				num.Add(j);
+				break;
+			}
+		}
+	}
+
+	return num;
+}
+
+TArray<int32> UMODToolBlueprintFunctionLibrary::StringSortUp_Outint(TArray<FString> in) {
+	TArray<FString> inst = in;
+
+	inst.Sort([](const FString& A, const FString& B) {
+		return A > B;
+		}
+	);
+
+	TArray<int32> num;
+
+	for (int i = 0; i < in.Num(); i++) {
+		for (int j = 0; j < inst.Num(); j++) {
+			if (in[i] == inst[j] && in[i] != "" && inst[j] != "") {
+				in[i] = "";
+				inst[j] = "";
+				num.Add(j);
+				break;
+			}
+		}
+	}
+
+	return num;
 }
 //
