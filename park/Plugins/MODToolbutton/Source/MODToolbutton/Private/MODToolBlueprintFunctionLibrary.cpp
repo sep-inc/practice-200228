@@ -149,8 +149,8 @@ TArray<int32> UMODToolBlueprintFunctionLibrary::StringSortDown_Outint(TArray<FSt
 
 	for (int i = 0; i < in.Num(); i++) {
 		for (int j = 0; j < inst.Num(); j++) {
-			if (in[i] == inst[j] && in[i] != "" && inst[j] != "") {
-				in[i] = "";
+			if (in[i] == inst[j] && inst[j] != "") {
+
 				inst[j] = "";
 				num.Add(j);
 				break;
@@ -173,8 +173,7 @@ TArray<int32> UMODToolBlueprintFunctionLibrary::StringSortUp_Outint(TArray<FStri
 
 	for (int i = 0; i < in.Num(); i++) {
 		for (int j = 0; j < inst.Num(); j++) {
-			if (in[i] == inst[j] && in[i] != "" && inst[j] != "") {
-				in[i] = "";
+			if (in[i] == inst[j] && inst[j] != "") {
 				inst[j] = "";
 				num.Add(j);
 				break;
