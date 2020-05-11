@@ -48,10 +48,7 @@ public:
 	static FString int64ToString(int64 in);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	static TArray<int32> StringSortDown_Outint(TArray<FString> in);
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-	static TArray<int32> StringSortUp_Outint(TArray<FString> in);
+	static TArray<int32> StringSort_OutNum(TArray<FString> in, bool ascending_worder);
 	/*UFUNCTION(BlueprintCallable, Category = "EUW")
 	static void CreatePackage2(UObject* obj, FString file_name);*/
 };
