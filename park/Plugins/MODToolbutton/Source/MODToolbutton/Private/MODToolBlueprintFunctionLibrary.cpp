@@ -27,7 +27,6 @@ TSharedPtr<FJsonObject> UMODToolBlueprintFunctionLibrary::LoadJsonObject(FString
 	auto LoadError = [&JsonFullPath]()
 
 	{
-
 		UE_LOG(LogTemp, Error, TEXT("Failed LoadJson : %s"), *JsonFullPath);
 
 		return nullptr;
@@ -39,7 +38,6 @@ TSharedPtr<FJsonObject> UMODToolBlueprintFunctionLibrary::LoadJsonObject(FString
 	if (FFileHelper::LoadFileToString(loadFileString, *JsonFullPath) == false)
 
 	{
-
 		LoadError();
 
 	}
