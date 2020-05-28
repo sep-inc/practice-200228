@@ -1,14 +1,50 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "MODToolBlueprintFunctionLibrary.h"
 #include "Misc/FileHelper.h"
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonSerializer.h"
 #include "IPlatformFilePak.h"
 
+//#include "PakFileUtilities.h"
+#include "PakFileUtilities/Public/PakFileUtilities.h"
+
+
+//#include "IPlatformFilePak.h"
+//#include "Misc/SecureHash.h"
+//#include "Math/BigInt.h"
+//#include "Developer/PakFileUtilities/Private/SignedArchiveWriter.h"
+//#include "Misc/AES.h"
+//#include "Templates/UniquePtr.h"
+//#include "Serialization/LargeMemoryWriter.h"
+//#include "ProfilingDebugging/DiagnosticTable.h"
+//#include "Serialization/JsonSerializer.h"
+//#include "Misc/Base64.h"
+//#include "Misc/Compression.h"
+//#include "Features/IModularFeatures.h"
+//#include "Misc/CoreDelegates.h"
+//#include "Misc/FileHelper.h"
+//#include "Misc/ConfigCacheIni.h"
+
+#include "HAL/PlatformFilemanager.h"
+#include "Async/ParallelFor.h"
+#include "Async/AsyncWork.h"
+#include "Modules/ModuleManager.h"
+#include "DerivedDataCacheInterface.h"
+#include "Serialization/MemoryReader.h"
+#include "Serialization/MemoryWriter.h"
+#include "Misc/Compression.h"
 #include "Math/NumericLimits.h"
+#include "GenericPlatform/GenericPlatformFile.h"
+#include "HAL/FileManager.h"
+#include "HAL/FileManagerGeneric.h"
 #include <typeinfo>
 #include <string>
-#include "MODToolBlueprintFunctionLibrary.h"
+
+
+
+
+
 
 FString UMODToolBlueprintFunctionLibrary::FileCreate(FString file_name, FString in) {
 
@@ -167,4 +203,25 @@ TArray<int32> UMODToolBlueprintFunctionLibrary::StringSort_OutNum(TArray<FString
 	return num;
 }
 
+void UMODToolBlueprintFunctionLibrary::CreatePackage2(UObject* obj, FString file_name) {
+	FString PakFromPath = FPaths::EngineDir().Append("Binaries/Win64/ModPackage.pak");
+	FString PakToPath = FPaths::ProjectPluginsDir().Append("MODToolbuttonContent/Content/EUW/Package/ModPackage.pak");
+
+	FString cmd = FString("ModPackage.pak = ").Append(FPaths::ProjectPluginsDir()).Append("MODToolbuttonContent/Content/EUW/Asset/");
+	ExecuteUnrealPak(*cmd);
+
+	
+	if (!FFileManagerGeneric::Get().Move(*PakToPath, *PakFromPath)) {
+		UE_LOG(LogTemp, Error, TEXT("Could not be packaged."));
+	}
+
+}
 //
+
+
+
+
+
+
+
+

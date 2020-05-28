@@ -34,7 +34,8 @@ public class MODToolbutton : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Projects",
+                "Core",
+                "Projects",
 				"InputCore",
 				"UnrealEd",
 				"LevelEditor",
@@ -50,7 +51,8 @@ public class MODToolbutton : ModuleRules
                  "DerivedDataCache",
                 "RSA",
                 "PakFile",
-                "Json"
+                "Json",
+                "PakFileUtilities"
             }
 			);
 		
