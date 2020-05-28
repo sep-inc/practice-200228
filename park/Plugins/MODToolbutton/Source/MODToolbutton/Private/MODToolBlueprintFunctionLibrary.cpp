@@ -203,18 +203,25 @@ TArray<int32> UMODToolBlueprintFunctionLibrary::StringSort_OutNum(TArray<FString
 	return num;
 }
 
-void UMODToolBlueprintFunctionLibrary::CreatePackage2(UObject* obj, FString file_name) {
+void UMODToolBlueprintFunctionLibrary::CreateModPackage(TArray<FString>& out) {
 	FString PakFromPath = FPaths::EngineDir().Append("Binaries/Win64/ModPackage.pak");
 	FString PakToPath = FPaths::ProjectPluginsDir().Append("MODToolbuttonContent/Content/EUW/Package/ModPackage.pak");
 
 	FString cmd = FString("ModPackage.pak = ").Append(FPaths::ProjectPluginsDir()).Append("MODToolbuttonContent/Content/EUW/Asset/");
 	ExecuteUnrealPak(*cmd);
 
-	
+
 	if (!FFileManagerGeneric::Get().Move(*PakToPath, *PakFromPath)) {
 		UE_LOG(LogTemp, Error, TEXT("Could not be packaged."));
 	}
 
+	FPakFile file(&FPlatformFileManager::Get().GetPlatformFile(), *PakToPath,false);
+	if (!file.Check()) {
+		UE_LOG(LogTemp, Error, TEXT("ERROR"));
+	}
+
+	
+	file.GetFilenames(out);
 }
 //
 

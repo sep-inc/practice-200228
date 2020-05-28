@@ -52,7 +52,7 @@ public:
 	static TArray<int32> StringSort_OutNum(TArray<FString> in, bool ascending_worder);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void CreatePackage2(UObject* obj, FString file_name);
+	static void CreateModPackage(TArray<FString>& out);
 
 
 };
