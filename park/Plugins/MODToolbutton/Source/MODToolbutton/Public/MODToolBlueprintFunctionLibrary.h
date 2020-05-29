@@ -52,7 +52,10 @@ public:
 	static TArray<int32> StringSort_OutNum(TArray<FString> in, bool ascending_worder);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	static void CreateModPackage(TArray<FString>& out);
+	static void CreateModPackage(bool& ErrorFrag);
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	static void GetPackageFolderNames(TArray<FString>& out);
 
 
 };

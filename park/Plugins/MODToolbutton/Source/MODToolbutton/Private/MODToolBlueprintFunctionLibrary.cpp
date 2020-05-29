@@ -9,23 +9,6 @@
 //#include "PakFileUtilities.h"
 #include "PakFileUtilities/Public/PakFileUtilities.h"
 
-
-//#include "IPlatformFilePak.h"
-//#include "Misc/SecureHash.h"
-//#include "Math/BigInt.h"
-//#include "Developer/PakFileUtilities/Private/SignedArchiveWriter.h"
-//#include "Misc/AES.h"
-//#include "Templates/UniquePtr.h"
-//#include "Serialization/LargeMemoryWriter.h"
-//#include "ProfilingDebugging/DiagnosticTable.h"
-//#include "Serialization/JsonSerializer.h"
-//#include "Misc/Base64.h"
-//#include "Misc/Compression.h"
-//#include "Features/IModularFeatures.h"
-//#include "Misc/CoreDelegates.h"
-//#include "Misc/FileHelper.h"
-//#include "Misc/ConfigCacheIni.h"
-
 #include "HAL/PlatformFilemanager.h"
 #include "Async/ParallelFor.h"
 #include "Async/AsyncWork.h"
@@ -203,7 +186,8 @@ TArray<int32> UMODToolBlueprintFunctionLibrary::StringSort_OutNum(TArray<FString
 	return num;
 }
 
-void UMODToolBlueprintFunctionLibrary::CreateModPackage(TArray<FString>& out) {
+void UMODToolBlueprintFunctionLibrary::CreateModPackage(bool& ErrorFrag) {
+	ErrorFrag = false;
 	FString PakFromPath = FPaths::EngineDir().Append("Binaries/Win64/ModPackage.pak");
 	FString PakToPath = FPaths::ProjectPluginsDir().Append("MODToolbuttonContent/Content/EUW/Package/ModPackage.pak");
 
@@ -213,17 +197,29 @@ void UMODToolBlueprintFunctionLibrary::CreateModPackage(TArray<FString>& out) {
 
 	if (!FFileManagerGeneric::Get().Move(*PakToPath, *PakFromPath)) {
 		UE_LOG(LogTemp, Error, TEXT("Could not be packaged."));
+		ErrorFrag = true;
+		return;
 	}
 
 	FPakFile file(&FPlatformFileManager::Get().GetPlatformFile(), *PakToPath,false);
 	if (!file.Check()) {
 		UE_LOG(LogTemp, Error, TEXT("ERROR"));
+		ErrorFrag = true;
+		return;
 	}
 
-	
+}
+
+void UMODToolBlueprintFunctionLibrary::GetPackageFolderNames(TArray<FString>& out) {
+	FString PakPath = FPaths::ProjectPluginsDir().Append("MODToolbuttonContent/Content/EUW/Package/ModPackage.pak");
+
+	FPakFile file(&FPlatformFileManager::Get().GetPlatformFile(), *PakPath, false);
+	if (!file.Check()) {
+		UE_LOG(LogTemp, Error, TEXT("ERROR"));
+	}
+
 	file.GetFilenames(out);
 }
-//
 
 
 
