@@ -8,67 +8,116 @@
 
 #include <typeinfo>
 
-
-
 UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
+
+	//プレイヤーパラメーター
+	player_param_max.Health = 100.f;
+	player_param_min.Health = 0.f;
 	AddPlayerPrame(TO_STRING(Health), typeid(player_param.Health).name(), &player_param.Health);
+	player_param_max.Attack = 100.f;
+	player_param_min.Attack = 0.f;
 	AddPlayerPrame(TO_STRING(Attack), typeid(player_param.Attack).name(), &player_param.Attack);
+	player_param_max.Defense = 100.f;
+	player_param_min.Defense = 0.f;
 	AddPlayerPrame(TO_STRING(Defense), typeid(player_param.Defense).name(), &player_param.Defense);
+	player_param_max.Speed = 100.f;
+	player_param_min.Speed = 0.f;
 	AddPlayerPrame(TO_STRING(Speed), typeid(player_param.Speed).name(), &player_param.Speed);
+	player_param_max.int32_var = 100.f;
+	player_param_min.int32_var = 0.f;
 	AddPlayerPrame(TO_STRING(int32_var), typeid(player_param.int32_var).name(), &player_param.int32_var);
+	player_param_max.float_var = 100.f;
+	player_param_min.float_var = 0.f;
 	AddPlayerPrame(TO_STRING(float_var), typeid(player_param.float_var).name(), &player_param.float_var);
+	player_param_max.string_var = "";
+	player_param_min.string_var = "";
 	AddPlayerPrame(TO_STRING(string_var), typeid(player_param.string_var).name(), &player_param.string_var);
+	player_param_max.int64_var = 100.f;
+	player_param_min.int64_var = 0.f;
 	AddPlayerPrame(TO_STRING(int64_var), typeid(player_param.int64_var).name(), &player_param.int64_var);
 
+	//ウェポンパラメーター
+	weapon_param_max.Durability = 100;
+	weapon_param_min.Durability = 0;
 	AddWeaponPrame(TO_STRING(Durability), typeid(weapon_param.Durability).name(), &weapon_param.Durability);
+	weapon_param_max.Attack = 100;
+	weapon_param_min.Attack = 0;
 	AddWeaponPrame(TO_STRING(Attack), typeid(weapon_param.Attack).name(), &weapon_param.Attack);
+	weapon_param_max.Defense = 100;
+	weapon_param_min.Defense = 0;
 	AddWeaponPrame(TO_STRING(Defense), typeid(weapon_param.Defense).name(), &weapon_param.Defense);
+	weapon_param_max.Weight = 100;
+	weapon_param_min.Weight = 0;
 	AddWeaponPrame(TO_STRING(Weight), typeid(weapon_param.Weight).name(), &weapon_param.Weight);
 
+	//マップパラメーター
+	map_param_max.Health = 100;
+	map_param_min.Health = 0;
 	AddMapPrame(TO_STRING(Health), typeid(map_param.Health).name(), &map_param.Health);
+	map_param_max.Attack = 100;
+	map_param_min.Attack = 0;
 	AddMapPrame(TO_STRING(Attack), typeid(map_param.Attack).name(), &map_param.Attack);
+	map_param_max.Defense = 100;
+	map_param_min.Defense = 0;
 	AddMapPrame(TO_STRING(Defense), typeid(map_param.Defense).name(), &map_param.Defense);
+	map_param_max.Speed = 100;
+	map_param_min.Speed = 0;
 	AddMapPrame(TO_STRING(Speed), typeid(map_param.Speed).name(), &map_param.Speed);
+	map_param_max.test4 = "";
+	map_param_min.test4 = "";
 	AddMapPrame(TO_STRING(test4), typeid(map_param.test4).name(), &map_param.test4);
+	map_param_max.test5 = 100;
+	map_param_min.test5 = 0;
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
+	//エネミーパラメーター
+	enemy_param_max.param1 = 100;
+	enemy_param_min.param1 = 0;
 	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
+	enemy_param_max.param2 = 100;
+	enemy_param_min.param2 = 0;
 	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
+	enemy_param_max.param3 = 100;
+	enemy_param_min.param3 = 0;
 	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
 
 }
 
+UMODToolEditorUtilityWidgetCPP::~UMODToolEditorUtilityWidgetCPP() {
+
+}
+
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
-	player_param.AddVar(name, type, aa);
+	player_param.search.AddVar(name, type, aa);
 	int64 byte_count = (int64)(aa) - (int64)(&player_param.start);
 
 	int64 max_address = (int64)(&player_param_max.start) + byte_count;
 	int64 min_address = (int64)(&player_param_min.start) + byte_count;
 
-	player_param_max.AddVar(name, type, (void*)max_address);
-	player_param_min.AddVar(name, type, (void*)min_address);
+	player_param_max.search.AddVar(name, type, (void*)max_address);
+	player_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddWeaponPrame(const char* name, const char* type, void* aa) {
-	weapon_param.AddVar(name, type, aa);
+	weapon_param.search.AddVar(name, type, aa);
 	int64 byte_count = (int64)(aa)-(int64)(&weapon_param.start);
 
 	int64 max_address = (int64)(&weapon_param_max.start) + byte_count;
 	int64 min_address = (int64)(&weapon_param_min.start) + byte_count;
 
-	weapon_param_max.AddVar(name, type, (void*)max_address);
-	weapon_param_min.AddVar(name, type, (void*)min_address);
+	weapon_param_max.search.AddVar(name, type, (void*)max_address);
+	weapon_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddMapPrame(const char* name, const char* type, void* aa) {
-	map_param.AddVar(name, type, aa);
+	map_param.search.AddVar(name, type, aa);
 	int64 byte_count = (int64)(aa)-(int64)(&map_param.start);
 
 	int64 max_address = (int64)(&map_param_max.start) + byte_count;
 	int64 min_address = (int64)(&map_param_min.start) + byte_count;
 
-	map_param_max.AddVar(name, type, (void*)max_address);
-	map_param_min.AddVar(name, type, (void*)min_address);
+	map_param_max.search.AddVar(name, type, (void*)max_address);
+	map_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char* type, void* aa) {
@@ -84,8 +133,8 @@ void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char*
 	int64 max_address = (int64)(&enemy_param_max.start) + byte_count;
 	int64 min_address = (int64)(&enemy_param_min.start) + byte_count;
 
-	enemy_param_max.AddVar(name, type, (void*)max_address);
-	enemy_param_min.AddVar(name, type, (void*)min_address);
+	enemy_param_max.search.AddVar(name, type, (void*)max_address);
+	enemy_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
@@ -96,7 +145,7 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_wave_param[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_wave_param[index_num].enemy[i].AddVar(
+			map_wave_param[index_num].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address
@@ -108,13 +157,12 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 
 void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 	int32 set_index = map_wave_param.Insert(FMapWaveParam(), index - 1);
-
 	map_wave_param[set_index].enemy.Init(FEnemyParam(), 6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_wave_param[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_wave_param[set_index].enemy[i].AddVar(
+			map_wave_param[set_index].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address

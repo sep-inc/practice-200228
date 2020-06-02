@@ -15,9 +15,11 @@
 USTRUCT(BlueprintType)
 struct FPrameBase {
 	GENERATED_USTRUCT_BODY()
-
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FString> var_name;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FString> var_Type;
+	
 	TArray<void*> var_address;
 
 	void AddVar(const char* name, const char* type, void* aa) {
@@ -29,27 +31,28 @@ struct FPrameBase {
 		var_address.Add(aa);
 	}
 
-	void GetPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
+	
+	void GetPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
 		if (var_name.Num() > index && index >= 0) {
 			FString type = var_Type[index];
 
 			if (type == "int") {
-				out1 = *((int32*)var_address[index]);
+				int32_var = *((int32*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "float") {
-				out2 = *((float*)var_address[index]);
+				float_var = *((float*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "class FString") {
-				out3 = *((FString*)var_address[index]);
+				string_var = *((FString*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "__int64") {
-				out4 = *((int64*)var_address[index]);
+				int64_var = *((int64*)var_address[index]);
 				var_type = type;
 				return;
 			}
@@ -58,7 +61,8 @@ struct FPrameBase {
 		}
 	}
 
-	void SetPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
+	
+	void SetPrame(int32 index, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
 		if (var_name.Num() > index && index >= 0) {
 			FString type = var_Type[index];
 
@@ -66,29 +70,48 @@ struct FPrameBase {
 
 			//FString kata = typeid(a).name();
 			if (type == "int") {
-				*((int32*)var_address[index]) = in1;
+				*((int32*)var_address[index]) = int32_var;
 				return;
 			}
 			else if (type == "float") {
-				*((float*)var_address[index]) = in2;
+				*((float*)var_address[index]) = float_var;
 				return;
 			}
 			else if (type == "class FString") {
-				*((FString*)var_address[index]) = in3;
+				*((FString*)var_address[index]) = string_var;
 				return;
 			}
 			else if (type == "__int64") {
-				*((int64*)var_address[index]) = in4;
+				*((int64*)var_address[index]) = int64_var;
 				return;
 			}
 		}
 	}
+
+	FString GetType(int32 index) {
+		if (var_Type[index] == "__int64") return "int64";
+		return var_Type[index];
+	}
 };
+
+USTRUCT(BlueprintType)
+struct FVar{
+	GENERATED_USTRUCT_BODY()
+	
+	int32 int32_var;
+	float float_var;
+	FString string_var;
+	int64 int64_var;
+};
+
 
 //ここに追加した要素はUMODToolEditorUtilityWidgetCPPのコンストラクタで登録してください
 USTRUCT(BlueprintType)
-struct FPlayerParam : public FPrameBase{
+struct FPlayerParam{
 	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FPrameBase search;
 
 	int start;
 
@@ -120,13 +143,36 @@ struct FPlayerParam : public FPrameBase{
 };
 
 USTRUCT(BlueprintType)
-struct FWeaponParam : public FPrameBase {
+struct FPlayerMovement {
 	GENERATED_USTRUCT_BODY()
 
-		int start;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FPrameBase search;
 
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		float Durability;
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float ContinuedSpeedForward;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float ContinuedSpeedBackward;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float ContinuedSpeedHorizontal;
+
+};
+
+USTRUCT(BlueprintType)
+struct FWeaponParam {
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FPrameBase search;
+
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float Durability;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		float Attack;
@@ -140,13 +186,16 @@ struct FWeaponParam : public FPrameBase {
 };
 
 USTRUCT(BlueprintType)
-struct FMapParam : public FPrameBase {
+struct FMapParam {
 	GENERATED_USTRUCT_BODY()
 
-		int start;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FPrameBase search;
 
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-			float Health;
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float Health;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		float Attack;
@@ -168,8 +217,11 @@ struct FMapParam : public FPrameBase {
 };
 
 USTRUCT(BlueprintType)
-struct FEnemyParam : public FPrameBase {
+struct FEnemyParam {
 	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FPrameBase search;
 
 	int start;
 
@@ -293,7 +345,35 @@ class MODTOOLBUTTON_API UMODToolEditorUtilityWidgetCPP : public UEditorUtilityWi
 	GENERATED_BODY()
 
 public:
+
+	//パラメーター
+	UPROPERTY(EditAnywhere, Category = "ModEUW")
+		FPlayerParam player_param;
+
+	UPROPERTY(EditAnywhere, Category = "ModEUW")
+		FWeaponParam weapon_param;
+
+	UPROPERTY(EditAnywhere, Category = "ModEUW")
+		FMapParam map_param;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
+		TArray<FMapWaveParam> map_wave_param;
+
+	//最大値
+	FPlayerParam player_param_max;
+	FWeaponParam weapon_param_max;
+	FMapParam map_param_max;
+	FEnemyParam enemy_param_max;
+
+	//最低値
+	FPlayerParam player_param_min;
+	FWeaponParam weapon_param_min;
+	FMapParam map_param_min;
+	FEnemyParam enemy_param_min;
+
+
 	UMODToolEditorUtilityWidgetCPP();
+	~UMODToolEditorUtilityWidgetCPP();
 
 	void AddPlayerPrame(const char* name, const char* type, void* aa);
 	void AddWeaponPrame(const char* name, const char* type, void* aa);
@@ -309,67 +389,48 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void RemoveWave(int32 index);
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	void GetPrame(FPrameBase prame, int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		prame.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetPrame(FPrameBase prame, int32 index, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
+		prame.SetPrame(index, int32_var, float_var, string_var, int64_var);
+	}
+
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FString GetType(FPrameBase prame, int32 index) {
+		if (prame.var_Type[index] == "__int64") return "int64";
+		return prame.var_Type[index];
+	}
+	
 	//ゲッター
 
-	//要素数
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	int32 GetPlayerPrameItemCount() {
-		return player_param.var_name.Num();
-	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-		int32 GetWeaponPrameItemCount() {
-		return weapon_param.var_name.Num();
+		FPlayerParam GetPlayerParam() {
+		return player_param;
+	}
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FWeaponParam GetWeaponParam() {
+		return weapon_param;
+	}
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FMapParam GetMapParam() {
+		return map_param;
 	}
 
-	UFUNCTION(BlueprintPure, Category = "EUW")
-		int32 GetMapPrameItemCount() {
-		return map_param.var_name.Num();
-	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		int32 GetEnemyPrameItemCount() {
 		return map_wave_param_addres.Num();
 	}
 
-	//変数名
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetPlayerPrameName(int32 index) {
-		return player_param.var_name[index];
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetWeaponPrameName(int32 index) {
-		return weapon_param.var_name[index];
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetMapPrameName(int32 index) {
-		return map_param.var_name[index];
-	}
-
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	FString GetEnemyPrameName(int32 index) {
 		return map_wave_param_addres[index].name;
-	}
-
-	//変数型
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetPlayerPrameType(int32 index) {
-		if (player_param.var_Type[index] == "__int64") return "int64";
-		return player_param.var_Type[index];
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetWeaponPrameType(int32 index) {
-		if (weapon_param.var_Type[index] == "__int64") return "int64";
-		return weapon_param.var_Type[index];
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FString GetMapPrameType(int32 index) {
-		if (map_param.var_Type[index] == "__int64") return "int64";
-		return map_param.var_Type[index];
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
@@ -384,25 +445,10 @@ public:
 		return map_wave_param.Num();
 	}
 
-	//パラメーターゲット
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetPlayerPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		player_param.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetWeaponPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		weapon_param.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMapPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		map_param.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		map_wave_param[wave - 1].enemy[index].GetPrame(var_num, var_type, out1, out2, out3, out4);
+	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		map_wave_param[wave - 1].enemy[index].search.GetPrame(var_num, var_type, int32_var, float_var, string_var, int64_var);
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
@@ -415,121 +461,70 @@ public:
 		return map_wave_param[wave - 1].enemy[index].id;
 	}
 
-	//最大パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMaxPlayerPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		player_param_max.GetPrame(index, var_type, out1, out2, out3, out4);
+		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
+		map_wave_param[wave - 1].enemy[index].search.SetPrame(var_num, int32_var, float_var, string_var, int64_var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMaxWeaponPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		weapon_param_max.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMaxMapPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		map_param_max.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMaxEnemyPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		enemy_param_max.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	//最小パラメーターゲット
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMinPlayerPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		player_param_min.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMinWeaponPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		weapon_param_min.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMinMapPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		map_param_min.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void GetMinEnemyPrame(int32 index, FString& var_type, int32& out1, float& out2, FString& out3, int64& out4) {
-		enemy_param_min.GetPrame(index, var_type, out1, out2, out3, out4);
-	}
-
-	//セット
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetPlayerPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-		player_param.SetPrame(index, in1, in2, in3, in4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetWeaponPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-		weapon_param.SetPrame(index, in1, in2, in3, in4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetMapPrame(int32 index, int32 in1, float in2, FString in3, int64 in4) {
-		map_param.SetPrame(index, in1, in2, in3, in4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, int32 in1, float in2, FString in3, int64 in4) {
-		map_wave_param[wave - 1].enemy[index].SetPrame(var_num, in1, in2, in3, in4);
-	}
-
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void SetMapWavePrame(int32 Wave,FMapWaveParam in) {
+		void SetMapWavePrame(int32 Wave, FMapWaveParam in) {
 		map_wave_param[Wave - 1] = in;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void SetMapWaveEnemyId(int32 Wave, int32 index,int32 id) {
+		void SetMapWaveEnemyId(int32 Wave, int32 index, int32 id) {
 		map_wave_param[Wave - 1].enemy[index].id = id;
 	}
 
-	//パラメーター
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FPlayerParam player_param;
+	//最大パラメーターゲット
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void GetMaxPlayerPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		player_param_max.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FWeaponParam weapon_param;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMaxWeaponPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		weapon_param_max.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FMapParam map_param;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMaxMapPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		map_param_max.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
-	TArray<FMapWaveParam> map_wave_param;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMaxEnemyPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		enemy_param_max.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	//最大値
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FPlayerParam player_param_max;
+	//最小パラメーターゲット
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMinPlayerPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		player_param_min.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FWeaponParam weapon_param_max;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMinWeaponPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		weapon_param_min.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FMapParam map_param_max;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMinMapPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		map_param_min.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FEnemyParam enemy_param_max;
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void GetMinEnemyPrame(int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		enemy_param_min.search.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	}
 
-	//最低値
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FPlayerParam player_param_min;
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FWeaponParam weapon_param_min;
 
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FMapParam map_param_min;
-
-	UPROPERTY(EditAnywhere, Category = "ModEUW")
-	FEnemyParam enemy_param_min;
-
+	
 private:
 
 	TArray<VarPra> map_wave_param_addres;
 	FEnemyParam enemy_param_measurement;		//計測用
+
 
 };
