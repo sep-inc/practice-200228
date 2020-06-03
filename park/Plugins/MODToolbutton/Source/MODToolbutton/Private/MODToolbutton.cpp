@@ -1,4 +1,4 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+Ôªø// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "MODToolbutton.h"
 #include "MODToolbuttonStyle.h"
@@ -60,7 +60,7 @@ void FMODToolbuttonModule::ShutdownModule()
 void FMODToolbuttonModule::PluginButtonClicked()
 {
 	FString path = "EditorUtilityWidgetBlueprint'/MODToolbuttonContent/EUW/ToolEUW.ToolEUW'";
-	UWidgetBlueprint* sc = TSoftObjectPtr<UWidgetBlueprint>(FSoftObjectPath(*path)).LoadSynchronous(); // íºê⁄UEditorUtilityWidgetBlueprintÇéÛÇØéÊÇÈÇ±Ç∆ÇÕèoóàÇ»Ç¢Ç¡Ç€Ç¢
+	UWidgetBlueprint* sc = TSoftObjectPtr<UWidgetBlueprint>(FSoftObjectPath(*path)).LoadSynchronous(); // Áõ¥Êé•UEditorUtilityWidgetBlueprint„ÇíÂèó„ÅëÂèñ„Çã„Åì„Å®„ÅØÂá∫Êù•„Å™„ÅÑ„Å£„ÅΩ„ÅÑ
 	UEditorUtilitySubsystem* EditorUtilitySubsystem = GEditor->GetEditorSubsystem<UEditorUtilitySubsystem>();
 	UEditorUtilityWidgetBlueprint* euwb = (UEditorUtilityWidgetBlueprint*)sc;
 	EditorUtilitySubsystem->SpawnAndRegisterTab(euwb);

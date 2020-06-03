@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "EditorUtilityWidget.h"
 #include "Dom/JsonObject.h"
+#include "Components/ScrollBox.h"
 #include "MODToolEditorUtilityWidgetCPP.generated.h"
 
 #define TO_STRING(VariableName) #VariableName
@@ -359,6 +360,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
 		TArray<FMapWaveParam> map_wave_param;
 
+	
+		TMap<EPrameType, FPrameBase> prames;
+
+		TMap<EPrameType, UScrollBox*> prame_scroll_box;
+
 	//最大値
 	FPlayerParam player_param_max;
 	FWeaponParam weapon_param_max;
@@ -375,6 +381,10 @@ public:
 	UMODToolEditorUtilityWidgetCPP();
 	~UMODToolEditorUtilityWidgetCPP();
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
+
+
 	void AddPlayerPrame(const char* name, const char* type, void* aa);
 	void AddWeaponPrame(const char* name, const char* type, void* aa);
 	void AddMapPrame(const char* name, const char* type, void* aa);
@@ -390,13 +400,13 @@ public:
 	void RemoveWave(int32 index);
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	void GetPrame(FPrameBase prame, int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		prame.GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
+	void GetPrame(EPrameType prameType, int32 index, FString& var_type, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+		prames[prameType].GetPrame(index, var_type, int32_var, float_var, string_var, int64_var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void SetPrame(FPrameBase prame, int32 index, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
-		prame.SetPrame(index, int32_var, float_var, string_var, int64_var);
+	void SetPrame(EPrameType prameType, int32 index, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
+		prames[prameType].SetPrame(index, int32_var, float_var, string_var, int64_var);
 	}
 
 
@@ -407,6 +417,18 @@ public:
 	}
 	
 	//ゲッター
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	TMap<EPrameType, FPrameBase>GetPrames() {
+		return prames;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	TMap<EPrameType, UScrollBox*> GetPrame_scroll_box() {
+		return prame_scroll_box;
+	}
+
+
 
 
 	UFUNCTION(BlueprintPure, Category = "EUW")

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -28,26 +28,26 @@ class MODTOOLBUTTON_API UMODToolBlueprintFunctionLibrary : public UBlueprintFunc
 
 	GENERATED_BODY()
 public:
-	//ƒtƒ@ƒCƒ‹ì¬
+	//ãƒ•ã‚¡ã‚¤ãƒ«ä½œæˆ
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static FString FileCreate(FString file_name, FString in);
 
-	//Jsonƒtƒ@ƒCƒ‹‚ğ“Ç‚İ‚Ş
+	//Jsonãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	static TSharedPtr<FJsonObject> LoadJsonObject(FString file_name);
 
-	//Jsonƒtƒ@ƒCƒ‹‚Ì’l‚ğ“Ç‚İ‚Ş
+	//Jsonãƒ•ã‚¡ã‚¤ãƒ«ã®å€¤ã‚’èª­ã¿è¾¼ã‚€
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static int GetJsonValueinteger(FString file_name, FString field_name);
 
-	//string‚ğint64‚É•ÏŠ·‚·‚é
+	//stringã‚’int64ã«å¤‰æ›ã™ã‚‹
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	static int64 StringToInt64(FString in);
 
-	//int64‚ğstring‚É•ÏŠ·‚·‚é
+	//int64ã‚’stringã«å¤‰æ›ã™ã‚‹
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	static FString int64ToString(int64 in);
 
-	//stringƒ\[ƒgiƒAƒ‹ƒtƒ@ƒxƒbƒg‡j
+	//stringã‚½ãƒ¼ãƒˆï¼ˆã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆé †ï¼‰
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static TArray<int32> StringSort_OutNum(TArray<FString> in, bool ascending_worder);
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "MODToolBlueprintFunctionLibrary.h"
 #include "Misc/FileHelper.h"
@@ -39,10 +39,10 @@ FString UMODToolBlueprintFunctionLibrary::FileCreate(FString file_name, FString 
 }
 
 TSharedPtr<FJsonObject> UMODToolBlueprintFunctionLibrary::LoadJsonObject(FString file_name) {
-	//ƒtƒ‹ƒpƒX¶¬
+	//ãƒ•ãƒ«ãƒ‘ã‚¹ç”Ÿæˆ
 	const FString JsonFullPath = FPaths::GameContentDir().Append(TEXT("Mod/")).Append(file_name).Append(TEXT(".json"));
 
-	//ƒGƒ‰[ˆ—
+	//ã‚¨ãƒ©ãƒ¼å‡¦ç†
 	auto LoadError = [&JsonFullPath]()
 
 	{
@@ -114,7 +114,7 @@ int64 UMODToolBlueprintFunctionLibrary::StringToInt64(FString in) {
 
 	char* var = TCHAR_TO_ANSI(*a);
 
-	//Œ…”ƒ`ƒFƒbƒN
+	//æ¡æ•°ãƒã‚§ãƒƒã‚¯
 	if (in.Len() < digit) {
 		return minus ? -(std::stoll(var)) : std::stoll(var);
 	}

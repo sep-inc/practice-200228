@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 #include "MODToolEditorUtilityWidgetCPP.h"
 #include "Misc/FileHelper.h"
 #include "Serialization/JsonReader.h"
@@ -10,7 +10,7 @@
 
 UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 
-	//ÉvÉåÉCÉÑÅ[ÉpÉâÉÅÅ[É^Å[
+	//„Éó„É¨„Ç§„É§„Éº„Éë„É©„É°„Éº„Çø„Éº
 	player_param_max.Health = 100.f;
 	player_param_min.Health = 0.f;
 	AddPlayerPrame(TO_STRING(Health), typeid(player_param.Health).name(), &player_param.Health);
@@ -36,7 +36,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	player_param_min.int64_var = 0.f;
 	AddPlayerPrame(TO_STRING(int64_var), typeid(player_param.int64_var).name(), &player_param.int64_var);
 
-	//ÉEÉFÉ|ÉìÉpÉâÉÅÅ[É^Å[
+	//„Ç¶„Çß„Éù„É≥„Éë„É©„É°„Éº„Çø„Éº
 	weapon_param_max.Durability = 100;
 	weapon_param_min.Durability = 0;
 	AddWeaponPrame(TO_STRING(Durability), typeid(weapon_param.Durability).name(), &weapon_param.Durability);
@@ -50,7 +50,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	weapon_param_min.Weight = 0;
 	AddWeaponPrame(TO_STRING(Weight), typeid(weapon_param.Weight).name(), &weapon_param.Weight);
 
-	//É}ÉbÉvÉpÉâÉÅÅ[É^Å[
+	//„Éû„ÉÉ„Éó„Éë„É©„É°„Éº„Çø„Éº
 	map_param_max.Health = 100;
 	map_param_min.Health = 0;
 	AddMapPrame(TO_STRING(Health), typeid(map_param.Health).name(), &map_param.Health);
@@ -70,7 +70,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	map_param_min.test5 = 0;
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
-	//ÉGÉlÉ~Å[ÉpÉâÉÅÅ[É^Å[
+	//„Ç®„Éç„Éü„Éº„Éë„É©„É°„Éº„Çø„Éº
 	enemy_param_max.param1 = 100;
 	enemy_param_min.param1 = 0;
 	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
@@ -81,10 +81,20 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	enemy_param_min.param3 = 0;
 	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
 
+
 }
 
 UMODToolEditorUtilityWidgetCPP::~UMODToolEditorUtilityWidgetCPP() {
 
+}
+
+
+void UMODToolEditorUtilityWidgetCPP::Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box) {
+	prames.Add(EPrameType::Player, player_param.search);
+	prames.Add(EPrameType::Weapons, weapon_param.search);
+	prames.Add(EPrameType::Map, map_param.search);
+
+	prame_scroll_box = set_scroll_box;
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
