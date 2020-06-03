@@ -360,10 +360,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
 		TArray<FMapWaveParam> map_wave_param;
 
-	
-		TMap<EPrameType, FPrameBase> prames;
+	TMap<EPrameType, FPrameBase> prames;
 
-		TMap<EPrameType, UScrollBox*> prame_scroll_box;
+	TMap<EPrameType, UScrollBox*> prame_scroll_box;
+
+
 
 	//ç≈ëÂíl
 	FPlayerParam player_param_max;
@@ -383,6 +384,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
 
 
 	void AddPlayerPrame(const char* name, const char* type, void* aa);

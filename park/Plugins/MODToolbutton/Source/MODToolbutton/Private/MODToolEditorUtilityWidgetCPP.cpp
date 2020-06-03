@@ -97,6 +97,10 @@ void UMODToolEditorUtilityWidgetCPP::Initialization(TMap<EPrameType, UScrollBox*
 	prame_scroll_box = set_scroll_box;
 }
 
+void UMODToolEditorUtilityWidgetCPP::CreateLocalMod() {
+
+}
+
 void UMODToolEditorUtilityWidgetCPP::AddPlayerPrame(const char* name, const char* type, void* aa) {
 	player_param.search.AddVar(name, type, aa);
 	int64 byte_count = (int64)(aa) - (int64)(&player_param.start);
