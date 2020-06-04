@@ -37,47 +37,47 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	AddPlayerPrame(TO_STRING(int64_var), typeid(player_param.int64_var).name(), &player_param.int64_var);
 
 	//ウェポンパラメーター
-	weapon_param_max.Durability = 100;
+	weapon_param_max.Durability = 200;
 	weapon_param_min.Durability = 0;
 	AddWeaponPrame(TO_STRING(Durability), typeid(weapon_param.Durability).name(), &weapon_param.Durability);
-	weapon_param_max.Attack = 100;
+	weapon_param_max.Attack = 200;
 	weapon_param_min.Attack = 0;
 	AddWeaponPrame(TO_STRING(Attack), typeid(weapon_param.Attack).name(), &weapon_param.Attack);
-	weapon_param_max.Defense = 100;
+	weapon_param_max.Defense = 200;
 	weapon_param_min.Defense = 0;
 	AddWeaponPrame(TO_STRING(Defense), typeid(weapon_param.Defense).name(), &weapon_param.Defense);
-	weapon_param_max.Weight = 100;
+	weapon_param_max.Weight = 200;
 	weapon_param_min.Weight = 0;
 	AddWeaponPrame(TO_STRING(Weight), typeid(weapon_param.Weight).name(), &weapon_param.Weight);
 
 	//マップパラメーター
-	map_param_max.Health = 100;
+	map_param_max.Health = 300;
 	map_param_min.Health = 0;
 	AddMapPrame(TO_STRING(Health), typeid(map_param.Health).name(), &map_param.Health);
-	map_param_max.Attack = 100;
+	map_param_max.Attack = 300;
 	map_param_min.Attack = 0;
 	AddMapPrame(TO_STRING(Attack), typeid(map_param.Attack).name(), &map_param.Attack);
-	map_param_max.Defense = 100;
+	map_param_max.Defense = 300;
 	map_param_min.Defense = 0;
 	AddMapPrame(TO_STRING(Defense), typeid(map_param.Defense).name(), &map_param.Defense);
-	map_param_max.Speed = 100;
+	map_param_max.Speed = 300;
 	map_param_min.Speed = 0;
 	AddMapPrame(TO_STRING(Speed), typeid(map_param.Speed).name(), &map_param.Speed);
 	map_param_max.test4 = "";
 	map_param_min.test4 = "";
 	AddMapPrame(TO_STRING(test4), typeid(map_param.test4).name(), &map_param.test4);
-	map_param_max.test5 = 100;
+	map_param_max.test5 = 300;
 	map_param_min.test5 = 0;
 	AddMapPrame(TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
 	//エネミーパラメーター
-	enemy_param_max.param1 = 100;
+	enemy_param_max.param1 = 400;
 	enemy_param_min.param1 = 0;
 	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
-	enemy_param_max.param2 = 100;
+	enemy_param_max.param2 = 400;
 	enemy_param_min.param2 = 0;
 	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
-	enemy_param_max.param3 = 100;
+	enemy_param_max.param3 = 400;
 	enemy_param_min.param3 = 0;
 	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
 
@@ -93,6 +93,14 @@ void UMODToolEditorUtilityWidgetCPP::Initialization(TMap<EPrameType, UScrollBox*
 	prames.Add(EPrameType::Player, player_param.search);
 	prames.Add(EPrameType::Weapons, weapon_param.search);
 	prames.Add(EPrameType::Map, map_param.search);
+
+	max_prames.Add(EPrameType::Player, player_param_max.search);
+	max_prames.Add(EPrameType::Weapons, weapon_param_max.search);
+	max_prames.Add(EPrameType::Map, map_param_max.search);
+
+	min_prames.Add(EPrameType::Player, player_param_min.search);
+	min_prames.Add(EPrameType::Weapons, weapon_param_min.search);
+	min_prames.Add(EPrameType::Map, map_param_min.search);
 
 	prame_scroll_box = set_scroll_box;
 }
