@@ -31,7 +31,7 @@
 
 FString UMODToolBlueprintFunctionLibrary::FileCreate(FString file_name, FString in) {
 
-	if (FFileHelper::SaveStringToFile(in, *(FPaths::GameContentDir() + FString("Mod/") + file_name + FString(".json")))) {
+	if (FFileHelper::SaveStringToFile(in, *(FPaths::ProjectPluginsDir() + FString("MODToolbuttonContent/Content/EUW/Package/") + file_name + FString(".json")))) {
 		return (FString)FPaths::GameDir() + FString("Mod/") + file_name + FString(".json");
 
 	}
@@ -40,7 +40,7 @@ FString UMODToolBlueprintFunctionLibrary::FileCreate(FString file_name, FString 
 
 TSharedPtr<FJsonObject> UMODToolBlueprintFunctionLibrary::LoadJsonObject(FString file_name) {
 	//フルパス生成
-	const FString JsonFullPath = FPaths::GameContentDir().Append(TEXT("Mod/")).Append(file_name).Append(TEXT(".json"));
+	const FString JsonFullPath = FPaths::ProjectPluginsDir().Append("MODToolbuttonContent/Content/EUW/Package/").Append(file_name).Append(TEXT(".json"));
 
 	//エラー処理
 	auto LoadError = [&JsonFullPath]()

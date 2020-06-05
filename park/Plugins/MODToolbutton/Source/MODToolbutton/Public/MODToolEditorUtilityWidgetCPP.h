@@ -102,6 +102,10 @@ struct FPrameBase {
 		if (var_Type[index] == "__int64") return "int64";
 		return var_Type[index];
 	}
+
+	FString GetName(int32 index) {
+		return var_name[index];
+	}
 };
 
 USTRUCT(BlueprintType)
@@ -153,7 +157,7 @@ struct FPlayerParam{
 };
 
 USTRUCT(BlueprintType)
-struct FPlayerMovement {
+struct FPlayerMovementPrame {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
@@ -280,6 +284,7 @@ UENUM(BlueprintType)
 enum class EPrameType : uint8
 {
 	Player,
+	PlayerMovement,
 	Weapons,
 	Map
 };
@@ -351,6 +356,13 @@ struct VarPra
 	int32 byte_count;
 };
 
+struct StartAddress
+{
+	int64 main_address;
+	int64 max_address;
+	int64 min_address;
+};
+
 
 UCLASS()
 class MODTOOLBUTTON_API UMODToolEditorUtilityWidgetCPP : public UEditorUtilityWidget
@@ -362,6 +374,9 @@ public:
 	//パラメーター
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 		FPlayerParam player_param;
+
+	UPROPERTY(EditAnywhere, Category = "ModEUW")
+		FPlayerMovementPrame player_movement_prame;
 
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 		FWeaponParam weapon_param;
@@ -379,16 +394,19 @@ public:
 
 	TMap<EPrameType, UScrollBox*> prame_scroll_box;
 
-
+	//書き出すパラメーター
+	TArray<EPrameType> validity_parames;
 
 	//最大値
 	FPlayerParam player_param_max;
+	FPlayerMovementPrame player_movement_max;
 	FWeaponParam weapon_param_max;
 	FMapParam map_param_max;
 	FEnemyParam enemy_param_max;
 
 	//最低値
 	FPlayerParam player_param_min;
+	FPlayerMovementPrame player_movement_min;
 	FWeaponParam weapon_param_min;
 	FMapParam map_param_min;
 	FEnemyParam enemy_param_min;
@@ -400,9 +418,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
 
-	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void CreateLocalMod();
+	void SetPrames();
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void CreateLocalMod(FString mod_name);
+
+	void AddPrame(EPrameType type, StartAddress s_a, const char* name, const char* var_type, void* aa);
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	bool AddValidityParames(EPrameType type);
 
 	void AddPlayerPrame(const char* name, const char* type, void* aa);
 	void AddWeaponPrame(const char* name, const char* type, void* aa);
@@ -464,6 +488,11 @@ public:
 		return map_param;
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FPlayerMovementPrame GetPlayerMovementPrame() {
+		return player_movement_prame;
+	}
+
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		int32 GetEnemyPrameItemCount() {
@@ -517,6 +546,7 @@ public:
 		void SetMapWaveEnemyId(int32 Wave, int32 index, int32 id) {
 		map_wave_param[Wave - 1].enemy[index].id = id;
 	}
+
 
 	//最大パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
