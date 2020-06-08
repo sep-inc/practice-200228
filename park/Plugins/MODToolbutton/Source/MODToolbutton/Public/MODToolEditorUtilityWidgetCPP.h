@@ -130,28 +130,29 @@ struct FPlayerDefaultParame{
 	int start;
 
 
-	int32 Health;
-	float AttackDamage;
-	int32 DrainHealthValuePerSeconds;
+	int32 Health;										//プレイヤーのHP値。
+	float AttackDamage;									//プレイヤーの持つ攻撃力。武器の攻撃力にこの数値が上乗せされます。
+	int32 DrainHealthValuePerSeconds;					//１秒間に吸収できるライフマナの量。
 
-	int32 Energy_MaxValue;
-	int32 Energy_DelaySecondsForIncrementValue;
-	int32 Energy_IncrementValuePerSecond;
+	int32 Energy_MaxValue;								//スタミナの最大量。
+	int32 Energy_DelaySecondsForIncrementValue;			//1秒間に回復するスタミナ量。
+	int32 Energy_IncrementValuePerSecond;				//スタミナが回復するまでのインターバル。
 
-	int32 SpecialGage_MaxValue;
-	int32 SpecialGage_DecreaseSpeed;
-	int32 SpecialGage_IncreaseValues_TakeDamage;
-	int32 SpecialGage_IncreaseValues_DodgeByVHS;
+	int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
+	int32 SpecialGage_DecreaseSpeed;					//エンチャント発動中のスペシャルゲージ減少量(秒速)。
+														//MaxValueが100で、DecreaseSpeedが10の場合、エンチャント効果時間は10秒になります。
+	int32 SpecialGage_IncreaseValues_TakeDamage;		//敵からダメージを受けた時のスペシャルゲージ蓄積量。
+	int32 SpecialGage_IncreaseValues_DodgeByVHS;		//敵の攻撃をタイミングよく回避した時のスペシャルゲージ蓄積量。
 
-	float ResuscitateDelayTime;
-	float NotDominantHandDamageRate;
-	float NotDominantHandDamageRate_Throw;
+	float ResuscitateDelayTime;							//味方を蘇生するまでにかかる時間。
+	float NotDominantHandDamageRate;					//利き手ではない手でのダメージ倍率。
+	float NotDominantHandDamageRate_Throw;				//利き手ではない手での投げダメージ倍率。
 
-	float KnockBackLevel1_Distance;
-	float KnockBackLevel1_Time;
-	float KnockBackLevel1_WholeTime;
-	float KnockBackLevel1_CameraBackDistance;
-	float KnockBackLevel1_CameraUpDistance;
+	float KnockBackLevel1_Distance;						//ノックバック時に後退する距離。
+	float KnockBackLevel1_Time;							//ノックバック時の後退時間。
+	float KnockBackLevel1_WholeTime;					//ノックバック判定の全体時間。
+	float KnockBackLevel1_CameraBackDistance;			//ノックバック時の3人称視点に移行した時のカメラの後退する距離。
+	float KnockBackLevel1_CameraUpDistance;				//ノックバック時の3人称視点に移行した時のカメラの上昇する距離。
 
 	float KnockBackLevel2_Distance;
 	float KnockBackLevel2_Time;
@@ -177,11 +178,11 @@ struct FPlayerDefaultParame{
 	float KnockBackLevel5_CameraBackDistance;
 	float KnockBackLevel5_CameraUpDistance;
 
-	float GuardCrash_Time;
-	float GuardCrash_CameraBackDistance;
-	float GuardCrash_CameraUpDistance;
+	float GuardCrash_Time;								//ガードクラッシュ状態の全体時間。
+	float GuardCrash_CameraBackDistance;				//ガードクラッシュ時の3人称視点に移行した時のカメラの後退する距離。
+	float GuardCrash_CameraUpDistance;					//ガードクラッシュ時の3人称視点に移行した時のカメラの上昇する距離。
 
-	float VHSCoolDownTime;
+	float VHSCoolDownTime;								//ステップを行った際のクールタイム。
 };
 
 USTRUCT(BlueprintType)
@@ -193,26 +194,30 @@ struct FPlayerMovementPrame {
 
 	int start;
 
-	float ContinuedSpeedForward;
-	float ContinuedSpeedBackward;
-	float ContinuedSpeedHorizontal;
+	float ContinuedSpeedForward;						//通常移動時の前方向スピード（cm/s）
+	float ContinuedSpeedBackward;						//通常移動時の後方向スピード（cm/s）
+	float ContinuedSpeedHorizontal;						//通常移動時の横方向スピード（cm/s）
 
-	float StepLengthForward;
-	float StepLengthBackward;
-	float StepLengthHorizontal;
-	float StepMoveTime;
-	float StepRigidTime;
+	float StepLengthForward;							//ステップ移動時の前方向移動量（cm）
+	float StepLengthBackward;							//ステップ移動時の後方向移動量（cm）
+	float StepLengthHorizontal;							//ステップ移動時の横方向移動量（cm）
+	float StepMoveTime;									//ステップ移動にかかる時間（s）
+	float StepRigidTime;								//ステップ移動後の硬直時間（s）
 
-	float LockOnRotateSpeed;
-	float LockOnRotateLimit;
-	float LockOnHeadLimit;
-	float LockOnDistanceLimit;
+	float LockOnRotateSpeed;							//ロックオン時の回転スピード(degree/s)
+														//これ以上ターゲットとの角度が離れるとロックオンが強制解除されます。
+	float LockOnRotateLimit;							//ロックオン時の回転の限界角度(degree)
+														//これ以上回転するとロックオンが強制解除されます。
+	float LockOnHeadLimit;								//ロックオン時の頭の限界角度(degree)
+														//これ以上首を振るとロックオンが強制解除されます。
+	float LockOnDistanceLimit;							//ロックオン時プレイヤーとロックオンした敵の距離限界
+														//これ以上距離が離れるとロックオンが強制解除されます。
 
-	float TurnAngle;
-	float TurnAngleAuto;
-	float TurnTime;
-	float TurnInterval;
-	float FreeRotationSpeed;
+	float TurnAngle;									//一回あたりの回転操作での回転量(degree)。
+	float TurnAngleAuto;								//一回あたりの自動ターンでの回転量(degree)。
+	float TurnTime;										//回転にかかる時間(s)。
+	float TurnInterval;									//自動ターンが始まるまでのインターバル(s)。
+	float FreeRotationSpeed;							//フリー回転のスピード。
 
 };
 
