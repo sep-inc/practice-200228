@@ -121,7 +121,7 @@ struct FVar{
 
 //ここに追加した要素はUMODToolEditorUtilityWidgetCPPのコンストラクタで登録してください
 USTRUCT(BlueprintType)
-struct FPlayerParam{
+struct FPlayerDefaultParame{
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
@@ -130,30 +130,58 @@ struct FPlayerParam{
 	int start;
 
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	bool Health;
+	int32 Health;
+	float AttackDamage;
+	int32 DrainHealthValuePerSeconds;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 Attack;
+	int32 Energy_MaxValue;
+	int32 Energy_DelaySecondsForIncrementValue;
+	int32 Energy_IncrementValuePerSecond;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 Defense;
+	int32 SpecialGage_MaxValue;
+	int32 SpecialGage_DecreaseSpeed;
+	int32 SpecialGage_IncreaseValues_TakeDamage;
+	int32 SpecialGage_IncreaseValues_DodgeByVHS;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 Speed;
+	float ResuscitateDelayTime;
+	float NotDominantHandDamageRate;
+	float NotDominantHandDamageRate_Throw;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 int32_var;
+	float KnockBackLevel1_Distance;
+	float KnockBackLevel1_Time;
+	float KnockBackLevel1_WholeTime;
+	float KnockBackLevel1_CameraBackDistance;
+	float KnockBackLevel1_CameraUpDistance;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	float float_var;
+	float KnockBackLevel2_Distance;
+	float KnockBackLevel2_Time;
+	float KnockBackLevel2_WholeTime;
+	float KnockBackLevel2_CameraBackDistance;
+	float KnockBackLevel2_CameraUpDistance;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	FString string_var;
+	float KnockBackLevel3_Distance;
+	float KnockBackLevel3_Time;
+	float KnockBackLevel3_WholeTime;
+	float KnockBackLevel3_CameraBackDistance;
+	float KnockBackLevel3_CameraUpDistance;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int64 int64_var;
+	float KnockBackLevel4_Distance;
+	float KnockBackLevel4_Time;
+	float KnockBackLevel4_WholeTime;
+	float KnockBackLevel4_CameraBackDistance;
+	float KnockBackLevel4_CameraUpDistance;
 
+	float KnockBackLevel5_Distance;
+	float KnockBackLevel5_Time;
+	float KnockBackLevel5_WholeTime;
+	float KnockBackLevel5_CameraBackDistance;
+	float KnockBackLevel5_CameraUpDistance;
+
+	float GuardCrash_Time;
+	float GuardCrash_CameraBackDistance;
+	float GuardCrash_CameraUpDistance;
+
+	float VHSCoolDownTime;
 };
 
 USTRUCT(BlueprintType)
@@ -165,14 +193,26 @@ struct FPlayerMovementPrame {
 
 	int start;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	float ContinuedSpeedForward;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	float ContinuedSpeedBackward;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	float ContinuedSpeedHorizontal;
+
+	float StepLengthForward;
+	float StepLengthBackward;
+	float StepLengthHorizontal;
+	float StepMoveTime;
+	float StepRigidTime;
+
+	float LockOnRotateSpeed;
+	float LockOnRotateLimit;
+	float LockOnHeadLimit;
+	float LockOnDistanceLimit;
+
+	float TurnAngle;
+	float TurnAngleAuto;
+	float TurnTime;
+	float TurnInterval;
+	float FreeRotationSpeed;
 
 };
 
@@ -283,7 +323,7 @@ enum class EVarType : uint8
 UENUM(BlueprintType)
 enum class EPrameType : uint8
 {
-	Player,
+	PlayerDefault,
 	PlayerMovement,
 	Weapons,
 	Map
@@ -373,7 +413,7 @@ public:
 
 	//パラメーター
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
-		FPlayerParam player_param;
+		FPlayerDefaultParame player_default_param;
 
 	UPROPERTY(EditAnywhere, Category = "ModEUW")
 		FPlayerMovementPrame player_movement_prame;
@@ -398,14 +438,14 @@ public:
 	TArray<EPrameType> validity_parames;
 
 	//最大値
-	FPlayerParam player_param_max;
+	FPlayerDefaultParame player_default_param_max;
 	FPlayerMovementPrame player_movement_max;
 	FWeaponParam weapon_param_max;
 	FMapParam map_param_max;
 	FEnemyParam enemy_param_max;
 
 	//最低値
-	FPlayerParam player_param_min;
+	FPlayerDefaultParame player_default_param_min;
 	FPlayerMovementPrame player_movement_min;
 	FWeaponParam weapon_param_min;
 	FMapParam map_param_min;
@@ -418,6 +458,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
 
+	void InitPlayerDefaultParame();
+	void InitPlayerMovementPrameParame();
+
 	void SetPrames();
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -428,7 +471,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	bool AddValidityParames(EPrameType type);
 
-	void AddPlayerPrame(const char* name, const char* type, void* aa);
+	void AddPlayerDefaultParame(const char* name, const char* type, void* aa);
 	void AddWeaponPrame(const char* name, const char* type, void* aa);
 	void AddMapPrame(const char* name, const char* type, void* aa);
 	void AddEnemyPrame(const char* name, const char* type, void* aa);
@@ -476,8 +519,8 @@ public:
 
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-		FPlayerParam GetPlayerParam() {
-		return player_param;
+		FPlayerDefaultParame GetPlayerDefaultParame() {
+		return player_default_param;
 	}
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		FWeaponParam GetWeaponParam() {
