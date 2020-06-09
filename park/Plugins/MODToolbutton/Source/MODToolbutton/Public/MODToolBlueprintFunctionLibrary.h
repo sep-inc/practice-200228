@@ -15,12 +15,49 @@
 USTRUCT(BlueprintType)
 struct FEnergy {
 	GENERATED_USTRUCT_BODY()
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 MaxValue;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 DelaySecondsForIncrementValue;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 IncrementValuePerSecond;
+};
+
+USTRUCT(BlueprintType)
+struct FIncreaseValues {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 TakeDamage;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 DodgeByVHS;
+};
+
+USTRUCT(BlueprintType)
+struct FSpecialGage {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 MaxValue;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 DecreaseSpeed;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FIncreaseValues IncreaseValues;
+};
+
+USTRUCT(BlueprintType)
+struct FKnockBackLevels {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Level;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float Distance;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float Time;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float WholeTime;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float CameraBackDistance;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float CameraUpDistance;
 };
 
 

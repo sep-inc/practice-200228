@@ -107,8 +107,8 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_parame_start.max_address = (int64)(&player_default_param_max.start);
 	player_parame_start.min_address = (int64)(&player_default_param_min.start);
 
-	player_default_param_max.Health;
-	player_default_param_min.Health;
+	player_default_param_max.Health = 100;
+	player_default_param_min.Health = 0;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(Health), typeid(player_default_param.Health).name(), &player_default_param.Health);
 	player_default_param_max.AttackDamage = 100.f;
