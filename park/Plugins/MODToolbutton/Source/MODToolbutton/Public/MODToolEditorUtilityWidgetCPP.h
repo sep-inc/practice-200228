@@ -10,9 +10,10 @@
 
 #define TO_STRING(VariableName) #VariableName
 
-/**
- * 
- */
+
+
+
+
 USTRUCT(BlueprintType)
 struct FPrameBase {
 	GENERATED_USTRUCT_BODY()
@@ -33,42 +34,50 @@ struct FPrameBase {
 	}
 
 	
-	void GetPrame(int32 index, FString& var_type, bool bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
+	void GetPrame(int32 index, FString& var_type, FVar& var) {
 		if (var_name.Num() > index && index >= 0) {
 			FString type = var_Type[index];
 
 			if (type == "bool") {
-				bool_var = *((bool*)var_address[index]);
+				var.bool_var = *((bool*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "int") {
-				int32_var = *((int32*)var_address[index]);
+				var.int32_var = *((int32*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "float") {
-				float_var = *((float*)var_address[index]);
+				var.float_var = *((float*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "class FString") {
-				string_var = *((FString*)var_address[index]);
+				var.string_var = *((FString*)var_address[index]);
 				var_type = type;
 				return;
 			}
 			else if (type == "__int64") {
-				int64_var = *((int64*)var_address[index]);
+				var.int64_var = *((int64*)var_address[index]);
 				var_type = type;
 				return;
 			}
-
-			var_type = type;
+			else if (type == "class TArray<int, class TSizedDefaultAllocator<32> >") {
+				var.array_int32 = *((TArray<int32>*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FEnergy") {
+				var.energy_var = *((FEnergy*)var_address[index]);
+				var_type = type;
+				return;
+			}
 		}
 	}
 
 	
-	void SetPrame(int32 index, bool bool_var, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
+	void SetPrame(int32 index, FVar var) {
 		if (var_name.Num() > index && index >= 0) {
 			FString type = var_Type[index];
 
@@ -76,28 +85,36 @@ struct FPrameBase {
 
 			//FString kata = typeid(a).name();
 			if (type == "bool") {
-				*((bool*)var_address[index]) = bool_var;
+				*((bool*)var_address[index]) = var.bool_var;
 				return;
 			}
 			else if (type == "int") {
-				*((int32*)var_address[index]) = int32_var;
+				*((int32*)var_address[index]) = var.int32_var;
 				return;
 			}
 			else if (type == "float") {
-				*((float*)var_address[index]) = float_var;
+				*((float*)var_address[index]) = var.float_var;
 				return;
 			}
 			else if (type == "class FString") {
-				*((FString*)var_address[index]) = string_var;
+				*((FString*)var_address[index]) = var.string_var;
 				return;
 			}
 			else if (type == "__int64") {
-				*((int64*)var_address[index]) = int64_var;
+				*((int64*)var_address[index]) = var.int64_var;
+				return;
+			}
+			else if (type == "class TArray<int, class TSizedDefaultAllocator<32> >") {
+				*((TArray<int32>*)var_address[index]) = var.array_int32;
+				return;
+			}
+			else if (type == "struct FEnergy") {
+				*((FEnergy*)var_address[index]) = var.energy_var;
 				return;
 			}
 		}
 	}
-
+	
 	FString GetType(int32 index) {
 		if (var_Type[index] == "__int64") return "int64";
 		return var_Type[index];
@@ -108,15 +125,6 @@ struct FPrameBase {
 	}
 };
 
-USTRUCT(BlueprintType)
-struct FVar{
-	GENERATED_USTRUCT_BODY()
-	
-	int32 int32_var;
-	float float_var;
-	FString string_var;
-	int64 int64_var;
-};
 
 
 //ここに追加した要素はUMODToolEditorUtilityWidgetCPPのコンストラクタで登録してください
@@ -130,13 +138,11 @@ struct FPlayerDefaultParame{
 	int start;
 
 
-	int32 Health;										//プレイヤーのHP値。
+	int32 Health;								//プレイヤーのHP値。
 	float AttackDamage;									//プレイヤーの持つ攻撃力。武器の攻撃力にこの数値が上乗せされます。
 	int32 DrainHealthValuePerSeconds;					//１秒間に吸収できるライフマナの量。
 
-	int32 Energy_MaxValue;								//スタミナの最大量。
-	int32 Energy_DelaySecondsForIncrementValue;			//1秒間に回復するスタミナ量。
-	int32 Energy_IncrementValuePerSecond;				//スタミナが回復するまでのインターバル。
+	FEnergy energy;
 
 	int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
 	int32 SpecialGage_DecreaseSpeed;					//エンチャント発動中のスペシャルゲージ減少量(秒速)。
@@ -321,7 +327,9 @@ enum class EVarType : uint8
 	INT,
 	INT64,
 	FLOAT,
-	STRING
+	STRING,
+	ARRAY_INT,
+	ENERGY
 };
 
 
@@ -364,6 +372,13 @@ struct FUnDoLog {
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	FString STRING_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	TArray<int32> ARRAY_INT_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FEnergy ENERGY_type;
+
 
 };
 
@@ -476,9 +491,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	bool AddValidityParames(EPrameType type);
 
-	void AddPlayerDefaultParame(const char* name, const char* type, void* aa);
-	void AddWeaponPrame(const char* name, const char* type, void* aa);
-	void AddMapPrame(const char* name, const char* type, void* aa);
 	void AddEnemyPrame(const char* name, const char* type, void* aa);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -491,13 +503,13 @@ public:
 	void RemoveWave(int32 index);
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	void GetPrame(EPrameType prameType, int32 index, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		prames[prameType].GetPrame(index, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+	void GetPrame(EPrameType prameType, int32 index, FString& var_type, FVar& var) {
+		prames[prameType].GetPrame(index, var_type, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void SetPrame(EPrameType prameType, int32 index, bool bool_var, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
-		prames[prameType].SetPrame(index, bool_var, int32_var, float_var, string_var, int64_var);
+	void SetPrame(EPrameType prameType, int32 index, FVar var) {
+		prames[prameType].SetPrame(index, var);
 	}
 
 
@@ -507,7 +519,56 @@ public:
 		return prame.var_Type[index];
 	}
 	
-	//ゲッター
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarBOOL(bool in) {
+		FVar var;
+		var.bool_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarINT(int32 in) {
+		FVar var;
+		var.int32_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarINT64(int64 in) {
+		FVar var;
+		var.int64_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarFLOAT(float in) {
+		FVar var;
+		var.float_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarSTRING(FString in) {
+		FVar var;
+		var.string_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	FVar CreateVarARRAY_INT(TArray<int32> in) {
+		FVar var;
+		var.array_int32 = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FVar CreateVarENERGY(FEnergy in) {
+		FVar var;
+		var.energy_var = in;
+		return var;
+	}
+
+	
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	TMap<EPrameType, FPrameBase>GetPrames() {
@@ -519,9 +580,6 @@ public:
 	TMap<EPrameType, UScrollBox*> GetPrame_scroll_box() {
 		return prame_scroll_box;
 	}
-
-
-
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		FPlayerDefaultParame GetPlayerDefaultParame() {
@@ -566,8 +624,8 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		map_wave_param[wave - 1].enemy[index].search.GetPrame(var_num, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, FVar& var) {
+		map_wave_param[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
@@ -581,8 +639,8 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, bool bool_var, int32 int32_var, float float_var, FString string_var, int64 int64_var) {
-		map_wave_param[wave - 1].enemy[index].search.SetPrame(var_num, bool_var, int32_var, float_var, string_var, int64_var);
+		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, FVar var) {
+		map_wave_param[wave - 1].enemy[index].search.SetPrame(var_num, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -598,24 +656,24 @@ public:
 
 	//最大パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void GetMaxPrame(EPrameType prameType, int32 index, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		max_prames[prameType].GetPrame(index, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+	void GetMaxPrame(EPrameType prameType, int32 index, FString& var_type, FVar& var) {
+		max_prames[prameType].GetPrame(index, var_type, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMaxEnemyPrame(int32 index, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		enemy_param_max.search.GetPrame(index, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+		void GetMaxEnemyPrame(int32 index, FString& var_type, FVar& var) {
+		enemy_param_max.search.GetPrame(index, var_type, var);
 	}
 
 	//最小パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void GetMinPrame(EPrameType prameType, int32 index, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		min_prames[prameType].GetPrame(index, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+		void GetMinPrame(EPrameType prameType, int32 index, FString& var_type, FVar& var) {
+		min_prames[prameType].GetPrame(index, var_type, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	void GetMinEnemyPrame(int32 index, FString& var_type, bool& bool_var, int32& int32_var, float& float_var, FString& string_var, int64& int64_var) {
-		enemy_param_min.search.GetPrame(index, var_type, bool_var, int32_var, float_var, string_var, int64_var);
+	void GetMinEnemyPrame(int32 index, FString& var_type, FVar& var) {
+		enemy_param_min.search.GetPrame(index, var_type, var);
 	}
 
 	

@@ -12,6 +12,30 @@
  * 
  */
 
+USTRUCT(BlueprintType)
+struct FEnergy {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 MaxValue;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 DelaySecondsForIncrementValue;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 IncrementValuePerSecond;
+};
+
+
+USTRUCT(BlueprintType)
+struct FVar {
+	GENERATED_USTRUCT_BODY()
+
+		bool bool_var;
+	int32 int32_var;
+	float float_var;
+	FString string_var;
+	int64 int64_var;
+	TArray<int32> array_int32;
+	FEnergy energy_var;
+};
 
 
 UENUM(BlueprintType)
@@ -56,6 +80,42 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static void GetPackageFolderNames(TArray<FString>& out);
+
+	//ゲッター
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static bool GetVarBOOL(FVar var) {
+		return var.bool_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static int32 GetVarINT(FVar var) {
+		return var.int32_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static int64 GetVarINT64(FVar var) {
+		return var.int64_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static float GetVarFLOAT(FVar var) {
+		return var.float_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FString GetVarSTRING(FVar var) {
+		return var.string_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static TArray<int32> GetVarARRAY_INT(FVar var) {
+		return var.array_int32;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FEnergy GetVarENERGY(FVar var) {
+		return var.energy_var;
+	}
 
 
 };

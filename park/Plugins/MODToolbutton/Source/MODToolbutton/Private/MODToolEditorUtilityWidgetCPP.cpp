@@ -107,8 +107,8 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_parame_start.max_address = (int64)(&player_default_param_max.start);
 	player_parame_start.min_address = (int64)(&player_default_param_min.start);
 
-	player_default_param_max.Health = 100.f;
-	player_default_param_min.Health = 0.f;
+	player_default_param_max.Health;
+	player_default_param_min.Health;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(Health), typeid(player_default_param.Health).name(), &player_default_param.Health);
 	player_default_param_max.AttackDamage = 100.f;
@@ -122,20 +122,15 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 
 
 
-	player_default_param_max.Energy_MaxValue = 100.f;
-	player_default_param_min.Energy_MaxValue = 0.f;
+	player_default_param_max.energy.MaxValue = 100.f;
+	player_default_param_min.energy.MaxValue = 0.f;
+	player_default_param_max.energy.DelaySecondsForIncrementValue = 100.f;
+	player_default_param_min.energy.DelaySecondsForIncrementValue = 0.f;
+	player_default_param_max.energy.IncrementValuePerSecond = 100;
+	player_default_param_min.energy.IncrementValuePerSecond = 0;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(Energy_MaxValue), typeid(player_default_param.Energy_MaxValue).name(), &player_default_param.Energy_MaxValue);
-	player_default_param_max.Energy_DelaySecondsForIncrementValue = 100.f;
-	player_default_param_min.Energy_DelaySecondsForIncrementValue = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(Energy_DelaySecondsForIncrementValue), typeid(player_default_param.Energy_DelaySecondsForIncrementValue).name(), &player_default_param.Energy_DelaySecondsForIncrementValue);
-	player_default_param_max.Energy_IncrementValuePerSecond = 0;
-	player_default_param_min.Energy_IncrementValuePerSecond = 0;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(Energy_IncrementValuePerSecond), typeid(player_default_param.Energy_IncrementValuePerSecond).name(), &player_default_param.Energy_IncrementValuePerSecond);
-
-
+		TO_STRING(Energy), typeid(player_default_param.energy).name(), &player_default_param.energy);
+	
 
 	player_default_param_max.SpecialGage_MaxValue = 100.f;
 	player_default_param_min.SpecialGage_MaxValue = 0.f;
@@ -443,11 +438,11 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_default_param.Energy_MaxValue));
+				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_default_param.energy.MaxValue));
 				JsonArrayObject->SetField(TEXT("MaxValue"), value2_1);
-				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_default_param.Energy_DelaySecondsForIncrementValue));
+				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_default_param.energy.DelaySecondsForIncrementValue));
 				JsonArrayObject->SetField(TEXT("DelaySecondsForIncrementValue"), value2_2);
-				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_default_param.Energy_IncrementValuePerSecond));
+				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_default_param.energy.IncrementValuePerSecond));
 				JsonArrayObject->SetField(TEXT("IncrementValuePerSecond"), value2_3);
 
 				JsonObject->SetObjectField("Energy", JsonArrayObject);
@@ -695,39 +690,6 @@ void UMODToolEditorUtilityWidgetCPP::AddPrame(EPrameType type, StartAddress s_a,
 	max_prames[type].AddVar(name, var_type, (void*)max_address);
 	min_prames[type].AddVar(name, var_type, (void*)min_address);
 
-}
-
-void UMODToolEditorUtilityWidgetCPP::AddPlayerDefaultParame(const char* name, const char* type, void* aa) {
-	player_default_param.search.AddVar(name, type, aa);
-	int64 byte_count = (int64)(aa) - (int64)(&player_default_param.start);
-
-	int64 max_address = (int64)(&player_default_param_max.start) + byte_count;
-	int64 min_address = (int64)(&player_default_param_min.start) + byte_count;
-
-	player_default_param_max.search.AddVar(name, type, (void*)max_address);
-	player_default_param_min.search.AddVar(name, type, (void*)min_address);
-}
-
-void UMODToolEditorUtilityWidgetCPP::AddWeaponPrame(const char* name, const char* type, void* aa) {
-	weapon_param.search.AddVar(name, type, aa);
-	int64 byte_count = (int64)(aa)-(int64)(&weapon_param.start);
-
-	int64 max_address = (int64)(&weapon_param_max.start) + byte_count;
-	int64 min_address = (int64)(&weapon_param_min.start) + byte_count;
-
-	weapon_param_max.search.AddVar(name, type, (void*)max_address);
-	weapon_param_min.search.AddVar(name, type, (void*)min_address);
-}
-
-void UMODToolEditorUtilityWidgetCPP::AddMapPrame(const char* name, const char* type, void* aa) {
-	map_param.search.AddVar(name, type, aa);
-	int64 byte_count = (int64)(aa)-(int64)(&map_param.start);
-
-	int64 max_address = (int64)(&map_param_max.start) + byte_count;
-	int64 min_address = (int64)(&map_param_min.start) + byte_count;
-
-	map_param_max.search.AddVar(name, type, (void*)max_address);
-	map_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char* type, void* aa) {
