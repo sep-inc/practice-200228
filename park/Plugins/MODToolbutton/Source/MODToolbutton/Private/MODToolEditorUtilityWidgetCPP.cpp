@@ -743,7 +743,29 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Character/player_movement"), OutputString);
 		}
 	}
-	
+
+	TSharedPtr <FJsonObject> JsonObject1 = MakeShareable(new FJsonObject);
+
+	TSharedPtr<FJsonValueNumber> value1 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
+	JsonObject1->SetField(TEXT("PlayerStartTagPrefix"), value1);
+	TSharedPtr<FJsonValueNumber> value2 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
+	JsonObject1->SetField(TEXT("RoomId"), value2);
+	TSharedPtr<FJsonValueNumber> value3 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
+	JsonObject1->SetField(TEXT("Wave"), value3);
+
+	TSharedPtr<FJsonValueObject> a = MakeShareable(new FJsonValueObject(JsonObject1));
+
+	TArray<TSharedPtr<FJsonValue>> JsonArrayObject1;
+	JsonArrayObject1.Add(a);
+	TArray<TSharedPtr<FJsonValue>> JsonArrayObject2;
+	TSharedPtr<FJsonValueArray> b = MakeShareable(new FJsonValueArray(JsonArrayObject1));
+	JsonArrayObject2.Add(b);
+
+	FString OutputString;
+	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+	FJsonSerializer::Serialize(JsonArrayObject2, Writer);
+
+	UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Character/test"), OutputString);
 }
 
 
