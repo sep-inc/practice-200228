@@ -73,9 +73,14 @@ struct FPrameBase {
 				var_type = type;
 				return;
 			}
+			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
+				var.array_knockBackLevels = *((TArray<FKnockBackLevels>*)var_address[index]);
+				var_type = type;
+				return;
+			}
 		}
 	}
-
+	
 	
 	void SetPrame(int32 index, FVar var) {
 		if (var_name.Num() > index && index >= 0) {
@@ -112,6 +117,10 @@ struct FPrameBase {
 				*((FEnergy*)var_address[index]) = var.energy_var;
 				return;
 			}
+			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
+				*((TArray<FKnockBackLevels>*)var_address[index]) = var.array_knockBackLevels;
+				return;
+			}
 		}
 	}
 	
@@ -138,7 +147,7 @@ struct FPlayerDefaultParame{
 	int start;
 
 
-	int32 Health;								//プレイヤーのHP値。
+	TArray<FKnockBackLevels> Health;								//プレイヤーのHP値。
 	float AttackDamage;									//プレイヤーの持つ攻撃力。武器の攻撃力にこの数値が上乗せされます。
 	int32 DrainHealthValuePerSeconds;					//１秒間に吸収できるライフマナの量。
 
@@ -236,18 +245,26 @@ struct FWeaponParam {
 
 	int start;
 
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	float Durability;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		float Attack;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int64 Defense;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		float Weight;
-
+	int32 ID;
+	int32 DamageAmount;
+	float MinimumDamageRate;
+	int32 KnockBackAmount;
+	float DamageAmountCorrectionRateByWeakPoint;
+	float MaxPowerChargeTime;
+	int32 EnergyDamageAmount;
+	int32 EnergyDamageAmount_Parry;
+	int32 Durability;
+	float DurabilityDamageRate_Parry;
+	float DurabilityDamageRate_Guard;
+	float ParryThreshold;
+	float WalkSpeed;
+	float CrackDamageRate;
+	float WearingRecoveryDurabilityAmount;
+	FTwoHandCorrections TwoHandCorrections;
+	FSpecialGage_W SpecialGage;
+	float DamageAmountCorrectionRateByThrown;
+	float KnockBackAmountCorrectionRateByThrown;
+	float ConsumeDurabilityCorrectionRateByThrown;
 };
 
 USTRUCT(BlueprintType)
@@ -329,7 +346,8 @@ enum class EVarType : uint8
 	FLOAT,
 	STRING,
 	ARRAY_INT,
-	ENERGY
+	ENERGY,
+	ARRAY_KNOCKBACKLEVELS
 };
 
 
@@ -480,6 +498,7 @@ public:
 
 	void InitPlayerDefaultParame();
 	void InitPlayerMovementPrameParame();
+	void InitWeaponParam();
 
 	void SetPrames();
 
@@ -565,6 +584,13 @@ public:
 		FVar CreateVarENERGY(FEnergy in) {
 		FVar var;
 		var.energy_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FVar CreateVarARRAY_KNOCKBACKLEVELS(TArray<FKnockBackLevels> in) {
+		FVar var;
+		var.array_knockBackLevels = in;
 		return var;
 	}
 

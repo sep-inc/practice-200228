@@ -17,31 +17,9 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 
 	InitPlayerDefaultParame();
 	InitPlayerMovementPrameParame();
+	InitWeaponParam();
+
 	
-
-	//ウェポンパラメーター
-	StartAddress weapon_param_start;
-	weapon_param_start.main_address = (int64)(&weapon_param.start);
-	weapon_param_start.max_address = (int64)(&weapon_param_max.start);
-	weapon_param_start.min_address = (int64)(&weapon_param_min.start);
-
-	weapon_param_max.Durability = 200;
-	weapon_param_min.Durability = 0;
-	AddPrame(EPrameType::Weapons, weapon_param_start,
-		TO_STRING(Durability), typeid(weapon_param.Durability).name(), &weapon_param.Durability);
-	weapon_param_max.Attack = 200;
-	weapon_param_min.Attack = 0;
-	AddPrame(EPrameType::Weapons, weapon_param_start,
-		TO_STRING(Attack), typeid(weapon_param.Attack).name(), &weapon_param.Attack);
-	weapon_param_max.Defense = 200;
-	weapon_param_min.Defense = 0;
-	AddPrame(EPrameType::Weapons, weapon_param_start,
-		TO_STRING(Defense), typeid(weapon_param.Defense).name(), &weapon_param.Defense);
-	weapon_param_max.Weight = 200;
-	weapon_param_min.Weight = 0;
-	AddPrame(EPrameType::Weapons, weapon_param_start,
-		TO_STRING(Weight), typeid(weapon_param.Weight).name(), &weapon_param.Weight);
-
 	//マップパラメーター
 	StartAddress map_param_start;
 	map_param_start.main_address = (int64)(&map_param.start);
@@ -107,8 +85,8 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_parame_start.max_address = (int64)(&player_default_param_max.start);
 	player_parame_start.min_address = (int64)(&player_default_param_min.start);
 
-	player_default_param_max.Health = 100;
-	player_default_param_min.Health = 0;
+	//player_default_param_max.Health = 100;
+	//player_default_param_min.Health = 0;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(Health), typeid(player_default_param.Health).name(), &player_default_param.Health);
 	player_default_param_max.AttackDamage = 100.f;
@@ -390,6 +368,95 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerMovementPrameParame() {
 
 }
 
+void UMODToolEditorUtilityWidgetCPP::InitWeaponParam() {
+	//ウェポンパラメーター
+	StartAddress weapon_param_start;
+	weapon_param_start.main_address = (int64)(&weapon_param.start);
+	weapon_param_start.max_address = (int64)(&weapon_param_max.start);
+	weapon_param_start.min_address = (int64)(&weapon_param_min.start);
+
+	weapon_param_max.ID = 200;
+	weapon_param_min.ID = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(ID), typeid(weapon_param.ID).name(), &weapon_param.ID);
+	weapon_param_max.DamageAmount = 200;
+	weapon_param_min.DamageAmount = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(DamageAmount), typeid(weapon_param.DamageAmount).name(), &weapon_param.DamageAmount);
+	weapon_param_max.MinimumDamageRate = 200;
+	weapon_param_min.MinimumDamageRate = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(MinimumDamageRate), typeid(weapon_param.MinimumDamageRate).name(), &weapon_param.MinimumDamageRate);
+	weapon_param_max.KnockBackAmount = 200;
+	weapon_param_min.KnockBackAmount = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(KnockBackAmount), typeid(weapon_param.KnockBackAmount).name(), &weapon_param.KnockBackAmount);
+	weapon_param_max.DamageAmountCorrectionRateByWeakPoint = 200;
+	weapon_param_min.DamageAmountCorrectionRateByWeakPoint = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(DamageAmountCorrectionRateByWeakPoint), typeid(weapon_param.DamageAmountCorrectionRateByWeakPoint).name(), &weapon_param.DamageAmountCorrectionRateByWeakPoint);
+	weapon_param_max.MaxPowerChargeTime = 200;
+	weapon_param_min.MaxPowerChargeTime = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(MaxPowerChargeTime), typeid(weapon_param.MaxPowerChargeTime).name(), &weapon_param.MaxPowerChargeTime);
+	weapon_param_max.EnergyDamageAmount = 200;
+	weapon_param_min.EnergyDamageAmount = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(EnergyDamageAmount), typeid(weapon_param.EnergyDamageAmount).name(), &weapon_param.MaxPowerChargeTime);
+	weapon_param_max.EnergyDamageAmount_Parry = 200;
+	weapon_param_min.EnergyDamageAmount_Parry = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(EnergyDamageAmount_Parry), typeid(weapon_param.EnergyDamageAmount_Parry).name(), &weapon_param.EnergyDamageAmount_Parry);
+	weapon_param_max.Durability = 200;
+	weapon_param_min.Durability = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(Durability), typeid(weapon_param.Durability).name(), &weapon_param.Durability);
+	weapon_param_max.DurabilityDamageRate_Parry = 200;
+	weapon_param_min.DurabilityDamageRate_Parry = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(DurabilityDamageRate_Parry), typeid(weapon_param.DurabilityDamageRate_Parry).name(), &weapon_param.DurabilityDamageRate_Parry);
+	weapon_param_max.DurabilityDamageRate_Guard = 200;
+	weapon_param_min.DurabilityDamageRate_Guard = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(DurabilityDamageRate_Guard), typeid(weapon_param.DurabilityDamageRate_Guard).name(), &weapon_param.DurabilityDamageRate_Guard);
+	weapon_param_max.ParryThreshold = 200;
+	weapon_param_min.ParryThreshold = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(ParryThreshold), typeid(weapon_param.ParryThreshold).name(), &weapon_param.ParryThreshold);
+	weapon_param_max.WalkSpeed = 200;
+	weapon_param_min.WalkSpeed = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(WalkSpeed), typeid(weapon_param.WalkSpeed).name(), &weapon_param.WalkSpeed);
+	weapon_param_max.CrackDamageRate = 200;
+	weapon_param_min.CrackDamageRate = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(CrackDamageRate), typeid(weapon_param.CrackDamageRate).name(), &weapon_param.CrackDamageRate);
+	weapon_param_max.WearingRecoveryDurabilityAmount = 200;
+	weapon_param_min.WearingRecoveryDurabilityAmount = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(WearingRecoveryDurabilityAmount), typeid(weapon_param.WearingRecoveryDurabilityAmount).name(), &weapon_param.WearingRecoveryDurabilityAmount);
+	//weapon_param_max.TwoHandCorrections = 200;
+	//weapon_param_min.TwoHandCorrections = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(TwoHandCorrections), typeid(weapon_param.TwoHandCorrections).name(), &weapon_param.TwoHandCorrections);
+	//weapon_param_max.SpecialGage = 200;
+	//weapon_param_min.SpecialGage = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(SpecialGage), typeid(weapon_param.SpecialGage).name(), &weapon_param.SpecialGage);
+	weapon_param_max.DamageAmountCorrectionRateByThrown = 200;
+	weapon_param_min.DamageAmountCorrectionRateByThrown = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(DamageAmountCorrectionRateByThrown), typeid(weapon_param.DamageAmountCorrectionRateByThrown).name(), &weapon_param.DamageAmountCorrectionRateByThrown);
+	weapon_param_max.KnockBackAmountCorrectionRateByThrown = 200;
+	weapon_param_min.KnockBackAmountCorrectionRateByThrown = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(KnockBackAmountCorrectionRateByThrown), typeid(weapon_param.KnockBackAmountCorrectionRateByThrown).name(), &weapon_param.KnockBackAmountCorrectionRateByThrown);
+	weapon_param_max.ConsumeDurabilityCorrectionRateByThrown = 200;
+	weapon_param_min.ConsumeDurabilityCorrectionRateByThrown = 0;
+	AddPrame(EPrameType::Weapons, weapon_param_start,
+		TO_STRING(ConsumeDurabilityCorrectionRateByThrown), typeid(weapon_param.ConsumeDurabilityCorrectionRateByThrown).name(), &weapon_param.ConsumeDurabilityCorrectionRateByThrown);
+}
+
 
 void UMODToolEditorUtilityWidgetCPP::SetPrames() {
 	prames.Add(EPrameType::PlayerDefault, player_default_param.search);
@@ -426,8 +493,8 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			TSharedPtr <FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
 			{
-				TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_default_param.Health));
-				JsonObject->SetField(TEXT("Health"), value1_1);
+				//TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_default_param.Health));
+				//JsonObject->SetField(TEXT("Health"), value1_1);
 				TSharedPtr<FJsonValueNumber> value1_2 = MakeShareable(new FJsonValueNumber(player_default_param.AttackDamage));
 				JsonObject->SetField(TEXT("AttackDamage"), value1_2);
 				TSharedPtr<FJsonValueNumber> value1_3 = MakeShareable(new FJsonValueNumber(player_default_param.DrainHealthValuePerSeconds));

@@ -24,7 +24,7 @@ struct FEnergy {
 };
 
 USTRUCT(BlueprintType)
-struct FIncreaseValues {
+struct FIncreaseValues_P {
 	GENERATED_USTRUCT_BODY()
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 TakeDamage;
@@ -33,14 +33,14 @@ struct FIncreaseValues {
 };
 
 USTRUCT(BlueprintType)
-struct FSpecialGage {
+struct FSpecialGage_P {
 	GENERATED_USTRUCT_BODY()
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	int32 MaxValue;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	int32 DecreaseSpeed;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	FIncreaseValues IncreaseValues;
+	FIncreaseValues_P IncreaseValues;
 };
 
 USTRUCT(BlueprintType)
@@ -60,6 +60,33 @@ struct FKnockBackLevels {
 		float CameraUpDistance;
 };
 
+USTRUCT(BlueprintType)
+struct FTwoHandCorrections {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float DamageAmount;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float KnockBackAmount;
+};
+
+USTRUCT(BlueprintType)
+struct FIncreaseValues_W {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Hit;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Guard;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Parry;
+
+};
+
+USTRUCT(BlueprintType)
+struct FSpecialGage_W {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FIncreaseValues_W IncreaseValues;
+};
 
 USTRUCT(BlueprintType)
 struct FVar {
@@ -72,6 +99,7 @@ struct FVar {
 	int64 int64_var;
 	TArray<int32> array_int32;
 	FEnergy energy_var;
+	TArray<FKnockBackLevels> array_knockBackLevels;
 };
 
 
@@ -152,6 +180,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		static FEnergy GetVarENERGY(FVar var) {
 		return var.energy_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static TArray<FKnockBackLevels> GetVarARRAY_KNOCKBACKLEVELS(FVar var) {
+		return var.array_knockBackLevels;
 	}
 
 
