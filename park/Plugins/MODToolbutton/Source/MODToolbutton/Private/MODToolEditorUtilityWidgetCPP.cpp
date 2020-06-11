@@ -18,8 +18,6 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	InitPlayerDefaultParame();
 	InitPlayerMovementPrameParame();
 	InitWeaponParam();
-
-	AddQuest();
 	
 	//マップパラメーター
 	StartAddress map_param_start;

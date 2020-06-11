@@ -479,7 +479,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
 		TArray<FMapQuestParam> map_quest_param;
 
-	int32 quest_num;
 
 	TMap<EPrameType, FPrameBase> prames;
 
@@ -548,6 +547,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void SetPrame(EPrameType prameType, int32 index, FVar var) {
 		prames[prameType].SetPrame(index, var);
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		int32 GetQuestNum() {
+		return quest_num;
 	}
 
 
@@ -727,5 +731,6 @@ private:
 	TArray<VarPra> map_wave_param_addres;
 	FEnemyParam enemy_param_measurement;		//計測用
 
+	int32 quest_num;
 
 };
