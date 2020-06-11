@@ -151,6 +151,7 @@ struct FPlayerDefaultParame{
 	float AttackDamage;									//プレイヤーの持つ攻撃力。武器の攻撃力にこの数値が上乗せされます。
 	int32 DrainHealthValuePerSeconds;					//１秒間に吸収できるライフマナの量。
 
+
 	FEnergy energy;
 
 	int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
