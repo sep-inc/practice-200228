@@ -44,6 +44,23 @@ struct FSpecialGage_P {
 };
 
 USTRUCT(BlueprintType)
+struct FOtherList {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Id;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString Name;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString Level;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float LifeManaRate;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 MapColor;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		bool bNextLevelEnable;
+};
+
+USTRUCT(BlueprintType)
 struct FKnockBackLevels {
 	GENERATED_USTRUCT_BODY()
 		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")

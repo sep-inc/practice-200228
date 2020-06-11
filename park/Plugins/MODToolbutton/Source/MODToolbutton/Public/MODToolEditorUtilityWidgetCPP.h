@@ -312,13 +312,16 @@ struct FEnemyParam {
 	int32 id;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 param1;
+	FString EnemyId;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 param2;
+	FString Point;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	int32 param3;
+	int32 Count;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 Limit;
 };
 
 
@@ -328,8 +331,18 @@ struct FMapWaveParam{
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FEnemyParam> enemy;
-
 };
+
+USTRUCT(BlueprintType)
+struct FMapQuestParam {
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	TArray<FMapWaveParam> wave;
+
+	FOtherList other_list;
+};
+
 
 UENUM(BlueprintType)
 enum class EUnDoType : uint8
@@ -464,7 +477,9 @@ public:
 		FMapParam map_param;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "ModEUW")
-		TArray<FMapWaveParam> map_wave_param;
+		TArray<FMapQuestParam> map_quest_param;
+
+	int32 quest_num;
 
 	TMap<EPrameType, FPrameBase> prames;
 
@@ -515,6 +530,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void AddWave();
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void AddQuest();
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void InsertWave(int32 index);
@@ -646,38 +664,38 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	int32 GetMaxWaveNum() {
-		return map_wave_param.Num();
+		return map_quest_param[quest_num - 1].wave.Num();
 	}
 
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, FVar& var) {
-		map_wave_param[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
+		map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	FMapWaveParam GetMapWavePrame(int32 index) {
-		return map_wave_param[index];
+		return map_quest_param[quest_num - 1].wave[index];
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	int32 GetMapWaveEnemyId(int32 wave,int32 index) {
-		return map_wave_param[wave - 1].enemy[index].id;
+		FString GetMapWaveEnemyId(int32 wave,int32 index) {
+		return map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].EnemyId;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, FVar var) {
-		map_wave_param[wave - 1].enemy[index].search.SetPrame(var_num, var);
+		map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].search.SetPrame(var_num, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetMapWavePrame(int32 Wave, FMapWaveParam in) {
-		map_wave_param[Wave - 1] = in;
+		map_quest_param[quest_num - 1].wave[Wave - 1] = in;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetMapWaveEnemyId(int32 Wave, int32 index, int32 id) {
-		map_wave_param[Wave - 1].enemy[index].id = id;
+		void SetMapWaveEnemyId(int32 Wave, int32 index, FString id) {
+		map_quest_param[quest_num - 1].wave[Wave - 1].enemy[index].EnemyId = id;
 	}
 
 

@@ -19,6 +19,7 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	InitPlayerMovementPrameParame();
 	InitWeaponParam();
 
+	AddQuest();
 	
 	//マップパラメーター
 	StartAddress map_param_start;
@@ -52,17 +53,18 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 		TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
 	//エネミーパラメーター
-	enemy_param_max.param1 = 400;
-	enemy_param_min.param1 = 0;
-	AddEnemyPrame(TO_STRING(param1), typeid(enemy_param_measurement.param1).name(), &enemy_param_measurement.param1);
-	enemy_param_max.param2 = 400;
-	enemy_param_min.param2 = 0;
-	AddEnemyPrame(TO_STRING(param2), typeid(enemy_param_measurement.param2).name(), &enemy_param_measurement.param2);
-	enemy_param_max.param3 = 400;
-	enemy_param_min.param3 = 0;
-	AddEnemyPrame(TO_STRING(param3), typeid(enemy_param_measurement.param3).name(), &enemy_param_measurement.param3);
-
-	
+	//enemy_param_max.EnemyId = 400;
+	//enemy_param_min.EnemyId = 0;
+	AddEnemyPrame(TO_STRING(EnemyId), typeid(enemy_param_measurement.EnemyId).name(), &enemy_param_measurement.EnemyId);
+	//enemy_param_max.Point = 400;
+	//enemy_param_min.Point = 0;
+	AddEnemyPrame(TO_STRING(Point), typeid(enemy_param_measurement.Point).name(), &enemy_param_measurement.Point);
+	enemy_param_max.Count = 400;
+	enemy_param_min.Count = 0;
+	AddEnemyPrame(TO_STRING(Count), typeid(enemy_param_measurement.Count).name(), &enemy_param_measurement.Count);
+	enemy_param_max.Limit = 400;
+	enemy_param_min.Limit = 0;
+	AddEnemyPrame(TO_STRING(Limit), typeid(enemy_param_measurement.Limit).name(), &enemy_param_measurement.Limit);
 
 }
 
@@ -799,14 +801,14 @@ void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char*
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
-	map_wave_param.Add(FMapWaveParam());
-	int32 index_num = map_wave_param.Num() - 1;
-	map_wave_param[index_num].enemy.Init(FEnemyParam(),6);
+	map_quest_param[quest_num - 1].wave.Add(FMapWaveParam());
+	int32 index_num = map_quest_param[quest_num - 1].wave.Num() - 1;
+	map_quest_param[quest_num - 1].wave[index_num].enemy.Init(FEnemyParam(),6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
-			int64 address = (int64)(&map_wave_param[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_wave_param[index_num].enemy[i].search.AddVar(
+			int64 address = (int64)(&map_quest_param[quest_num - 1].wave[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_quest_param[quest_num - 1].wave[index_num].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address
@@ -816,14 +818,19 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 
 }
 
+void UMODToolEditorUtilityWidgetCPP::AddQuest() {
+	map_quest_param.Add(FMapQuestParam());
+	quest_num++;
+}
+
 void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
-	int32 set_index = map_wave_param.Insert(FMapWaveParam(), index - 1);
-	map_wave_param[set_index].enemy.Init(FEnemyParam(), 6);
+	int32 set_index = map_quest_param[quest_num - 1].wave.Insert(FMapWaveParam(), index - 1);
+	map_quest_param[quest_num - 1].wave[set_index].enemy.Init(FEnemyParam(), 6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
-			int64 address = (int64)(&map_wave_param[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_wave_param[set_index].enemy[i].search.AddVar(
+			int64 address = (int64)(&map_quest_param[quest_num - 1].wave[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_quest_param[quest_num - 1].wave[set_index].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address
@@ -833,8 +840,8 @@ void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 }
 
 void UMODToolEditorUtilityWidgetCPP::RemoveWave(int32 index) {
-	if (index < 1 || index > map_wave_param.Num() + 1) {
+	if (index < 1 || index > map_quest_param[quest_num - 1].wave.Num() + 1) {
 		return;
 	}
-	map_wave_param.RemoveAt(index - 1);
+	map_quest_param[quest_num - 1].wave.RemoveAt(index - 1);
 }
