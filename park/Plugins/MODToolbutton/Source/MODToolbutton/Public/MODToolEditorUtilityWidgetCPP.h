@@ -147,12 +147,13 @@ struct FPlayerDefaultParame{
 	int start;
 
 
-	TArray<FKnockBackLevels> Health;								//プレイヤーのHP値。
+	int32 Health;										//プレイヤーのHP値。
 	float AttackDamage;									//プレイヤーの持つ攻撃力。武器の攻撃力にこの数値が上乗せされます。
 	int32 DrainHealthValuePerSeconds;					//１秒間に吸収できるライフマナの量。
 
+	FEnergy Energy;
 
-	FEnergy energy;
+	FSpecialGage_P SpecialGage;
 
 	int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
 	int32 SpecialGage_DecreaseSpeed;					//エンチャント発動中のスペシャルゲージ減少量(秒速)。
@@ -164,35 +165,7 @@ struct FPlayerDefaultParame{
 	float NotDominantHandDamageRate;					//利き手ではない手でのダメージ倍率。
 	float NotDominantHandDamageRate_Throw;				//利き手ではない手での投げダメージ倍率。
 
-	float KnockBackLevel1_Distance;						//ノックバック時に後退する距離。
-	float KnockBackLevel1_Time;							//ノックバック時の後退時間。
-	float KnockBackLevel1_WholeTime;					//ノックバック判定の全体時間。
-	float KnockBackLevel1_CameraBackDistance;			//ノックバック時の3人称視点に移行した時のカメラの後退する距離。
-	float KnockBackLevel1_CameraUpDistance;				//ノックバック時の3人称視点に移行した時のカメラの上昇する距離。
-
-	float KnockBackLevel2_Distance;
-	float KnockBackLevel2_Time;
-	float KnockBackLevel2_WholeTime;
-	float KnockBackLevel2_CameraBackDistance;
-	float KnockBackLevel2_CameraUpDistance;
-
-	float KnockBackLevel3_Distance;
-	float KnockBackLevel3_Time;
-	float KnockBackLevel3_WholeTime;
-	float KnockBackLevel3_CameraBackDistance;
-	float KnockBackLevel3_CameraUpDistance;
-
-	float KnockBackLevel4_Distance;
-	float KnockBackLevel4_Time;
-	float KnockBackLevel4_WholeTime;
-	float KnockBackLevel4_CameraBackDistance;
-	float KnockBackLevel4_CameraUpDistance;
-
-	float KnockBackLevel5_Distance;
-	float KnockBackLevel5_Time;
-	float KnockBackLevel5_WholeTime;
-	float KnockBackLevel5_CameraBackDistance;
-	float KnockBackLevel5_CameraUpDistance;
+	TArray<FKnockBackLevels> KnockBackLevels;
 
 	float GuardCrash_Time;								//ガードクラッシュ状態の全体時間。
 	float GuardCrash_CameraBackDistance;				//ガードクラッシュ時の3人称視点に移行した時のカメラの後退する距離。
@@ -730,6 +703,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void GetMaxEnemyPrame(int32 index, FString& var_type, FVar& var) {
 		enemy_param_max.search.GetPrame(index, var_type, var);
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FKnockBackLevels GetMaxKnockBackLevelsPrame() {
+		return player_default_param_max.KnockBackLevels[0];
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FKnockBackLevels GetMinKnockBackLevelsPrame() {
+		return player_default_param_min.KnockBackLevels[0];
 	}
 
 	//最小パラメーターゲット

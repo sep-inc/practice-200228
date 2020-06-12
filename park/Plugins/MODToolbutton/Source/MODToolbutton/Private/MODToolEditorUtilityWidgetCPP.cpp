@@ -85,8 +85,8 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_parame_start.max_address = (int64)(&player_default_param_max.start);
 	player_parame_start.min_address = (int64)(&player_default_param_min.start);
 
-	//player_default_param_max.Health = 100;
-	//player_default_param_min.Health = 0;
+	player_default_param_max.Health = 100;
+	player_default_param_min.Health = 0;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(Health), typeid(player_default_param.Health).name(), &player_default_param.Health);
 	player_default_param_max.AttackDamage = 100.f;
@@ -100,14 +100,14 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 
 
 
-	player_default_param_max.energy.MaxValue = 100.f;
-	player_default_param_min.energy.MaxValue = 0.f;
-	player_default_param_max.energy.DelaySecondsForIncrementValue = 100.f;
-	player_default_param_min.energy.DelaySecondsForIncrementValue = 0.f;
-	player_default_param_max.energy.IncrementValuePerSecond = 100;
-	player_default_param_min.energy.IncrementValuePerSecond = 0;
+	player_default_param_max.Energy.MaxValue = 100.f;
+	player_default_param_min.Energy.MaxValue = 0.f;
+	player_default_param_max.Energy.DelaySecondsForIncrementValue = 100.f;
+	player_default_param_min.Energy.DelaySecondsForIncrementValue = 0.f;
+	player_default_param_max.Energy.IncrementValuePerSecond = 100;
+	player_default_param_min.Energy.IncrementValuePerSecond = 0;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(Energy), typeid(player_default_param.energy).name(), &player_default_param.energy);
+		TO_STRING(Energy), typeid(player_default_param.Energy).name(), &player_default_param.Energy);
 	
 
 	player_default_param_max.SpecialGage_MaxValue = 100.f;
@@ -142,122 +142,23 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(NotDominantHandDamageRate_Throw), typeid(player_default_param.NotDominantHandDamageRate_Throw).name(), &player_default_param.NotDominantHandDamageRate_Throw);
 
+	player_default_param_max.KnockBackLevels.Add(FKnockBackLevels());
+	player_default_param_min.KnockBackLevels.Add(FKnockBackLevels());
 
-
-	player_default_param_max.KnockBackLevel1_Distance = 100.f;
-	player_default_param_min.KnockBackLevel1_Distance = 0.f;
+	player_default_param_max.KnockBackLevels[0].Level = 100.f;
+	player_default_param_min.KnockBackLevels[0].Level = 0.f;
+	player_default_param_max.KnockBackLevels[0].Distance = 100.f;
+	player_default_param_min.KnockBackLevels[0].Distance = 0.f;
+	player_default_param_max.KnockBackLevels[0].Time = 100.f;
+	player_default_param_min.KnockBackLevels[0].Time = 0.f;
+	player_default_param_max.KnockBackLevels[0].WholeTime = 100.f;
+	player_default_param_min.KnockBackLevels[0].WholeTime = 0.f;
+	player_default_param_max.KnockBackLevels[0].CameraBackDistance = 100.f;
+	player_default_param_min.KnockBackLevels[0].CameraBackDistance = 0.f;
+	player_default_param_max.KnockBackLevels[0].CameraUpDistance = 100.f;
+	player_default_param_min.KnockBackLevels[0].CameraUpDistance = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel1_Distance), typeid(player_default_param.KnockBackLevel1_Distance).name(), &player_default_param.KnockBackLevel1_Distance);
-	player_default_param_max.KnockBackLevel1_Time = 100.f;
-	player_default_param_min.KnockBackLevel1_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel1_Time), typeid(player_default_param.KnockBackLevel1_Time).name(), &player_default_param.KnockBackLevel1_Time);
-	player_default_param_max.KnockBackLevel1_WholeTime = 100.f;
-	player_default_param_min.KnockBackLevel1_WholeTime = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel1_WholeTime), typeid(player_default_param.KnockBackLevel1_WholeTime).name(), &player_default_param.KnockBackLevel1_WholeTime);
-	player_default_param_max.KnockBackLevel1_CameraBackDistance = 100.f;
-	player_default_param_min.KnockBackLevel1_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel1_CameraBackDistance), typeid(player_default_param.KnockBackLevel1_CameraBackDistance).name(), &player_default_param.KnockBackLevel1_CameraBackDistance);
-	player_default_param_max.KnockBackLevel1_CameraUpDistance = 100.f;
-	player_default_param_min.KnockBackLevel1_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel1_CameraUpDistance), typeid(player_default_param.KnockBackLevel1_CameraUpDistance).name(), &player_default_param.KnockBackLevel1_CameraUpDistance);
-
-
-
-	player_default_param_max.KnockBackLevel2_Distance = 100.f;
-	player_default_param_min.KnockBackLevel2_Distance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel2_Distance), typeid(player_default_param.KnockBackLevel2_Distance).name(), &player_default_param.KnockBackLevel2_Distance);
-	player_default_param_max.KnockBackLevel2_Time = 100.f;
-	player_default_param_min.KnockBackLevel2_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel2_Time), typeid(player_default_param.KnockBackLevel2_Time).name(), &player_default_param.KnockBackLevel2_Time);
-	player_default_param_max.KnockBackLevel2_WholeTime = 100.f;
-	player_default_param_min.KnockBackLevel2_WholeTime = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel2_WholeTime), typeid(player_default_param.KnockBackLevel2_WholeTime).name(), &player_default_param.KnockBackLevel2_WholeTime);
-	player_default_param_max.KnockBackLevel2_CameraBackDistance = 100.f;
-	player_default_param_min.KnockBackLevel2_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel2_CameraBackDistance), typeid(player_default_param.KnockBackLevel2_CameraBackDistance).name(), &player_default_param.KnockBackLevel2_CameraBackDistance);
-	player_default_param_max.KnockBackLevel2_CameraUpDistance = 100.f;
-	player_default_param_min.KnockBackLevel2_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel2_CameraUpDistance), typeid(player_default_param.KnockBackLevel2_CameraUpDistance).name(), &player_default_param.KnockBackLevel2_CameraUpDistance);
-
-
-
-	player_default_param_max.KnockBackLevel3_Distance = 100.f;
-	player_default_param_min.KnockBackLevel3_Distance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel3_Distance), typeid(player_default_param.KnockBackLevel3_Distance).name(), &player_default_param.KnockBackLevel3_Distance);
-	player_default_param_max.KnockBackLevel3_Time = 100.f;
-	player_default_param_min.KnockBackLevel3_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel3_Time), typeid(player_default_param.KnockBackLevel3_Time).name(), &player_default_param.KnockBackLevel3_Time);
-	player_default_param_max.KnockBackLevel3_WholeTime = 100.f;
-	player_default_param_min.KnockBackLevel3_WholeTime = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel3_WholeTime), typeid(player_default_param.KnockBackLevel3_WholeTime).name(), &player_default_param.KnockBackLevel3_WholeTime);
-	player_default_param_max.KnockBackLevel3_CameraBackDistance = 100.f;
-	player_default_param_min.KnockBackLevel3_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel3_CameraBackDistance), typeid(player_default_param.KnockBackLevel3_CameraBackDistance).name(), &player_default_param.KnockBackLevel3_CameraBackDistance);
-	player_default_param_max.KnockBackLevel3_CameraUpDistance = 100.f;
-	player_default_param_min.KnockBackLevel3_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel3_CameraUpDistance), typeid(player_default_param.KnockBackLevel3_CameraUpDistance).name(), &player_default_param.KnockBackLevel3_CameraUpDistance);
-
-
-
-	player_default_param_max.KnockBackLevel4_Distance = 100.f;
-	player_default_param_min.KnockBackLevel4_Distance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel4_Distance), typeid(player_default_param.KnockBackLevel4_Distance).name(), &player_default_param.KnockBackLevel4_Distance);
-	player_default_param_max.KnockBackLevel4_Time = 100.f;
-	player_default_param_min.KnockBackLevel4_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel4_Time), typeid(player_default_param.KnockBackLevel4_Time).name(), &player_default_param.KnockBackLevel4_Time);
-	player_default_param_max.KnockBackLevel4_WholeTime = 100.f;
-	player_default_param_min.KnockBackLevel4_WholeTime = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel4_WholeTime), typeid(player_default_param.KnockBackLevel4_WholeTime).name(), &player_default_param.KnockBackLevel4_WholeTime);
-	player_default_param_max.KnockBackLevel4_CameraBackDistance = 100.f;
-	player_default_param_min.KnockBackLevel4_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel4_CameraBackDistance), typeid(player_default_param.KnockBackLevel4_CameraBackDistance).name(), &player_default_param.KnockBackLevel4_CameraBackDistance);
-	player_default_param_max.KnockBackLevel4_CameraUpDistance = 100.f;
-	player_default_param_min.KnockBackLevel4_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel4_CameraUpDistance), typeid(player_default_param.KnockBackLevel4_CameraUpDistance).name(), &player_default_param.KnockBackLevel4_CameraUpDistance);
-
-
-
-	player_default_param_max.KnockBackLevel5_Distance = 100.f;
-	player_default_param_min.KnockBackLevel5_Distance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_Distance), typeid(player_default_param.KnockBackLevel5_Distance).name(), &player_default_param.KnockBackLevel5_Distance);
-	player_default_param_max.KnockBackLevel5_Time = 100.f;
-	player_default_param_min.KnockBackLevel5_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_Time), typeid(player_default_param.KnockBackLevel5_Time).name(), &player_default_param.KnockBackLevel5_Time);
-	player_default_param_max.KnockBackLevel5_WholeTime = 100.f;
-	player_default_param_min.KnockBackLevel5_WholeTime = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_WholeTime), typeid(player_default_param.KnockBackLevel5_WholeTime).name(), &player_default_param.KnockBackLevel5_WholeTime);
-	player_default_param_max.KnockBackLevel5_CameraBackDistance = 100.f;
-	player_default_param_min.KnockBackLevel5_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_CameraBackDistance), typeid(player_default_param.KnockBackLevel5_CameraBackDistance).name(), &player_default_param.KnockBackLevel5_CameraBackDistance);
-	player_default_param_max.KnockBackLevel5_CameraUpDistance = 100.f;
-	player_default_param_min.KnockBackLevel5_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_CameraUpDistance), typeid(player_default_param.KnockBackLevel5_CameraUpDistance).name(), &player_default_param.KnockBackLevel5_CameraUpDistance);
-
-
+		TO_STRING(KnockBackLevels), typeid(player_default_param.KnockBackLevels).name(), &player_default_param.KnockBackLevels);
 
 	player_default_param_max.GuardCrash_Time = 100.f;
 	player_default_param_min.GuardCrash_Time = 0.f;
@@ -505,11 +406,11 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_default_param.energy.MaxValue));
+				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.MaxValue));
 				JsonArrayObject->SetField(TEXT("MaxValue"), value2_1);
-				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_default_param.energy.DelaySecondsForIncrementValue));
+				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.DelaySecondsForIncrementValue));
 				JsonArrayObject->SetField(TEXT("DelaySecondsForIncrementValue"), value2_2);
-				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_default_param.energy.IncrementValuePerSecond));
+				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.IncrementValuePerSecond));
 				JsonArrayObject->SetField(TEXT("IncrementValuePerSecond"), value2_3);
 
 				JsonObject->SetObjectField("Energy", JsonArrayObject);
@@ -546,7 +447,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 
 			}
 
-			{
+			/*{
 				TArray<TSharedPtr<FJsonValue>> JsonArrayObject;
 				{
 					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
@@ -649,7 +550,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 				}
 
 				JsonObject->SetArrayField("KnockBackLevels", JsonArrayObject);
-			}
+			}*/
 
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
