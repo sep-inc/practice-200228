@@ -507,6 +507,10 @@ public:
 
 	UMODToolEditorUtilityWidgetCPP();
 	~UMODToolEditorUtilityWidgetCPP();
+	
+	inline int32 GetQuestIndex() {
+		return quest_num - 1;
+	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void Initialization(TMap<EPrameType, UScrollBox*> set_scroll_box);
@@ -682,38 +686,38 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	int32 GetMaxWaveNum() {
-		return map_quest_param[quest_num - 1].wave.Num();
+		return map_quest_param[GetQuestIndex()].wave.Num();
 	}
 
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void GetEnemyPrame(int32 wave,int32 index,int32 var_num, FString& var_type, FVar& var) {
-		map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
+		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	FMapWaveParam GetMapWavePrame(int32 index) {
-		return map_quest_param[quest_num - 1].wave[index];
+		return map_quest_param[GetQuestIndex()].wave[index];
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		FString GetMapWaveEnemyId(int32 wave,int32 index) {
-		return map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].EnemyId;
+		return map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].EnemyId;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, FVar var) {
-		map_quest_param[quest_num - 1].wave[wave - 1].enemy[index].search.SetPrame(var_num, var);
+		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search.SetPrame(var_num, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetMapWavePrame(int32 Wave, FMapWaveParam in) {
-		map_quest_param[quest_num - 1].wave[Wave - 1] = in;
+		map_quest_param[GetQuestIndex()].wave[Wave - 1] = in;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetMapWaveEnemyId(int32 Wave, int32 index, FString id) {
-		map_quest_param[quest_num - 1].wave[Wave - 1].enemy[index].EnemyId = id;
+		map_quest_param[GetQuestIndex()].wave[Wave - 1].enemy[index].EnemyId = id;
 	}
 
 
