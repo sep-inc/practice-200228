@@ -73,8 +73,23 @@ struct FPrameBase {
 				var_type = type;
 				return;
 			}
+			else if (type == "struct FSpecialGage_P") {
+				var.special_gage_p_var = *((FSpecialGage_P*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FSpecialGage_W") {
+				var.special_gage_w_var = *((FSpecialGage_W*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FTwoHandCorrections") {
+				var.two_hand_corrections_var = *((FTwoHandCorrections*)var_address[index]);
+				var_type = type;
+				return;
+			}
 			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
-				var.array_knockBackLevels = *((TArray<FKnockBackLevels>*)var_address[index]);
+				var.array_knockBackLevels_var = *((TArray<FKnockBackLevels>*)var_address[index]);
 				var_type = type;
 				return;
 			}
@@ -117,8 +132,20 @@ struct FPrameBase {
 				*((FEnergy*)var_address[index]) = var.energy_var;
 				return;
 			}
+			else if (type == "struct FSpecialGage_P") {
+				*((FSpecialGage_P*)var_address[index]) = var.special_gage_p_var;
+				return;
+			}
+			else if (type == "struct FSpecialGage_W") {
+				*((FSpecialGage_W*)var_address[index]) = var.special_gage_w_var;
+				return;
+			}
+			else if (type == "struct FSpeFTwoHandCorrectionscialGage_W") {
+				*((FTwoHandCorrections*)var_address[index]) = var.two_hand_corrections_var;
+				return;
+			}
 			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
-				*((TArray<FKnockBackLevels>*)var_address[index]) = var.array_knockBackLevels;
+				*((TArray<FKnockBackLevels>*)var_address[index]) = var.array_knockBackLevels_var;
 				return;
 			}
 		}
@@ -334,6 +361,9 @@ enum class EVarType : uint8
 	STRING,
 	ARRAY_INT,
 	ENERGY,
+	SPECIAL_GAGE_P,
+	SPECIAL_GAGE_W,
+	TWO_HAND_CORRECTIONS,
 	ARRAY_KNOCKBACKLEVELS
 };
 
@@ -384,7 +414,19 @@ struct FUnDoLog {
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	FEnergy ENERGY_type;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FSpecialGage_P SPECIAL_GAGE_P_type;
+		
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FSpecialGage_W SPECIAL_GAGE_W_type;
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FTwoHandCorrections TWO_HAND_CORRECTIONS_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	TArray<FKnockBackLevels> ARRAY_KNOCKBACKLEVELS_type;
+
+	
 };
 
 
@@ -553,62 +595,76 @@ public:
 	}
 	
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarBOOL(bool in) {
-		FVar var;
-		var.bool_var = in;
+		FUnDoLog CreateUnDoLogBOOL(int32 index, bool in) {
+		FUnDoLog var;
+		var.var_type = EVarType::BOOL;
+		var.index = index;
+		var.BOOL_var = in;
 		return var;
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarINT(int32 in) {
-		FVar var;
-		var.int32_var = in;
+		FUnDoLog CreateUnDoLogINT(int32 index, int32 in) {
+		FUnDoLog var;
+		var.var_type = EVarType::INT;
+		var.index = index;
+		var.INT_var = in;
 		return var;
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarINT64(int64 in) {
-		FVar var;
-		var.int64_var = in;
+		FUnDoLog CreateUnDoLogINT64(int32 index, int64 in) {
+		FUnDoLog var;
+		var.var_type = EVarType::INT64;
+		var.index = index;
+		var.INT64_type = in;
 		return var;
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarFLOAT(float in) {
-		FVar var;
-		var.float_var = in;
+		FUnDoLog CreateUnDoLogFLOAT(int32 index, float in) {
+		FUnDoLog var;
+		var.var_type = EVarType::FLOAT;
+		var.index = index;
+		var.FLOAT_type = in;
 		return var;
 	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarSTRING(FString in) {
-		FVar var;
-		var.string_var = in;
-		return var;
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-	FVar CreateVarARRAY_INT(TArray<int32> in) {
-		FVar var;
-		var.array_int32 = in;
-		return var;
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-		FVar CreateVarENERGY(FEnergy in) {
-		FVar var;
-		var.energy_var = in;
-		return var;
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-		FVar CreateVarARRAY_KNOCKBACKLEVELS(TArray<FKnockBackLevels> in) {
-		FVar var;
-		var.array_knockBackLevels = in;
-		return var;
-	}
-
 	
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogSTRING(int32 index, FString in) {
+		FUnDoLog var;
+		var.var_type = EVarType::STRING;
+		var.index = index;
+		var.STRING_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogARRAY_INT(int32 index, TArray<int32> in) {
+		FUnDoLog var;
+		var.var_type = EVarType::ARRAY_INT;
+		var.index = index;
+		var.ARRAY_INT_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogENERGY(int32 index, FEnergy in) {
+		FUnDoLog var;
+		var.var_type = EVarType::ENERGY;
+		var.index = index;
+		var.ENERGY_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogARRAY_KNOCKBACKLEVELS(int32 index, TArray<FKnockBackLevels> in) {
+		FUnDoLog var;
+		var.var_type = EVarType::ARRAY_KNOCKBACKLEVELS;
+		var.index = index;
+		var.ARRAY_KNOCKBACKLEVELS_type = in;
+		return var;
+	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	TMap<EPrameType, FPrameBase>GetPrames() {

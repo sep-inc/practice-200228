@@ -1,0 +1,72 @@
+{
+	"AttackDamage": 0,
+	"DrainHealthValuePerSeconds": 0,
+	"Energy":
+	{
+		"MaxValue": 0,
+		"DelaySecondsForIncrementValue": 0,
+		"IncrementValuePerSecond": 0
+	},
+	"SpecialGage":
+	{
+		"MaxValue": 0,
+		"DecreaseSpeed": 0,
+		"IncreaseValues":
+		{
+			"TakeDamage": 0,
+			"DodgeByVHS": 0
+		}
+	},
+	"ResuscitateDelayTime": 0,
+	"NotDominantHandDamageRate": 0,
+	"NotDominantHandDamageRate_Throw": 0,
+	"KnockBackLevels": [
+		{
+			"Level": 1,
+			"Distance": 0,
+			"Time": 0,
+			"WholeTime": 0,
+			"CameraBackDistance": 0,
+			"CameraUpDistance": 0
+		},
+		{
+			"Level": 2,
+			"Distance": 0,
+			"Time": 0,
+			"WholeTime": 0,
+			"CameraBackDistance": 0,
+			"CameraUpDistance": 0
+		},
+		{
+			"Level": 3,
+			"Distance": 0,
+			"Time": 0,
+			"WholeTime": 0,
+			"CameraBackDistance": 0,
+			"CameraUpDistance": 0
+		},
+		{
+			"Level": 4,
+			"Distance": 0,
+			"Time": 0,
+			"WholeTime": 0,
+			"CameraBackDistance": 0,
+			"CameraUpDistance": 0
+		},
+		{
+			"Level": 5,
+			"Distance": 0,
+			"Time": 0,
+			"WholeTime": 0,
+			"CameraBackDistance": 0,
+			"CameraUpDistance": 0
+		}
+	],
+	"GuardCrash":
+	{
+		"Time": 0,
+		"CameraBackDistance": 0,
+		"CameraUpDistance": 0
+	},
+	"VHSCoolDownTime": 0
+}

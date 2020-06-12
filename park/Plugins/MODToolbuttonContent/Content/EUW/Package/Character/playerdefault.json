@@ -1,0 +1,30 @@
+{
+	"AttackDamage": 0,
+	"DrainHealthValuePerSeconds": 0,
+	"Energy":
+	{
+		"MaxValue": 86,
+		"DelaySecondsForIncrementValue": 75,
+		"IncrementValuePerSecond": 62
+	},
+	"SpecialGage":
+	{
+		"MaxValue": 58,
+		"DecreaseSpeed": 85,
+		"IncreaseValues":
+		{
+			"TakeDamage": 43,
+			"DodgeByVHS": 69
+		}
+	},
+	"ResuscitateDelayTime": 55.737030029296875,
+	"NotDominantHandDamageRate": 0,
+	"NotDominantHandDamageRate_Throw": 0,
+	"GuardCrash":
+	{
+		"Time": 0,
+		"CameraBackDistance": 0,
+		"CameraUpDistance": 0
+	},
+	"VHSCoolDownTime": 0
+}

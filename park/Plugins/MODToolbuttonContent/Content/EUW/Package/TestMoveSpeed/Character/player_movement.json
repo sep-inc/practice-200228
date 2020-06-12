@@ -1,0 +1,19 @@
+{
+	"ContinuedSpeedForward": 0,
+	"ContinuedSpeedBackward": 0,
+	"ContinuedSpeedHorizontal": 0,
+	"StepLengthForward": 0,
+	"StepLengthBackward": 0,
+	"StepLengthHorizontal": 0,
+	"StepMoveTime": 0,
+	"StepRigidTime": 0,
+	"LockOnRotateSpeed": 0,
+	"LockOnRotateLimit": 0,
+	"LockOnHeadLimit": 0,
+	"LockOnDistanceLimit": 0,
+	"TurnAngle": 0,
+	"TurnAngleAuto": 0,
+	"TurnTime": 0,
+	"TurnInterval": 0,
+	"FreeRotationSpeed": 0
+}

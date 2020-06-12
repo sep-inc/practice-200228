@@ -109,14 +109,17 @@ USTRUCT(BlueprintType)
 struct FVar {
 	GENERATED_USTRUCT_BODY()
 
-		bool bool_var;
+	bool bool_var;
 	int32 int32_var;
 	float float_var;
 	FString string_var;
 	int64 int64_var;
 	TArray<int32> array_int32;
 	FEnergy energy_var;
-	TArray<FKnockBackLevels> array_knockBackLevels;
+	FSpecialGage_P special_gage_p_var;
+	FSpecialGage_W special_gage_w_var;
+	FTwoHandCorrections two_hand_corrections_var;
+	TArray<FKnockBackLevels> array_knockBackLevels_var;
 };
 
 
@@ -201,9 +204,64 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		static TArray<FKnockBackLevels> GetVarARRAY_KNOCKBACKLEVELS(FVar var) {
-		return var.array_knockBackLevels;
+		return var.array_knockBackLevels_var;
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarBOOL(bool in) {
+		FVar var;
+		var.bool_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarINT(int32 in) {
+		FVar var;
+		var.int32_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarINT64(int64 in) {
+		FVar var;
+		var.int64_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarFLOAT(float in) {
+		FVar var;
+		var.float_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarSTRING(FString in) {
+		FVar var;
+		var.string_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarARRAY_INT(TArray<int32> in) {
+		FVar var;
+		var.array_int32 = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarENERGY(FEnergy in) {
+		FVar var;
+		var.energy_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarARRAY_KNOCKBACKLEVELS(TArray<FKnockBackLevels> in) {
+		FVar var;
+		var.array_knockBackLevels_var = in;
+		return var;
+	}
 
 };
 
