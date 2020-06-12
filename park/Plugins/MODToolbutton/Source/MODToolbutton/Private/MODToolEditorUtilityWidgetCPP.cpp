@@ -799,14 +799,14 @@ void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char*
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
-	map_quest_param[quest_num - 1].wave.Add(FMapWaveParam());
-	int32 index_num = map_quest_param[quest_num - 1].wave.Num() - 1;
-	map_quest_param[quest_num - 1].wave[index_num].enemy.Init(FEnemyParam(),6);
+	map_quest_param[GetQuestIndex()].wave.Add(FMapWaveParam());
+	int32 index_num = map_quest_param[GetQuestIndex()].wave.Num() - 1;
+	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(),6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
-			int64 address = (int64)(&map_quest_param[quest_num - 1].wave[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_quest_param[quest_num - 1].wave[index_num].enemy[i].search.AddVar(
+			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address
@@ -822,13 +822,13 @@ void UMODToolEditorUtilityWidgetCPP::AddQuest() {
 }
 
 void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
-	int32 set_index = map_quest_param[quest_num - 1].wave.Insert(FMapWaveParam(), index - 1);
-	map_quest_param[quest_num - 1].wave[set_index].enemy.Init(FEnemyParam(), 6);
+	int32 set_index = map_quest_param[GetQuestIndex()].wave.Insert(FMapWaveParam(), index - 1);
+	map_quest_param[GetQuestIndex()].wave[set_index].enemy.Init(FEnemyParam(), 6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
-			int64 address = (int64)(&map_quest_param[quest_num - 1].wave[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
-			map_quest_param[quest_num - 1].wave[set_index].enemy[i].search.AddVar(
+			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
+			map_quest_param[GetQuestIndex()].wave[set_index].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
 				(void*)address
@@ -838,8 +838,8 @@ void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 }
 
 void UMODToolEditorUtilityWidgetCPP::RemoveWave(int32 index) {
-	if (index < 1 || index > map_quest_param[quest_num - 1].wave.Num() + 1) {
+	if (index < 1 || index > map_quest_param[GetQuestIndex()].wave.Num() + 1) {
 		return;
 	}
-	map_quest_param[quest_num - 1].wave.RemoveAt(index - 1);
+	map_quest_param[GetQuestIndex()].wave.RemoveAt(index - 1);
 }
