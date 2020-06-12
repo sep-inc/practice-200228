@@ -534,6 +534,11 @@ public:
 	void AddQuest();
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetQuest(int32 in) {
+		quest_num = in;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void InsertWave(int32 index);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -554,6 +559,15 @@ public:
 		return quest_num;
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		int32 GetQuestMaxNum() {
+		return map_quest_param.Num();
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void SetQuestNum(int32 in) {
+		quest_num = in;
+	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	FString GetType(FPrameBase prame, int32 index) {
