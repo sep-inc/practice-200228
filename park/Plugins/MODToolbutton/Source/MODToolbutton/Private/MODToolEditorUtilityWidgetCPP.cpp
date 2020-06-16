@@ -416,8 +416,8 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			TSharedPtr <FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
 			{
-				//TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_default_param.Health));
-				//JsonObject->SetField(TEXT("Health"), value1_1);
+				TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_default_param.Health));
+				JsonObject->SetField(TEXT("Health"), value1_1);
 				TSharedPtr<FJsonValueNumber> value1_2 = MakeShareable(new FJsonValueNumber(player_default_param.AttackDamage));
 				JsonObject->SetField(TEXT("AttackDamage"), value1_2);
 				TSharedPtr<FJsonValueNumber> value1_3 = MakeShareable(new FJsonValueNumber(player_default_param.DrainHealthValuePerSeconds));
@@ -439,23 +439,23 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			}
 
 			{
-				/*TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage_MaxValue));
+				TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.MaxValue));
 				JsonArrayObject->SetField(TEXT("MaxValue"), value3_1);
-				TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage_DecreaseSpeed));
+				TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.DecreaseSpeed));
 				JsonArrayObject->SetField(TEXT("DecreaseSpeed"), value3_2);
 				{
 					TSharedPtr <FJsonObject> JsonArrayObject2 = MakeShareable(new FJsonObject);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage_IncreaseValues_TakeDamage));
+					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.IncreaseValues.TakeDamage));
 					JsonArrayObject2->SetField(TEXT("TakeDamage"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage_IncreaseValues_DodgeByVHS));
+					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.IncreaseValues.DodgeByVHS));
 					JsonArrayObject2->SetField(TEXT("DodgeByVHS"), value3_4);
 
 					JsonArrayObject->SetObjectField("IncreaseValues", JsonArrayObject2);
 				}
 
-				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);*/
+				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);
 
 			}
 
@@ -468,123 +468,42 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 				JsonObject->SetField(TEXT("NotDominantHandDamageRate_Throw"), value4_3);
 
 			}
-
-			/*{
+			{
 				TArray<TSharedPtr<FJsonValue>> JsonArrayObject;
-				{
+				for (int KnockBackLevels_index = 0; KnockBackLevels_index < player_default_param.KnockBackLevels.Num(); KnockBackLevels_index++) {
 					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
 
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(1));
+					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Level));
 					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel1_Distance));
+					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Distance));
 					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel1_Time));
+					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Time));
 					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel1_WholeTime));
+					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].WholeTime));
 					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel1_CameraBackDistance));
+					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].CameraBackDistance));
 					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel1_CameraUpDistance));
+					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].CameraUpDistance));
 					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
 
 					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
 					JsonArrayObject.Add(obj);
+					printf("aaa");
 				}
-
-				{
-					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
-
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(2));
-					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel2_Distance));
-					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel2_Time));
-					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel2_WholeTime));
-					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel2_CameraBackDistance));
-					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel2_CameraUpDistance));
-					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
-
-					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
-					JsonArrayObject.Add(obj);
-				}
-
-				{
-					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
-
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(3));
-					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel3_Distance));
-					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel3_Time));
-					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel3_WholeTime));
-					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel3_CameraBackDistance));
-					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel3_CameraUpDistance));
-					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
-
-					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
-					JsonArrayObject.Add(obj);
-				}
-
-				{
-					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
-
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(4));
-					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel4_Distance));
-					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel4_Time));
-					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel4_WholeTime));
-					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel4_CameraBackDistance));
-					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel4_CameraUpDistance));
-					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
-
-					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
-					JsonArrayObject.Add(obj);
-				}
-
-				{
-					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
-
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(5));
-					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel5_Distance));
-					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel5_Time));
-					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel5_WholeTime));
-					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel5_CameraBackDistance));
-					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevel5_CameraUpDistance));
-					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
-
-					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
-					JsonArrayObject.Add(obj);
-				}
-
 				JsonObject->SetArrayField("KnockBackLevels", JsonArrayObject);
-			}*/
+			}
 
 			{
-			/*	TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash_Time));
+				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.Time));
 				JsonArrayObject->SetField(TEXT("Time"), value4_1);
-				TSharedPtr<FJsonValueNumber> value4_2 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash_CameraBackDistance));
+				TSharedPtr<FJsonValueNumber> value4_2 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.CameraBackDistance));
 				JsonArrayObject->SetField(TEXT("CameraBackDistance"), value4_2);
-				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash_CameraUpDistance));
+				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.CameraUpDistance));
 				JsonArrayObject->SetField(TEXT("CameraUpDistance"), value4_3);
 
-				JsonObject->SetObjectField("GuardCrash", JsonArrayObject);*/
+				JsonObject->SetObjectField("GuardCrash", JsonArrayObject);
 			}
 
 			TSharedPtr<FJsonValueNumber> value5_1 = MakeShareable(new FJsonValueNumber(player_default_param.VHSCoolDownTime));

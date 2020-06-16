@@ -153,8 +153,9 @@ struct FPrameBase {
 				*((FTwoHandCorrections*)var_address[index]) = var.two_hand_corrections_var;
 				return;
 			}
-			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
+			else if (type == "class TArray<struct FKnockBackLevels,class TSizedDefaultAllocator<32> >") {
 				*((TArray<FKnockBackLevels>*)var_address[index]) = var.array_knockBackLevels_var;
+				printf("aaa");
 				return;
 			}
 		}
