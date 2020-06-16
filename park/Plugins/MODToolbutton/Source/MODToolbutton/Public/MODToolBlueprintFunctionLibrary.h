@@ -44,6 +44,17 @@ struct FSpecialGage_P {
 };
 
 USTRUCT(BlueprintType)
+struct FGuardCrash {
+	GENERATED_USTRUCT_BODY()
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float Time;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float CameraBackDistance;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		float CameraUpDistance;
+};
+
+USTRUCT(BlueprintType)
 struct FOtherList {
 	GENERATED_USTRUCT_BODY()
 		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
@@ -117,6 +128,7 @@ struct FVar {
 	TArray<int32> array_int32;
 	FEnergy energy_var;
 	FSpecialGage_P special_gage_p_var;
+	FGuardCrash guard_crash_var;
 	FSpecialGage_W special_gage_w_var;
 	FTwoHandCorrections two_hand_corrections_var;
 	TArray<FKnockBackLevels> array_knockBackLevels_var;
@@ -203,6 +215,26 @@ public:
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FSpecialGage_P GetVarSPECIAL_GAGE_P(FVar var) {
+		return var.special_gage_p_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FGuardCrash GetVarGUARD_CRASH(FVar var) {
+		return var.guard_crash_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FSpecialGage_W GetVarSPECIAL_GAGE_W(FVar var) {
+		return var.special_gage_w_var;
+	}
+	
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FTwoHandCorrections GetVarTWO_HAND_CORRECTIONS(FVar var) {
+		return var.two_hand_corrections_var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
 		static TArray<FKnockBackLevels> GetVarARRAY_KNOCKBACKLEVELS(FVar var) {
 		return var.array_knockBackLevels_var;
 	}
@@ -253,6 +285,35 @@ public:
 		static FVar CreateVarENERGY(FEnergy in) {
 		FVar var;
 		var.energy_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarSPECIAL_GAGE_P(FSpecialGage_P in) {
+		FVar var;
+		var.special_gage_p_var = in;
+		return var;
+	}
+
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarGUARD_CRASH(FGuardCrash in) {
+		FVar var;
+		var.guard_crash_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarSPECIAL_GAGE_W(FSpecialGage_W in) {
+		FVar var;
+		var.special_gage_w_var = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		static FVar CreateVarTWO_HAND_CORRECTIONS(FTwoHandCorrections in) {
+		FVar var;
+		var.two_hand_corrections_var = in;
 		return var;
 	}
 

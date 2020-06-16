@@ -78,6 +78,11 @@ struct FPrameBase {
 				var_type = type;
 				return;
 			}
+			else if (type == "struct FGuardCrash") {
+				var.guard_crash_var = *((FGuardCrash*)var_address[index]);
+				var_type = type;
+				return;
+			}
 			else if (type == "struct FSpecialGage_W") {
 				var.special_gage_w_var = *((FSpecialGage_W*)var_address[index]);
 				var_type = type;
@@ -136,6 +141,10 @@ struct FPrameBase {
 				*((FSpecialGage_P*)var_address[index]) = var.special_gage_p_var;
 				return;
 			}
+			else if (type == "struct FGuardCrash") {
+				*((FGuardCrash*)var_address[index]) = var.guard_crash_var;
+				return;
+			}
 			else if (type == "struct FSpecialGage_W") {
 				*((FSpecialGage_W*)var_address[index]) = var.special_gage_w_var;
 				return;
@@ -182,11 +191,11 @@ struct FPlayerDefaultParame{
 
 	FSpecialGage_P SpecialGage;
 
-	int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
-	int32 SpecialGage_DecreaseSpeed;					//エンチャント発動中のスペシャルゲージ減少量(秒速)。
-														//MaxValueが100で、DecreaseSpeedが10の場合、エンチャント効果時間は10秒になります。
-	int32 SpecialGage_IncreaseValues_TakeDamage;		//敵からダメージを受けた時のスペシャルゲージ蓄積量。
-	int32 SpecialGage_IncreaseValues_DodgeByVHS;		//敵の攻撃をタイミングよく回避した時のスペシャルゲージ蓄積量。
+	//int32 SpecialGage_MaxValue;							//スタミナが回復するまでのインターバル。
+	//int32 SpecialGage_DecreaseSpeed;					//エンチャント発動中のスペシャルゲージ減少量(秒速)。
+	//													//MaxValueが100で、DecreaseSpeedが10の場合、エンチャント効果時間は10秒になります。
+	//int32 SpecialGage_IncreaseValues_TakeDamage;		//敵からダメージを受けた時のスペシャルゲージ蓄積量。
+	//int32 SpecialGage_IncreaseValues_DodgeByVHS;		//敵の攻撃をタイミングよく回避した時のスペシャルゲージ蓄積量。
 
 	float ResuscitateDelayTime;							//味方を蘇生するまでにかかる時間。
 	float NotDominantHandDamageRate;					//利き手ではない手でのダメージ倍率。
@@ -194,9 +203,11 @@ struct FPlayerDefaultParame{
 
 	TArray<FKnockBackLevels> KnockBackLevels;
 
-	float GuardCrash_Time;								//ガードクラッシュ状態の全体時間。
-	float GuardCrash_CameraBackDistance;				//ガードクラッシュ時の3人称視点に移行した時のカメラの後退する距離。
-	float GuardCrash_CameraUpDistance;					//ガードクラッシュ時の3人称視点に移行した時のカメラの上昇する距離。
+	FGuardCrash GuardCrash;
+
+	//float GuardCrash_Time;								//ガードクラッシュ状態の全体時間。
+	//float GuardCrash_CameraBackDistance;				//ガードクラッシュ時の3人称視点に移行した時のカメラの後退する距離。
+	//float GuardCrash_CameraUpDistance;					//ガードクラッシュ時の3人称視点に移行した時のカメラの上昇する距離。
 
 	float VHSCoolDownTime;								//ステップを行った際のクールタイム。
 };
@@ -362,6 +373,7 @@ enum class EVarType : uint8
 	ARRAY_INT,
 	ENERGY,
 	SPECIAL_GAGE_P,
+	GUARD_CRASH,
 	SPECIAL_GAGE_W,
 	TWO_HAND_CORRECTIONS,
 	ARRAY_KNOCKBACKLEVELS
@@ -416,6 +428,9 @@ struct FUnDoLog {
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	FSpecialGage_P SPECIAL_GAGE_P_type;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FGuardCrash GUARD_CRASH_type;
 		
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	FSpecialGage_W SPECIAL_GAGE_W_type;
@@ -654,6 +669,42 @@ public:
 		var.var_type = EVarType::ENERGY;
 		var.index = index;
 		var.ENERGY_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogSPECIAL_GAGE_P(int32 index, FSpecialGage_P in) {
+		FUnDoLog var;
+		var.var_type = EVarType::SPECIAL_GAGE_P;
+		var.index = index;
+		var.SPECIAL_GAGE_P_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogGUARD_CRASH(int32 index, FGuardCrash in) {
+		FUnDoLog var;
+		var.var_type = EVarType::GUARD_CRASH;
+		var.index = index;
+		var.GUARD_CRASH_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogSPECIAL_GAGE_W(int32 index, FSpecialGage_W in) {
+		FUnDoLog var;
+		var.var_type = EVarType::SPECIAL_GAGE_W;
+		var.index = index;
+		var.SPECIAL_GAGE_W_type = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogTWO_HAND_CORRECTIONS(int32 index, FTwoHandCorrections in) {
+		FUnDoLog var;
+		var.var_type = EVarType::TWO_HAND_CORRECTIONS;
+		var.index = index;
+		var.TWO_HAND_CORRECTIONS_type = in;
 		return var;
 	}
 

@@ -109,8 +109,21 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(Energy), typeid(player_default_param.Energy).name(), &player_default_param.Energy);
 	
+	player_default_param_max.SpecialGage.MaxValue = 100;
+	player_default_param_min.SpecialGage.MaxValue = 0;
+	player_default_param_max.SpecialGage.DecreaseSpeed = 100;
+	player_default_param_min.SpecialGage.DecreaseSpeed = 0;
+	player_default_param_max.SpecialGage.IncreaseValues.TakeDamage = 100;
+	player_default_param_min.SpecialGage.IncreaseValues.TakeDamage = 0;
+	player_default_param_max.SpecialGage.IncreaseValues.DodgeByVHS = 100;
+	player_default_param_min.SpecialGage.IncreaseValues.DodgeByVHS = 0;
 
-	player_default_param_max.SpecialGage_MaxValue = 100.f;
+	AddPrame(EPrameType::PlayerDefault, player_parame_start,
+		TO_STRING(SpecialGage), typeid(player_default_param.SpecialGage).name(), &player_default_param.SpecialGage);
+
+
+
+	/*player_default_param_max.SpecialGage_MaxValue = 100.f;
 	player_default_param_min.SpecialGage_MaxValue = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(SpecialGage_MaxValue), typeid(player_default_param.SpecialGage_MaxValue).name(), &player_default_param.SpecialGage_MaxValue);
@@ -118,14 +131,14 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_default_param_min.SpecialGage_DecreaseSpeed = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(SpecialGage_DecreaseSpeed), typeid(player_default_param.SpecialGage_DecreaseSpeed).name(), &player_default_param.SpecialGage_DecreaseSpeed);
-	player_default_param_max.SpecialGage_IncreaseValues_TakeDamage = 100.f;
+	player_default_param_max.IncreaseValues.TakeDamage = 100.f;
 	player_default_param_min.SpecialGage_IncreaseValues_TakeDamage = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(SpecialGage_IncreaseValues_TakeDamage), typeid(player_default_param.SpecialGage_IncreaseValues_TakeDamage).name(), &player_default_param.SpecialGage_IncreaseValues_TakeDamage);
 	player_default_param_max.SpecialGage_IncreaseValues_DodgeByVHS = 100.f;
 	player_default_param_min.SpecialGage_IncreaseValues_DodgeByVHS = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(SpecialGage_IncreaseValues_DodgeByVHS), typeid(player_default_param.SpecialGage_IncreaseValues_DodgeByVHS).name(), &player_default_param.SpecialGage_IncreaseValues_DodgeByVHS);
+		TO_STRING(SpecialGage_IncreaseValues_DodgeByVHS), typeid(player_default_param.SpecialGage_IncreaseValues_DodgeByVHS).name(), &player_default_param.SpecialGage_IncreaseValues_DodgeByVHS);*/
 
 
 
@@ -160,7 +173,16 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(KnockBackLevels), typeid(player_default_param.KnockBackLevels).name(), &player_default_param.KnockBackLevels);
 
-	player_default_param_max.GuardCrash_Time = 100.f;
+	player_default_param_max.GuardCrash.Time = 100.f;
+	player_default_param_min.GuardCrash.Time = 0.f;
+	player_default_param_max.GuardCrash.CameraBackDistance = 100.f;
+	player_default_param_min.GuardCrash.CameraBackDistance = 0.f;
+	player_default_param_max.GuardCrash.CameraUpDistance = 100.f;
+	player_default_param_min.GuardCrash.CameraUpDistance = 0.f;
+	AddPrame(EPrameType::PlayerDefault, player_parame_start,
+		TO_STRING(GuardCrash), typeid(player_default_param.GuardCrash).name(), &player_default_param.GuardCrash);
+
+	/*player_default_param_max.GuardCrash_Time = 100.f;
 	player_default_param_min.GuardCrash_Time = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(KnockBackLevel5_Time), typeid(player_default_param.GuardCrash_Time).name(), &player_default_param.GuardCrash_Time);
@@ -172,7 +194,7 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	player_default_param_min.GuardCrash_CameraUpDistance = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(GuardCrash_CameraUpDistance), typeid(player_default_param.GuardCrash_CameraUpDistance).name(), &player_default_param.GuardCrash_CameraUpDistance);
-
+*/
 
 
 	player_default_param_max.VHSCoolDownTime = 100.f;
@@ -417,7 +439,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			}
 
 			{
-				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+				/*TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
 				TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage_MaxValue));
 				JsonArrayObject->SetField(TEXT("MaxValue"), value3_1);
@@ -433,7 +455,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 					JsonArrayObject->SetObjectField("IncreaseValues", JsonArrayObject2);
 				}
 
-				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);
+				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);*/
 
 			}
 
@@ -553,7 +575,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			}*/
 
 			{
-				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+			/*	TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
 				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash_Time));
 				JsonArrayObject->SetField(TEXT("Time"), value4_1);
@@ -562,7 +584,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash_CameraUpDistance));
 				JsonArrayObject->SetField(TEXT("CameraUpDistance"), value4_3);
 
-				JsonObject->SetObjectField("GuardCrash", JsonArrayObject);
+				JsonObject->SetObjectField("GuardCrash", JsonArrayObject);*/
 			}
 
 			TSharedPtr<FJsonValueNumber> value5_1 = MakeShareable(new FJsonValueNumber(player_default_param.VHSCoolDownTime));
