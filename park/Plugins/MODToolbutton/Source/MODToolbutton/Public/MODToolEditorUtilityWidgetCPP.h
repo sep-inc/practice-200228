@@ -558,7 +558,7 @@ public:
 	void AddPrame(EPrameType type, StartAddress s_a, const char* name, const char* var_type, void* aa);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-	bool AddValidityParames(EPrameType type);
+	bool SetValidityParames(EPrameType type, bool is);
 
 	void AddEnemyPrame(const char* name, const char* type, void* aa);
 

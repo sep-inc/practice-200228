@@ -406,10 +406,15 @@ void UMODToolEditorUtilityWidgetCPP::SetPrames() {
 
 }
 
-bool UMODToolEditorUtilityWidgetCPP::AddValidityParames(EPrameType type) {
+bool UMODToolEditorUtilityWidgetCPP::SetValidityParames(EPrameType type, bool is) {
 	
-	if (validity_parames.Find(type) == INDEX_NONE) {
-		validity_parames.Add(type);
+	if ((validity_parames.Find(type) == INDEX_NONE) == is) {
+		if (is) {
+			validity_parames.Add(type);
+		}
+		else {
+			validity_parames.Remove(type);
+		}
 		return true;
 	}
 	return false;
