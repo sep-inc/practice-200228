@@ -258,7 +258,7 @@ struct FWeaponParam {
 
 	int start;
 
-	int32 ID;
+	FString ID;
 	int32 DamageAmount;
 	float MinimumDamageRate;
 	int32 KnockBackAmount;

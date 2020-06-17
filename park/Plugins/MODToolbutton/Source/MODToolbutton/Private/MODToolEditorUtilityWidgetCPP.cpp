@@ -299,8 +299,8 @@ void UMODToolEditorUtilityWidgetCPP::InitWeaponParam() {
 	weapon_param_start.max_address = (int64)(&weapon_param_max.start);
 	weapon_param_start.min_address = (int64)(&weapon_param_min.start);
 
-	weapon_param_max.ID = 200;
-	weapon_param_min.ID = 0;
+	//weapon_param_max.ID = 200;
+	//weapon_param_min.ID = 0;
 	AddPrame(EPrameType::Weapons, weapon_param_start,
 		TO_STRING(ID), typeid(weapon_param.ID).name(), &weapon_param.ID);
 	weapon_param_max.DamageAmount = 200;
@@ -519,6 +519,56 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
 
 			UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Character/player_movement"), OutputString);
+		}
+		else if (validity_parames[i] == EPrameType::Weapons) {
+			TSharedPtr <FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+			
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DamageAmount"), weapon_param.DamageAmount);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("MinimumDamageRate"), weapon_param.MinimumDamageRate);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("KnockBackAmount"), weapon_param.KnockBackAmount);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DamageAmountCorrectionRateByWeakPoint"), weapon_param.DamageAmountCorrectionRateByWeakPoint);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("MaxPowerChargeTime"), weapon_param.MaxPowerChargeTime);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("EnergyDamageAmount"), weapon_param.EnergyDamageAmount);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("EnergyDamageAmount_Parry"), weapon_param.EnergyDamageAmount_Parry);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("Durability"), weapon_param.Durability);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DurabilityDamageRate_Parry"), weapon_param.DurabilityDamageRate_Parry);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DurabilityDamageRate_Guard"), weapon_param.DurabilityDamageRate_Guard);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ParryThreshold"), weapon_param.ParryThreshold);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("WalkSpeed"), weapon_param.WalkSpeed);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("CrackDamageRate"), weapon_param.CrackDamageRate);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("WearingRecoveryDurabilityAmount"), weapon_param.WearingRecoveryDurabilityAmount);
+			{
+				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("DamageAmount"), weapon_param.TwoHandCorrections.DamageAmount);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("DelaySecondsForIncrementValue"), weapon_param.TwoHandCorrections.KnockBackAmount);
+
+				JsonObject->SetObjectField("TwoHandCorrections", JsonArrayObject);
+			}
+			{
+				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
+				{
+					TSharedPtr <FJsonObject> JsonArrayObject2 = MakeShareable(new FJsonObject);
+
+					FuncLib::SetJsonFieldVal_Num(JsonArrayObject2, TEXT("Hit"), weapon_param.SpecialGage.IncreaseValues.Hit);
+					FuncLib::SetJsonFieldVal_Num(JsonArrayObject2, TEXT("Guard"), weapon_param.SpecialGage.IncreaseValues.Guard);
+					FuncLib::SetJsonFieldVal_Num(JsonArrayObject2, TEXT("Parry"), weapon_param.SpecialGage.IncreaseValues.Parry);
+
+					JsonArrayObject->SetObjectField("IncreaseValues", JsonArrayObject2);
+				}
+
+				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);
+			}
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DamageAmountCorrectionRateByThrown"), weapon_param.DamageAmountCorrectionRateByThrown);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("KnockBackAmountCorrectionRateByThrown"), weapon_param.KnockBackAmountCorrectionRateByThrown);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ConsumeDurabilityCorrectionRateByThrown"), weapon_param.ConsumeDurabilityCorrectionRateByThrown);
+
+			FString OutputString;
+			TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+			FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
+
+			UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Weapon/weapon") + weapon_param.ID, OutputString);
+
 		}
 	}
 
