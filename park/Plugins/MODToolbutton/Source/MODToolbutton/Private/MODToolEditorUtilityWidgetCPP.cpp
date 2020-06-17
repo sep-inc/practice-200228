@@ -359,12 +359,18 @@ void UMODToolEditorUtilityWidgetCPP::InitWeaponParam() {
 	weapon_param_min.WearingRecoveryDurabilityAmount = 0;
 	AddPrame(EPrameType::Weapons, weapon_param_start,
 		TO_STRING(WearingRecoveryDurabilityAmount), typeid(weapon_param.WearingRecoveryDurabilityAmount).name(), &weapon_param.WearingRecoveryDurabilityAmount);
-	//weapon_param_max.TwoHandCorrections = 200;
-	//weapon_param_min.TwoHandCorrections = 0;
+	weapon_param_max.TwoHandCorrections.DamageAmount = 200.f;
+	weapon_param_min.TwoHandCorrections.DamageAmount = 0.f;
+	weapon_param_max.TwoHandCorrections.KnockBackAmount = 200.f;
+	weapon_param_min.TwoHandCorrections.KnockBackAmount = 0.f;
 	AddPrame(EPrameType::Weapons, weapon_param_start,
 		TO_STRING(TwoHandCorrections), typeid(weapon_param.TwoHandCorrections).name(), &weapon_param.TwoHandCorrections);
-	//weapon_param_max.SpecialGage = 200;
-	//weapon_param_min.SpecialGage = 0;
+	weapon_param_max.SpecialGage.IncreaseValues.Hit = 200;
+	weapon_param_min.SpecialGage.IncreaseValues.Hit = 0;
+	weapon_param_max.SpecialGage.IncreaseValues.Guard = 200;
+	weapon_param_min.SpecialGage.IncreaseValues.Guard = 0;
+	weapon_param_max.SpecialGage.IncreaseValues.Parry = 200;
+	weapon_param_min.SpecialGage.IncreaseValues.Parry = 0;
 	AddPrame(EPrameType::Weapons, weapon_param_start,
 		TO_STRING(SpecialGage), typeid(weapon_param.SpecialGage).name(), &weapon_param.SpecialGage);
 	weapon_param_max.DamageAmountCorrectionRateByThrown = 200;

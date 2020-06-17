@@ -149,7 +149,7 @@ struct FPrameBase {
 				*((FSpecialGage_W*)var_address[index]) = var.special_gage_w_var;
 				return;
 			}
-			else if (type == "struct FSpeFTwoHandCorrectionscialGage_W") {
+			else if (type == "struct FTwoHandCorrections") {
 				*((FTwoHandCorrections*)var_address[index]) = var.two_hand_corrections_var;
 				return;
 			}
