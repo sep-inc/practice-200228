@@ -178,6 +178,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	static void GetPackageFolderNames(TArray<FString>& out);
 
+	static void SetJsonFieldVal_Num(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, double InNumber);
+
 	//ゲッター
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		static bool GetVarBOOL(FVar var) {

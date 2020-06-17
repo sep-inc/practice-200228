@@ -221,6 +221,11 @@ void UMODToolBlueprintFunctionLibrary::GetPackageFolderNames(TArray<FString>& ou
 	file.GetFilenames(out);
 }
 
+void UMODToolBlueprintFunctionLibrary::SetJsonFieldVal_Num(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, double InNumber) {
+	TSharedPtr<FJsonValueNumber> value = MakeShareable(new FJsonValueNumber(InNumber));
+	JsonObject->SetField(FieldName, value);
+
+}
 
 
 

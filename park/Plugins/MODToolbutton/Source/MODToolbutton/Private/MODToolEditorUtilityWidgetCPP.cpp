@@ -7,6 +7,7 @@
 #include "Dom/JsonObject.h"
 #include "MODToolBlueprintFunctionLibrary.h"
 
+typedef UMODToolBlueprintFunctionLibrary FuncLib;
 
 
 #include <typeinfo>
@@ -415,25 +416,15 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 		if (validity_parames[i] == EPrameType::PlayerDefault) {
 			TSharedPtr <FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
-			{
-				TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_default_param.Health));
-				JsonObject->SetField(TEXT("Health"), value1_1);
-				TSharedPtr<FJsonValueNumber> value1_2 = MakeShareable(new FJsonValueNumber(player_default_param.AttackDamage));
-				JsonObject->SetField(TEXT("AttackDamage"), value1_2);
-				TSharedPtr<FJsonValueNumber> value1_3 = MakeShareable(new FJsonValueNumber(player_default_param.DrainHealthValuePerSeconds));
-				JsonObject->SetField(TEXT("DrainHealthValuePerSeconds"), value1_3);
-
-			}
-
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("Health"), player_default_param.Health);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("AttackDamage"), player_default_param.AttackDamage);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("DrainHealthValuePerSeconds"), player_default_param.DrainHealthValuePerSeconds);
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.MaxValue));
-				JsonArrayObject->SetField(TEXT("MaxValue"), value2_1);
-				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.DelaySecondsForIncrementValue));
-				JsonArrayObject->SetField(TEXT("DelaySecondsForIncrementValue"), value2_2);
-				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_default_param.Energy.IncrementValuePerSecond));
-				JsonArrayObject->SetField(TEXT("IncrementValuePerSecond"), value2_3);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("MaxValue"), player_default_param.Energy.MaxValue);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("DelaySecondsForIncrementValue"), player_default_param.Energy.DelaySecondsForIncrementValue);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("IncrementValuePerSecond"), player_default_param.Energy.IncrementValuePerSecond);
 
 				JsonObject->SetObjectField("Energy", JsonArrayObject);
 			}
@@ -441,54 +432,39 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.MaxValue));
-				JsonArrayObject->SetField(TEXT("MaxValue"), value3_1);
-				TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.DecreaseSpeed));
-				JsonArrayObject->SetField(TEXT("DecreaseSpeed"), value3_2);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("MaxValue"), player_default_param.SpecialGage.MaxValue);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("DecreaseSpeed"), player_default_param.SpecialGage.DecreaseSpeed);
+
 				{
 					TSharedPtr <FJsonObject> JsonArrayObject2 = MakeShareable(new FJsonObject);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.IncreaseValues.TakeDamage));
-					JsonArrayObject2->SetField(TEXT("TakeDamage"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.SpecialGage.IncreaseValues.DodgeByVHS));
-					JsonArrayObject2->SetField(TEXT("DodgeByVHS"), value3_4);
+
+					FuncLib::SetJsonFieldVal_Num(JsonArrayObject2, TEXT("TakeDamage"), player_default_param.SpecialGage.IncreaseValues.TakeDamage);
+					FuncLib::SetJsonFieldVal_Num(JsonArrayObject2, TEXT("DodgeByVHS"), player_default_param.SpecialGage.IncreaseValues.DodgeByVHS);
 
 					JsonArrayObject->SetObjectField("IncreaseValues", JsonArrayObject2);
 				}
 
 				JsonObject->SetObjectField("SpecialGage", JsonArrayObject);
-
 			}
 
-			{
-				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_default_param.ResuscitateDelayTime));
-				JsonObject->SetField(TEXT("ResuscitateDelayTime"), value4_1);
-				TSharedPtr<FJsonValueNumber> value4_2 = MakeShareable(new FJsonValueNumber(player_default_param.NotDominantHandDamageRate));
-				JsonObject->SetField(TEXT("NotDominantHandDamageRate"), value4_2);
-				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_default_param.NotDominantHandDamageRate_Throw));
-				JsonObject->SetField(TEXT("NotDominantHandDamageRate_Throw"), value4_3);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ResuscitateDelayTime"), player_default_param.ResuscitateDelayTime);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("NotDominantHandDamageRate"), player_default_param.NotDominantHandDamageRate);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("NotDominantHandDamageRate_Throw"), player_default_param.NotDominantHandDamageRate_Throw);
 
-			}
 			{
 				TArray<TSharedPtr<FJsonValue>> JsonArrayObject;
 				for (int KnockBackLevels_index = 0; KnockBackLevels_index < player_default_param.KnockBackLevels.Num(); KnockBackLevels_index++) {
 					TSharedPtr <FJsonObject> JsonObject2 = MakeShareable(new FJsonObject);
 
-					TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Level));
-					JsonObject2->SetField(TEXT("Level"), value3_1);
-					TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Distance));
-					JsonObject2->SetField(TEXT("Distance"), value3_2);
-					TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].Time));
-					JsonObject2->SetField(TEXT("Time"), value3_3);
-					TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].WholeTime));
-					JsonObject2->SetField(TEXT("WholeTime"), value3_4);
-					TSharedPtr<FJsonValueNumber> value3_5 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].CameraBackDistance));
-					JsonObject2->SetField(TEXT("CameraBackDistance"), value3_5);
-					TSharedPtr<FJsonValueNumber> value3_6 = MakeShareable(new FJsonValueNumber(player_default_param.KnockBackLevels[KnockBackLevels_index].CameraUpDistance));
-					JsonObject2->SetField(TEXT("CameraUpDistance"), value3_6);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("Level"), player_default_param.KnockBackLevels[KnockBackLevels_index].Level);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("Distance"), player_default_param.KnockBackLevels[KnockBackLevels_index].Distance);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("Time"), player_default_param.KnockBackLevels[KnockBackLevels_index].Time);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("WholeTime"), player_default_param.KnockBackLevels[KnockBackLevels_index].WholeTime);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("CameraBackDistance"), player_default_param.KnockBackLevels[KnockBackLevels_index].CameraBackDistance);
+					FuncLib::SetJsonFieldVal_Num(JsonObject2, TEXT("CameraUpDistance"), player_default_param.KnockBackLevels[KnockBackLevels_index].CameraUpDistance);
 
 					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(JsonObject2));
 					JsonArrayObject.Add(obj);
-					printf("aaa");
 				}
 				JsonObject->SetArrayField("KnockBackLevels", JsonArrayObject);
 			}
@@ -496,18 +472,14 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			{
 				TSharedPtr <FJsonObject> JsonArrayObject = MakeShareable(new FJsonObject);
 
-				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.Time));
-				JsonArrayObject->SetField(TEXT("Time"), value4_1);
-				TSharedPtr<FJsonValueNumber> value4_2 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.CameraBackDistance));
-				JsonArrayObject->SetField(TEXT("CameraBackDistance"), value4_2);
-				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_default_param.GuardCrash.CameraUpDistance));
-				JsonArrayObject->SetField(TEXT("CameraUpDistance"), value4_3);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("Time"), player_default_param.GuardCrash.Time);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("CameraBackDistance"), player_default_param.GuardCrash.CameraBackDistance);
+				FuncLib::SetJsonFieldVal_Num(JsonArrayObject, TEXT("CameraUpDistance"), player_default_param.GuardCrash.CameraUpDistance);
 
 				JsonObject->SetObjectField("GuardCrash", JsonArrayObject);
 			}
 
-			TSharedPtr<FJsonValueNumber> value5_1 = MakeShareable(new FJsonValueNumber(player_default_param.VHSCoolDownTime));
-			JsonObject->SetField(TEXT("VHSCoolDownTime"), value5_1);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("VHSCoolDownTime"), player_default_param.VHSCoolDownTime);
 
 			FString OutputString;
 			TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
@@ -518,66 +490,24 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 		else if (validity_parames[i] == EPrameType::PlayerMovement) {
 			TSharedPtr <FJsonObject> JsonObject = MakeShareable(new FJsonObject);
 
-			{
-				TSharedPtr<FJsonValueNumber> value1_1 = MakeShareable(new FJsonValueNumber(player_movement_prame.ContinuedSpeedForward));
-				JsonObject->SetField(TEXT("ContinuedSpeedForward"), value1_1);
-
-				TSharedPtr<FJsonValueNumber> value1_2 = MakeShareable(new FJsonValueNumber(player_movement_prame.ContinuedSpeedBackward));
-				JsonObject->SetField(TEXT("ContinuedSpeedBackward"), value1_2);
-
-				TSharedPtr<FJsonValueNumber> value1_3 = MakeShareable(new FJsonValueNumber(player_movement_prame.ContinuedSpeedHorizontal));
-				JsonObject->SetField(TEXT("ContinuedSpeedHorizontal"), value1_3);
-			}
-
-			{
-				TSharedPtr<FJsonValueNumber> value2_1 = MakeShareable(new FJsonValueNumber(player_movement_prame.StepLengthForward));
-				JsonObject->SetField(TEXT("StepLengthForward"), value2_1);
-
-				TSharedPtr<FJsonValueNumber> value2_2 = MakeShareable(new FJsonValueNumber(player_movement_prame.StepLengthBackward));
-				JsonObject->SetField(TEXT("StepLengthBackward"), value2_2);
-
-				TSharedPtr<FJsonValueNumber> value2_3 = MakeShareable(new FJsonValueNumber(player_movement_prame.StepLengthHorizontal));
-				JsonObject->SetField(TEXT("StepLengthHorizontal"), value2_3);
-
-				TSharedPtr<FJsonValueNumber> value2_4 = MakeShareable(new FJsonValueNumber(player_movement_prame.StepMoveTime));
-				JsonObject->SetField(TEXT("StepMoveTime"), value2_4);
-
-				TSharedPtr<FJsonValueNumber> value2_5 = MakeShareable(new FJsonValueNumber(player_movement_prame.StepRigidTime));
-				JsonObject->SetField(TEXT("StepRigidTime"), value2_5);
-			}
-
-			{
-				TSharedPtr<FJsonValueNumber> value3_1 = MakeShareable(new FJsonValueNumber(player_movement_prame.LockOnRotateSpeed));
-				JsonObject->SetField(TEXT("LockOnRotateSpeed"), value3_1);
-
-				TSharedPtr<FJsonValueNumber> value3_2 = MakeShareable(new FJsonValueNumber(player_movement_prame.LockOnRotateLimit));
-				JsonObject->SetField(TEXT("LockOnRotateLimit"), value3_2);
-
-				TSharedPtr<FJsonValueNumber> value3_3 = MakeShareable(new FJsonValueNumber(player_movement_prame.LockOnHeadLimit));
-				JsonObject->SetField(TEXT("LockOnHeadLimit"), value3_3);
-
-				TSharedPtr<FJsonValueNumber> value3_4 = MakeShareable(new FJsonValueNumber(player_movement_prame.LockOnDistanceLimit));
-				JsonObject->SetField(TEXT("LockOnDistanceLimit"), value3_4);
-			}
-
-			{
-				TSharedPtr<FJsonValueNumber> value4_1 = MakeShareable(new FJsonValueNumber(player_movement_prame.TurnAngle));
-				JsonObject->SetField(TEXT("TurnAngle"), value4_1);
-
-				TSharedPtr<FJsonValueNumber> value4_2 = MakeShareable(new FJsonValueNumber(player_movement_prame.TurnAngleAuto));
-				JsonObject->SetField(TEXT("TurnAngleAuto"), value4_2);
-
-				TSharedPtr<FJsonValueNumber> value4_3 = MakeShareable(new FJsonValueNumber(player_movement_prame.TurnTime));
-				JsonObject->SetField(TEXT("TurnTime"), value4_3);
-
-				TSharedPtr<FJsonValueNumber> value4_4 = MakeShareable(new FJsonValueNumber(player_movement_prame.TurnInterval));
-				JsonObject->SetField(TEXT("TurnInterval"), value4_4);
-			}
-
-			{
-				TSharedPtr<FJsonValueNumber> value5 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
-				JsonObject->SetField(TEXT("FreeRotationSpeed"), value5);
-			}
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ContinuedSpeedForward"), player_movement_prame.ContinuedSpeedForward);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ContinuedSpeedBackward"), player_movement_prame.ContinuedSpeedBackward);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("ContinuedSpeedHorizontal"), player_movement_prame.ContinuedSpeedHorizontal);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("StepLengthForward"), player_movement_prame.StepLengthForward);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("StepLengthBackward"), player_movement_prame.StepLengthBackward);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("StepLengthHorizontal"), player_movement_prame.StepLengthHorizontal);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("StepMoveTime"), player_movement_prame.StepMoveTime);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("StepRigidTime"), player_movement_prame.StepRigidTime);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("LockOnRotateSpeed"), player_movement_prame.LockOnRotateSpeed);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("LockOnRotateLimit"), player_movement_prame.LockOnRotateLimit);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("LockOnHeadLimit"), player_movement_prame.LockOnHeadLimit);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("LockOnDistanceLimit"), player_movement_prame.LockOnDistanceLimit);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("TurnAngle"), player_movement_prame.TurnAngle);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("TurnAngleAuto"), player_movement_prame.TurnAngleAuto);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("TurnTime"), player_movement_prame.TurnTime);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("TurnInterval"), player_movement_prame.TurnInterval);
+			FuncLib::SetJsonFieldVal_Num(JsonObject, TEXT("FreeRotationSpeed"), player_movement_prame.FreeRotationSpeed);
+			
 			FString OutputString;
 			TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
 			FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
@@ -588,12 +518,9 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 
 	TSharedPtr <FJsonObject> JsonObject1 = MakeShareable(new FJsonObject);
 
-	TSharedPtr<FJsonValueNumber> value1 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
-	JsonObject1->SetField(TEXT("PlayerStartTagPrefix"), value1);
-	TSharedPtr<FJsonValueNumber> value2 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
-	JsonObject1->SetField(TEXT("RoomId"), value2);
-	TSharedPtr<FJsonValueNumber> value3 = MakeShareable(new FJsonValueNumber(player_movement_prame.FreeRotationSpeed));
-	JsonObject1->SetField(TEXT("Wave"), value3);
+	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("PlayerStartTagPrefix"), player_movement_prame.FreeRotationSpeed);
+	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("RoomId"), player_movement_prame.FreeRotationSpeed);
+	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("Wave"), player_movement_prame.FreeRotationSpeed);
 
 	TSharedPtr<FJsonValueObject> a = MakeShareable(new FJsonValueObject(JsonObject1));
 
