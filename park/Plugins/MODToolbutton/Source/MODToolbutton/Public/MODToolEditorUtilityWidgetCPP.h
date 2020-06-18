@@ -324,6 +324,9 @@ struct FEnemyParam {
 	int32 id;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	int32 SkippableWait;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	FString EnemyId;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
@@ -359,7 +362,9 @@ USTRUCT(BlueprintType)
 struct FMapWaveParam{
 	GENERATED_USTRUCT_BODY()
 
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	float DelayTime;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
@@ -373,6 +378,8 @@ USTRUCT(BlueprintType)
 struct FMapQuestParam {
 	GENERATED_USTRUCT_BODY()
 
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FString WaveName;
 	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FMapWaveParam> wave;

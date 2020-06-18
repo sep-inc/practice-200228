@@ -180,6 +180,10 @@ public:
 
 	static void SetJsonFieldVal_Num(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, double InNumber);
 
+	static void SetJsonFieldVal_String(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, const FString& InString);
+
+	static void SetJsonFieldVal_Bool(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, bool InBool);
+
 	//ゲッター
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		static bool GetVarBOOL(FVar var) {

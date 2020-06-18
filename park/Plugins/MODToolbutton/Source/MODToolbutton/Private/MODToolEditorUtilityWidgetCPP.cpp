@@ -579,28 +579,226 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 			UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Weapon/weapon") + weapon_param.ID, OutputString);
 
 		}
+		else if (validity_parames[i] == EPrameType::Map) {
+			
+			TArray<TSharedPtr<FJsonValue>> other_list_JsonArrayObject;
+
+			for (int map_index = 0; map_index < map_quest_param.Num(); map_index++) {
+				{
+					TSharedPtr<FJsonObject> other_list_JsonObject = MakeShareable(new FJsonObject);
+					FuncLib::SetJsonFieldVal_Num(other_list_JsonObject, TEXT("Id"), map_quest_param[map_index].other_list.Id);
+					FuncLib::SetJsonFieldVal_String(other_list_JsonObject, TEXT("Name"), map_quest_param[map_index].other_list.Name);
+					FuncLib::SetJsonFieldVal_String(other_list_JsonObject, TEXT("Level"), map_quest_param[map_index].other_list.Level);
+					FuncLib::SetJsonFieldVal_Num(other_list_JsonObject, TEXT("LifeManaRate"), map_quest_param[map_index].other_list.LifeManaRate);
+					if (map_index == map_quest_param.Num() - 1) {
+						FuncLib::SetJsonFieldVal_Num(other_list_JsonObject, TEXT("MapColor"), 1);
+						FuncLib::SetJsonFieldVal_Bool(other_list_JsonObject, TEXT("bNextLevelEnable"), false);
+					}
+
+					TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(other_list_JsonObject));
+					other_list_JsonArrayObject.Add(obj);
+				}
+				{
+					TSharedPtr <FJsonObject> quest_JsonObject = MakeShareable(new FJsonObject);
+
+					FuncLib::SetJsonFieldVal_String(quest_JsonObject, TEXT("PlayerStartTagPrefix"), TEXT("SQ1"));
+					FuncLib::SetJsonFieldVal_String(quest_JsonObject, TEXT("RoomId"), TEXT("Tut1"));
+					FuncLib::SetJsonFieldVal_String(quest_JsonObject, TEXT("Wave"), map_quest_param[map_index].WaveName);
+
+					TSharedPtr<FJsonValueObject> a = MakeShareable(new FJsonValueObject(quest_JsonObject));
+
+					TArray<TSharedPtr<FJsonValue>> JsonArrayObject1;
+					JsonArrayObject1.Add(a);
+					TArray<TSharedPtr<FJsonValue>> JsonArrayObject2;
+					TSharedPtr<FJsonValueArray> b = MakeShareable(new FJsonValueArray(JsonArrayObject1));
+					JsonArrayObject2.Add(b);
+
+					FString OutputString;
+					TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+					FJsonSerializer::Serialize(JsonArrayObject2, Writer);
+
+					UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Quest/quest") + FString::FromInt(map_quest_param[map_index].other_list.Id), OutputString);
+				}
+				{
+					TSharedPtr <FJsonObject> spawnwave_JsonObject = MakeShareable(new FJsonObject);
+
+					TArray<TSharedPtr<FJsonValue>> wave_JsonArrayObject;
+					for (int wave_index = 0; wave_index < map_quest_param[map_index].wave.Num(); wave_index++) {
+						TSharedPtr<FJsonObject> wave_JsonObject = MakeShareable(new FJsonObject);
+						if (map_quest_param[map_index].wave[wave_index].DelayTime > 0) {
+							FuncLib::SetJsonFieldVal_Num(wave_JsonObject, TEXT("DelayTime"), map_quest_param[map_index].wave[wave_index].DelayTime);
+						}
+						{
+							TArray<TSharedPtr<FJsonValue>> enemy_JsonArrayObject;
+							for (int enemy_index = 0; enemy_index < map_quest_param[map_index].wave[wave_index].enemy.Num(); enemy_index++) {
+								TSharedPtr<FJsonObject> enemy_JsonObject = MakeShareable(new FJsonObject);
+								if (map_quest_param[map_index].wave[wave_index].enemy[enemy_index].SkippableWait > 0) {
+									FuncLib::SetJsonFieldVal_Num(enemy_JsonObject, TEXT("SkippableWait"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].SkippableWait);
+								}
+								FuncLib::SetJsonFieldVal_String(enemy_JsonObject, TEXT("EnemyId"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].EnemyId);
+								FuncLib::SetJsonFieldVal_String(enemy_JsonObject, TEXT("Point"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].Point);
+								FuncLib::SetJsonFieldVal_Num(enemy_JsonObject, TEXT("Count"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].Count);
+								FuncLib::SetJsonFieldVal_Num(enemy_JsonObject, TEXT("Limit"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].Limit);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(enemy_JsonObject));
+								enemy_JsonArrayObject.Add(obj);
+							}
+							wave_JsonObject->SetArrayField("Spawn", enemy_JsonArrayObject);
+						}
+						{
+							TArray<TSharedPtr<FJsonValue>> weapon_JsonArrayObject;
+							for (int weapon_index = 0; weapon_index < map_quest_param[map_index].wave[wave_index].weapon.Num(); weapon_index++) {
+								TSharedPtr<FJsonObject> weapon_JsonObject = MakeShareable(new FJsonObject);
+								FuncLib::SetJsonFieldVal_String(weapon_JsonObject, TEXT("SpawnPointActor"), map_quest_param[map_index].wave[wave_index].weapon[weapon_index].SpawnPointActor);
+								FuncLib::SetJsonFieldVal_String(weapon_JsonObject, TEXT("WeaponClass"), map_quest_param[map_index].wave[wave_index].weapon[weapon_index].WeaponClass);
+								FuncLib::SetJsonFieldVal_Num(weapon_JsonObject, TEXT("Weight"), 1.0f);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(weapon_JsonObject));
+								weapon_JsonArrayObject.Add(obj);
+							}
+							wave_JsonObject->SetArrayField("Weapon", weapon_JsonArrayObject);
+						}
+						if (map_quest_param[map_index].wave[wave_index].weapon.Num() > 0) {
+							FuncLib::SetJsonFieldVal_Num(wave_JsonObject, TEXT("WeaponSpawnIntervalTime"), 0.0f);
+							FuncLib::SetJsonFieldVal_Num(wave_JsonObject, TEXT("StartSpawnWeaponCount"), map_quest_param[map_index].wave[wave_index].weapon.Num());
+						}
+					}
+					spawnwave_JsonObject->SetArrayField("SpawnWaves", wave_JsonArrayObject);
+					FuncLib::SetJsonFieldVal_Bool(spawnwave_JsonObject, TEXT("ShowHUD"), true);
+					FuncLib::SetJsonFieldVal_Bool(spawnwave_JsonObject, TEXT("AutoCleanUpEnemies"), true);
+					FuncLib::SetJsonFieldVal_Bool(spawnwave_JsonObject, TEXT("WillShowAreaResult"), true);
+					FuncLib::SetJsonFieldVal_Bool(spawnwave_JsonObject, TEXT("IsLoop"), false);
+
+					FuncLib::SetJsonFieldVal_Num(spawnwave_JsonObject, TEXT("RequiredRank"), 1);
+					{
+						TSharedPtr <FJsonObject> Achievement_JsonObject = MakeShareable(new FJsonObject);
+						{
+							TArray<TSharedPtr<FJsonValue>> TeamRank_JsonArrayObject;
+							{
+								TSharedPtr <FJsonObject> TeamRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Rank"), 5);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Mana"), 200);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(TeamRank_JsonObject));
+								TeamRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> TeamRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Rank"), 4);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Mana"), 180);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Time"), 240);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(TeamRank_JsonObject));
+								TeamRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> TeamRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Rank"), 3);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Mana"), 150);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Time"), 300);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(TeamRank_JsonObject));
+								TeamRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> TeamRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Rank"), 2);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Mana"), 100);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Time"), 360);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(TeamRank_JsonObject));
+								TeamRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> TeamRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Rank"), 1);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Mana"), 0);
+								FuncLib::SetJsonFieldVal_Num(TeamRank_JsonObject, TEXT("Time"), 0);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(TeamRank_JsonObject));
+								TeamRank_JsonArrayObject.Add(obj);
+							}
+							Achievement_JsonObject->SetArrayField("TeamRank", TeamRank_JsonArrayObject);
+						}
+						{
+							TArray<TSharedPtr<FJsonValue>> SoloRank_JsonArrayObject;
+							{
+								TSharedPtr <FJsonObject> SoloRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Rank"), 5);
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(SoloRank_JsonObject));
+								SoloRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> SoloRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Rank"), 4);
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(SoloRank_JsonObject));
+								SoloRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> SoloRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Rank"), 3);
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(SoloRank_JsonObject));
+								SoloRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> SoloRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Rank"), 2);
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(SoloRank_JsonObject));
+								SoloRank_JsonArrayObject.Add(obj);
+							}
+							{
+								TSharedPtr <FJsonObject> SoloRank_JsonObject = MakeShareable(new FJsonObject);
+
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Rank"), 1);
+								FuncLib::SetJsonFieldVal_Num(SoloRank_JsonObject, TEXT("Time"), 180);
+
+								TSharedPtr<FJsonValueObject> obj = MakeShareable(new FJsonValueObject(SoloRank_JsonObject));
+								SoloRank_JsonArrayObject.Add(obj);
+							}
+							Achievement_JsonObject->SetArrayField("SoloRank", SoloRank_JsonArrayObject);
+						}
+						spawnwave_JsonObject->SetObjectField("Achievement", Achievement_JsonObject);
+					}
+
+					FString OutputString;
+					TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+					FJsonSerializer::Serialize(spawnwave_JsonObject.ToSharedRef(), Writer);
+
+					UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Wave/") + map_quest_param[map_index].WaveName, OutputString);
+				}
+			}
+
+			TSharedPtr<FJsonObject> JsonObject = MakeShareable(new FJsonObject);
+			JsonObject->SetArrayField("OtherList", other_list_JsonArrayObject);
+
+			FString OutputString;
+			TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
+			FJsonSerializer::Serialize(JsonObject.ToSharedRef(), Writer);
+
+			UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Quest/quest"), OutputString);
+		}
 	}
-
-	TSharedPtr <FJsonObject> JsonObject1 = MakeShareable(new FJsonObject);
-
-	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("PlayerStartTagPrefix"), player_movement_prame.FreeRotationSpeed);
-	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("RoomId"), player_movement_prame.FreeRotationSpeed);
-	FuncLib::SetJsonFieldVal_Num(JsonObject1, TEXT("Wave"), player_movement_prame.FreeRotationSpeed);
-
-	TSharedPtr<FJsonValueObject> a = MakeShareable(new FJsonValueObject(JsonObject1));
-
-	TArray<TSharedPtr<FJsonValue>> JsonArrayObject1;
-	JsonArrayObject1.Add(a);
-	TArray<TSharedPtr<FJsonValue>> JsonArrayObject2;
-	TSharedPtr<FJsonValueArray> b = MakeShareable(new FJsonValueArray(JsonArrayObject1));
-	JsonArrayObject2.Add(b);
-
-	FString OutputString;
-	TSharedRef<TJsonWriter<>> Writer = TJsonWriterFactory<>::Create(&OutputString);
-	FJsonSerializer::Serialize(JsonArrayObject2, Writer);
-
-	UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Character/test"), OutputString);
 }
+
+	
 
 
 void UMODToolEditorUtilityWidgetCPP::AddPrame(EPrameType type, StartAddress s_a, const char* name, const char* var_type, void* aa) {

@@ -227,7 +227,15 @@ void UMODToolBlueprintFunctionLibrary::SetJsonFieldVal_Num(TSharedPtr<FJsonObjec
 
 }
 
+void UMODToolBlueprintFunctionLibrary::SetJsonFieldVal_String(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, const FString& InString) {
+	TSharedPtr<FJsonValueString> value = MakeShareable(new FJsonValueString(InString));
+	JsonObject->SetField(FieldName, value);
+}
 
+void UMODToolBlueprintFunctionLibrary::SetJsonFieldVal_Bool(TSharedPtr<FJsonObject>& JsonObject, const FString& FieldName, bool InBool) {
+	TSharedPtr<FJsonValueBoolean> value = MakeShareable(new FJsonValueBoolean(InBool));
+	JsonObject->SetField(FieldName, value);
+}
 
 
 
