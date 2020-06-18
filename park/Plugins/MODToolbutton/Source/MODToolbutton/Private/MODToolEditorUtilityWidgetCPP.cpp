@@ -420,6 +420,10 @@ bool UMODToolEditorUtilityWidgetCPP::SetValidityParames(EPrameType type, bool is
 	return false;
 }
 
+bool UMODToolEditorUtilityWidgetCPP::CheckValidityParames() {
+	return validity_parames.Num() != 0;
+}
+
 
 void UMODToolEditorUtilityWidgetCPP::CreateLocalMod(FString mod_name) {
 
@@ -673,3 +677,4 @@ void UMODToolEditorUtilityWidgetCPP::RemoveWave(int32 index) {
 	}
 	map_quest_param[GetQuestIndex()].wave.RemoveAt(index - 1);
 }
+

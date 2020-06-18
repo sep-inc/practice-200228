@@ -336,19 +336,44 @@ struct FEnemyParam {
 	int32 Limit;
 };
 
+USTRUCT(BlueprintType)
+struct FSpawnWeaponParam {
+	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FPrameBase search;
+
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FString SpawnPointActor;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	FString WeaponClass;
+
+};
 
 USTRUCT(BlueprintType)
 struct FMapWaveParam{
 	GENERATED_USTRUCT_BODY()
 
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	float DelayTime;
+
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FEnemyParam> enemy;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	TArray<FSpawnWeaponParam> weapon;
 };
 
 USTRUCT(BlueprintType)
 struct FMapQuestParam {
 	GENERATED_USTRUCT_BODY()
 
+	
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FMapWaveParam> wave;
 
@@ -559,6 +584,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	bool SetValidityParames(EPrameType type, bool is);
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+	bool CheckValidityParames();
 
 	void AddEnemyPrame(const char* name, const char* type, void* aa);
 
