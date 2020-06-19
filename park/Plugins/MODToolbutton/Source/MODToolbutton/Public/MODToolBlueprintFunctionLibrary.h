@@ -57,7 +57,10 @@ struct FGuardCrash {
 USTRUCT(BlueprintType)
 struct FOtherList {
 	GENERATED_USTRUCT_BODY()
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString WaveName;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 Id;
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		FString Name;

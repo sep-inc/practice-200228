@@ -379,9 +379,6 @@ struct FMapQuestParam {
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	FString WaveName;
-	
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FMapWaveParam> wave;
 
 	FOtherList other_list;
@@ -586,6 +583,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void CreateLocalMod(FString mod_name);
+
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void CreateLocalWaveMod(FString mod_name);
 
 	void AddPrame(EPrameType type, StartAddress s_a, const char* name, const char* var_type, void* aa);
 
@@ -829,6 +830,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetMapWavePrame(int32 Wave, FMapWaveParam in) {
 		map_quest_param[GetQuestIndex()].wave[Wave - 1] = in;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void SetMapOtherList(FOtherList in) {
+		map_quest_param[GetQuestIndex()].other_list = in;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
