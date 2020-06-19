@@ -556,6 +556,7 @@ public:
 	FWeaponParam weapon_param_max;
 	FMapParam map_param_max;
 	FEnemyParam enemy_param_max;
+	FSpawnWeaponParam spawn_weapon_prame_max;
 
 	//最低値
 	FPlayerDefaultParame player_default_param_min;
@@ -563,6 +564,7 @@ public:
 	FWeaponParam weapon_param_min;
 	FMapParam map_param_min;
 	FEnemyParam enemy_param_min;
+	FSpawnWeaponParam spawn_weapon_prame_min;
 
 
 	UMODToolEditorUtilityWidgetCPP();
@@ -597,6 +599,8 @@ public:
 	bool CheckValidityParames();
 
 	void AddEnemyPrame(const char* name, const char* type, void* aa);
+
+	void AddWeaponPrame(const char* name, const char* type, void* aa);
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void AddWave();
@@ -800,6 +804,21 @@ public:
 		return map_wave_param_addres[index].type;
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		int32 GetSpawnWeaponPrameItemCount() {
+		return map_wave_weapon_param_addres.Num();
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FString GetSpawnWeaponPrameName(int32 index) {
+		return map_wave_weapon_param_addres[index].name;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FString GetSpawnWeaponPrameType(int32 index) {
+		if (map_wave_weapon_param_addres[index].type == "__int64") return "int64";
+		return map_wave_weapon_param_addres[index].type;
+	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	int32 GetMaxWaveNum() {
@@ -812,6 +831,11 @@ public:
 		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search.GetPrame(var_num, var_type, var);
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void GetSpawnWeaponPrame(int32 wave, int32 index, int32 var_num, FString& var_type, FVar& var) {
+		map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].search.GetPrame(var_num, var_type, var);
+	}
+
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	FMapWaveParam GetMapWavePrame(int32 index) {
 		return map_quest_param[GetQuestIndex()].wave[index];
@@ -820,6 +844,11 @@ public:
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		FString GetMapWaveEnemyId(int32 wave,int32 index) {
 		return map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].EnemyId;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void SetSpawnWeaponPrame(int32 wave, int32 index, int32 var_num, FVar var) {
+		map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].search.SetPrame(var_num, var);
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -853,15 +882,14 @@ public:
 		void GetMaxEnemyPrame(int32 index, FString& var_type, FVar& var) {
 		enemy_param_max.search.GetPrame(index, var_type, var);
 	}
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void GetMaxSpawnWeaponPrame(int32 index, FString& var_type, FVar& var) {
+		spawn_weapon_prame_max.search.GetPrame(index, var_type, var);
+	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
 		FKnockBackLevels GetMaxKnockBackLevelsPrame() {
 		return player_default_param_max.KnockBackLevels[0];
-	}
-
-	UFUNCTION(BlueprintPure, Category = "EUW")
-		FKnockBackLevels GetMinKnockBackLevelsPrame() {
-		return player_default_param_min.KnockBackLevels[0];
 	}
 
 	//最小パラメーターゲット
@@ -875,11 +903,22 @@ public:
 		enemy_param_min.search.GetPrame(index, var_type, var);
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void GetMinSpawnWeaponPrame(int32 index, FString& var_type, FVar& var) {
+		spawn_weapon_prame_min.search.GetPrame(index, var_type, var);
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		FKnockBackLevels GetMinKnockBackLevelsPrame() {
+		return player_default_param_min.KnockBackLevels[0];
+	}
 	
 private:
 
 	TArray<VarPra> map_wave_param_addres;
+	TArray<VarPra> map_wave_weapon_param_addres;
 	FEnemyParam enemy_param_measurement;		//計測用
+	FSpawnWeaponParam spawn_weapon_param_measurement;		//計測用
 
 	int32 quest_num;
 

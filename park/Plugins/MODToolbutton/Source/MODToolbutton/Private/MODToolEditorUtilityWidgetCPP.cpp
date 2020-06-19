@@ -52,11 +52,10 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 		TO_STRING(test5), typeid(map_param.test5).name(), &map_param.test5);
 
 	//エネミーパラメーター
-	//enemy_param_max.EnemyId = 400;
-	//enemy_param_min.EnemyId = 0;
+	enemy_param_max.SkippableWait = 400;
+	enemy_param_min.SkippableWait = 0;
+	AddEnemyPrame(TO_STRING(Count), typeid(enemy_param_measurement.SkippableWait).name(), &enemy_param_measurement.SkippableWait);
 	AddEnemyPrame(TO_STRING(EnemyId), typeid(enemy_param_measurement.EnemyId).name(), &enemy_param_measurement.EnemyId);
-	//enemy_param_max.Point = 400;
-	//enemy_param_min.Point = 0;
 	AddEnemyPrame(TO_STRING(Point), typeid(enemy_param_measurement.Point).name(), &enemy_param_measurement.Point);
 	enemy_param_max.Count = 400;
 	enemy_param_min.Count = 0;
@@ -65,6 +64,9 @@ UMODToolEditorUtilityWidgetCPP::UMODToolEditorUtilityWidgetCPP() {
 	enemy_param_min.Limit = 0;
 	AddEnemyPrame(TO_STRING(Limit), typeid(enemy_param_measurement.Limit).name(), &enemy_param_measurement.Limit);
 
+	//スポーンウェポンパラメーター
+	AddWeaponPrame(TO_STRING(SpawnPointActor), typeid(spawn_weapon_param_measurement.SpawnPointActor).name(), &spawn_weapon_param_measurement.SpawnPointActor);
+	AddWeaponPrame(TO_STRING(WeaponClass), typeid(spawn_weapon_param_measurement.WeaponClass).name(), &spawn_weapon_param_measurement.WeaponClass);
 }
 
 UMODToolEditorUtilityWidgetCPP::~UMODToolEditorUtilityWidgetCPP() {
@@ -99,8 +101,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(DrainHealthValuePerSeconds), typeid(player_default_param.DrainHealthValuePerSeconds).name(), &player_default_param.DrainHealthValuePerSeconds);
 
-
-
 	player_default_param_max.Energy.MaxValue = 100.f;
 	player_default_param_min.Energy.MaxValue = 0.f;
 	player_default_param_max.Energy.DelaySecondsForIncrementValue = 100.f;
@@ -121,27 +121,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(SpecialGage), typeid(player_default_param.SpecialGage).name(), &player_default_param.SpecialGage);
-
-
-
-	/*player_default_param_max.SpecialGage_MaxValue = 100.f;
-	player_default_param_min.SpecialGage_MaxValue = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(SpecialGage_MaxValue), typeid(player_default_param.SpecialGage_MaxValue).name(), &player_default_param.SpecialGage_MaxValue);
-	player_default_param_max.SpecialGage_DecreaseSpeed = 100.f;
-	player_default_param_min.SpecialGage_DecreaseSpeed = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(SpecialGage_DecreaseSpeed), typeid(player_default_param.SpecialGage_DecreaseSpeed).name(), &player_default_param.SpecialGage_DecreaseSpeed);
-	player_default_param_max.IncreaseValues.TakeDamage = 100.f;
-	player_default_param_min.SpecialGage_IncreaseValues_TakeDamage = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(SpecialGage_IncreaseValues_TakeDamage), typeid(player_default_param.SpecialGage_IncreaseValues_TakeDamage).name(), &player_default_param.SpecialGage_IncreaseValues_TakeDamage);
-	player_default_param_max.SpecialGage_IncreaseValues_DodgeByVHS = 100.f;
-	player_default_param_min.SpecialGage_IncreaseValues_DodgeByVHS = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(SpecialGage_IncreaseValues_DodgeByVHS), typeid(player_default_param.SpecialGage_IncreaseValues_DodgeByVHS).name(), &player_default_param.SpecialGage_IncreaseValues_DodgeByVHS);*/
-
-
 
 	player_default_param_max.ResuscitateDelayTime = 100.f;
 	player_default_param_min.ResuscitateDelayTime = 0.f;
@@ -183,21 +162,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerDefaultParame() {
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
 		TO_STRING(GuardCrash), typeid(player_default_param.GuardCrash).name(), &player_default_param.GuardCrash);
 
-	/*player_default_param_max.GuardCrash_Time = 100.f;
-	player_default_param_min.GuardCrash_Time = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(KnockBackLevel5_Time), typeid(player_default_param.GuardCrash_Time).name(), &player_default_param.GuardCrash_Time);
-	player_default_param_max.GuardCrash_CameraBackDistance = 100.f;
-	player_default_param_min.GuardCrash_CameraBackDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(GuardCrash_CameraBackDistance), typeid(player_default_param.GuardCrash_CameraBackDistance).name(), &player_default_param.GuardCrash_CameraBackDistance);
-	player_default_param_max.GuardCrash_CameraUpDistance = 100.f;
-	player_default_param_min.GuardCrash_CameraUpDistance = 0.f;
-	AddPrame(EPrameType::PlayerDefault, player_parame_start,
-		TO_STRING(GuardCrash_CameraUpDistance), typeid(player_default_param.GuardCrash_CameraUpDistance).name(), &player_default_param.GuardCrash_CameraUpDistance);
-*/
-
-
 	player_default_param_max.VHSCoolDownTime = 100.f;
 	player_default_param_min.VHSCoolDownTime = 0.f;
 	AddPrame(EPrameType::PlayerDefault, player_parame_start,
@@ -225,8 +189,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerMovementPrameParame() {
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
 		TO_STRING(ContinuedSpeedForward), typeid(player_movement_prame.ContinuedSpeedHorizontal).name(), &player_movement_prame.ContinuedSpeedHorizontal);
 
-
-
 	player_movement_max.StepLengthForward = 5000.f;
 	player_movement_min.StepLengthForward = 0.f;
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
@@ -248,8 +210,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerMovementPrameParame() {
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
 		TO_STRING(StepRigidTime), typeid(player_movement_prame.StepRigidTime).name(), &player_movement_prame.StepRigidTime);
 
-
-
 	player_movement_max.LockOnRotateSpeed = 5000.f;
 	player_movement_min.LockOnRotateSpeed = 0.f;
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
@@ -266,8 +226,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerMovementPrameParame() {
 	player_movement_min.LockOnDistanceLimit = 0.f;
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
 		TO_STRING(LockOnDistanceLimit), typeid(player_movement_prame.LockOnDistanceLimit).name(), &player_movement_prame.LockOnDistanceLimit);
-
-
 
 	player_movement_max.TurnAngle = 5000.f;
 	player_movement_min.TurnAngle = 0.f;
@@ -289,7 +247,6 @@ void UMODToolEditorUtilityWidgetCPP::InitPlayerMovementPrameParame() {
 	player_movement_min.FreeRotationSpeed = 0.f;
 	AddPrame(EPrameType::PlayerMovement, player_movement_parame_start,
 		TO_STRING(FreeRotationSpeed), typeid(player_movement_prame.FreeRotationSpeed).name(), &player_movement_prame.FreeRotationSpeed);
-
 }
 
 void UMODToolEditorUtilityWidgetCPP::InitWeaponParam() {
@@ -299,8 +256,6 @@ void UMODToolEditorUtilityWidgetCPP::InitWeaponParam() {
 	weapon_param_start.max_address = (int64)(&weapon_param_max.start);
 	weapon_param_start.min_address = (int64)(&weapon_param_min.start);
 
-	//weapon_param_max.ID = 200;
-	//weapon_param_min.ID = 0;
 	AddPrame(EPrameType::Weapons, weapon_param_start,
 		TO_STRING(ID), typeid(weapon_param.ID).name(), &weapon_param.ID);
 	weapon_param_max.DamageAmount = 200;
@@ -805,9 +760,6 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalWaveMod(FString mod_name) {
 	UMODToolBlueprintFunctionLibrary::FileCreate(mod_name + ("/Quest/quest"), OutputString);
 }
 
-	
-
-
 void UMODToolEditorUtilityWidgetCPP::AddPrame(EPrameType type, StartAddress s_a, const char* name, const char* var_type, void* aa) {
 	prames[type].AddVar(name, var_type, aa);
 	int64 byte_count = (int64)(aa) - s_a.main_address;
@@ -837,10 +789,28 @@ void UMODToolEditorUtilityWidgetCPP::AddEnemyPrame(const char* name, const char*
 	enemy_param_min.search.AddVar(name, type, (void*)min_address);
 }
 
+void UMODToolEditorUtilityWidgetCPP::AddWeaponPrame(const char* name, const char* type, void* aa) {
+	VarPra inst;
+	inst.name = name;
+	inst.type = type;
+
+	int64 byte_count = (int64)(aa)-(int64)(&spawn_weapon_param_measurement.start);
+	inst.byte_count = byte_count;
+
+	map_wave_weapon_param_addres.Add(inst);
+
+	int64 max_address = (int64)(&spawn_weapon_prame_max.start) + byte_count;
+	int64 min_address = (int64)(&spawn_weapon_prame_min.start) + byte_count;
+
+	spawn_weapon_prame_max.search.AddVar(name, type, (void*)max_address);
+	spawn_weapon_prame_min.search.AddVar(name, type, (void*)min_address);
+}
+
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
 	map_quest_param[GetQuestIndex()].wave.Add(FMapWaveParam());
 	int32 index_num = map_quest_param[GetQuestIndex()].wave.Num() - 1;
 	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(),6);
+	map_quest_param[GetQuestIndex()].wave[index_num].weapon.Init(FSpawnWeaponParam(), 6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
@@ -853,6 +823,16 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 		}
 	}
 
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < map_wave_weapon_param_addres.Num(); j++) {
+			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].start) + map_wave_weapon_param_addres[j].byte_count;
+			map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].search.AddVar(
+				TCHAR_TO_ANSI(*map_wave_weapon_param_addres[j].name),
+				TCHAR_TO_ANSI(*map_wave_weapon_param_addres[j].type),
+				(void*)address
+			);
+		}
+	}
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddQuest() {
@@ -863,6 +843,7 @@ void UMODToolEditorUtilityWidgetCPP::AddQuest() {
 void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 	int32 set_index = map_quest_param[GetQuestIndex()].wave.Insert(FMapWaveParam(), index - 1);
 	map_quest_param[GetQuestIndex()].wave[set_index].enemy.Init(FEnemyParam(), 6);
+	map_quest_param[GetQuestIndex()].wave[set_index].weapon.Init(FSpawnWeaponParam(), 6);
 
 	for (int i = 0; i < 6; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
@@ -870,6 +851,17 @@ void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 			map_quest_param[GetQuestIndex()].wave[set_index].enemy[i].search.AddVar(
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].name),
 				TCHAR_TO_ANSI(*map_wave_param_addres[j].type),
+				(void*)address
+			);
+		}
+	}
+
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < map_wave_weapon_param_addres.Num(); j++) {
+			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[set_index].weapon[i].start) + map_wave_weapon_param_addres[j].byte_count;
+			map_quest_param[GetQuestIndex()].wave[set_index].weapon[i].search.AddVar(
+				TCHAR_TO_ANSI(*map_wave_weapon_param_addres[j].name),
+				TCHAR_TO_ANSI(*map_wave_weapon_param_addres[j].type),
 				(void*)address
 			);
 		}
