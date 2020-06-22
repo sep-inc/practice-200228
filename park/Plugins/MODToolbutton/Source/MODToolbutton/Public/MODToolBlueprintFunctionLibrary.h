@@ -12,6 +12,8 @@
  * 
  */
 
+
+
 USTRUCT(BlueprintType)
 struct FEnergy {
 	GENERATED_USTRUCT_BODY()
@@ -123,7 +125,7 @@ USTRUCT(BlueprintType)
 struct FVar {
 	GENERATED_USTRUCT_BODY()
 
-	bool bool_var;
+		bool bool_var;
 	int32 int32_var;
 	float float_var;
 	FString string_var;
@@ -135,6 +137,193 @@ struct FVar {
 	FSpecialGage_W special_gage_w_var;
 	FTwoHandCorrections two_hand_corrections_var;
 	TArray<FKnockBackLevels> array_knockBackLevels_var;
+};
+
+USTRUCT(BlueprintType)
+struct FPrameBase {
+	GENERATED_USTRUCT_BODY()
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		TArray<FString> var_name;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		TArray<FString> var_Type;
+
+	TArray<void*> var_address;
+
+	void AddVar(const char* name, const char* type, void* aa) {
+		var_name.Add(name);
+		//printf("%s", typeid(var).name());
+		//FString kata = (char*)typeid(var).name();
+		var_Type.Add(type);
+
+		var_address.Add(aa);
+	}
+
+
+	void GetPrame(int32 index, FString& var_type, FVar& var) {
+		if (var_name.Num() > index && index >= 0) {
+			FString type = var_Type[index];
+
+			if (type == "bool") {
+				var.bool_var = *((bool*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "int") {
+				var.int32_var = *((int32*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "float") {
+				var.float_var = *((float*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "class FString") {
+				var.string_var = *((FString*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "__int64") {
+				var.int64_var = *((int64*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "class TArray<int, class TSizedDefaultAllocator<32> >") {
+				var.array_int32 = *((TArray<int32>*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FEnergy") {
+				var.energy_var = *((FEnergy*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FSpecialGage_P") {
+				var.special_gage_p_var = *((FSpecialGage_P*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FGuardCrash") {
+				var.guard_crash_var = *((FGuardCrash*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FSpecialGage_W") {
+				var.special_gage_w_var = *((FSpecialGage_W*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "struct FTwoHandCorrections") {
+				var.two_hand_corrections_var = *((FTwoHandCorrections*)var_address[index]);
+				var_type = type;
+				return;
+			}
+			else if (type == "class TArray<struct FKnockBackLevels, class TSizedDefaultAllocator<32> >") {
+				var.array_knockBackLevels_var = *((TArray<FKnockBackLevels>*)var_address[index]);
+				var_type = type;
+				return;
+			}
+		}
+	}
+
+
+	void SetPrame(int32 index, FVar var) {
+		if (var_name.Num() > index && index >= 0) {
+			FString type = var_Type[index];
+
+			//prame.AddVar(TO_STRING(Damage), typeid(prame.Damage).name());	//const char* kata = typeid(a).name();
+
+			//FString kata = typeid(a).name();
+			if (type == "bool") {
+				*((bool*)var_address[index]) = var.bool_var;
+				return;
+			}
+			else if (type == "int") {
+				*((int32*)var_address[index]) = var.int32_var;
+				return;
+			}
+			else if (type == "float") {
+				*((float*)var_address[index]) = var.float_var;
+				return;
+			}
+			else if (type == "class FString") {
+				*((FString*)var_address[index]) = var.string_var;
+				return;
+			}
+			else if (type == "__int64") {
+				*((int64*)var_address[index]) = var.int64_var;
+				return;
+			}
+			else if (type == "class TArray<int, class TSizedDefaultAllocator<32> >") {
+				*((TArray<int32>*)var_address[index]) = var.array_int32;
+				return;
+			}
+			else if (type == "struct FEnergy") {
+				*((FEnergy*)var_address[index]) = var.energy_var;
+				return;
+			}
+			else if (type == "struct FSpecialGage_P") {
+				*((FSpecialGage_P*)var_address[index]) = var.special_gage_p_var;
+				return;
+			}
+			else if (type == "struct FGuardCrash") {
+				*((FGuardCrash*)var_address[index]) = var.guard_crash_var;
+				return;
+			}
+			else if (type == "struct FSpecialGage_W") {
+				*((FSpecialGage_W*)var_address[index]) = var.special_gage_w_var;
+				return;
+			}
+			else if (type == "struct FTwoHandCorrections") {
+				*((FTwoHandCorrections*)var_address[index]) = var.two_hand_corrections_var;
+				return;
+			}
+			else if (type == "class TArray<struct FKnockBackLevels,class TSizedDefaultAllocator<32> >") {
+				*((TArray<FKnockBackLevels>*)var_address[index]) = var.array_knockBackLevels_var;
+				printf("aaa");
+				return;
+			}
+		}
+	}
+
+	FString GetType(int32 index) {
+		if (var_Type[index] == "__int64") return "int64";
+		return var_Type[index];
+	}
+
+	FString GetName(int32 index) {
+		return var_name[index];
+	}
+};
+
+
+
+USTRUCT(BlueprintType)
+struct FEnemyParam {
+	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FPrameBase search;
+
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 SkippableWait;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString EnemyId;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString Point;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Count;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 Limit;
 };
 
 
