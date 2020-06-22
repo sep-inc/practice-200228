@@ -809,10 +809,10 @@ void UMODToolEditorUtilityWidgetCPP::AddWeaponPrame(const char* name, const char
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
 	map_quest_param[GetQuestIndex()].wave.Add(FMapWaveParam());
 	int32 index_num = map_quest_param[GetQuestIndex()].wave.Num() - 1;
-	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(),6);
-	map_quest_param[GetQuestIndex()].wave[index_num].weapon.Init(FSpawnWeaponParam(), 6);
+	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(),16);
+	map_quest_param[GetQuestIndex()].wave[index_num].weapon.Init(FSpawnWeaponParam(), 16);
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 16; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].search.AddVar(
@@ -823,7 +823,7 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 		}
 	}
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < 16; i++) {
 		for (int j = 0; j < map_wave_weapon_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].start) + map_wave_weapon_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].search.AddVar(
@@ -833,6 +833,10 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 			);
 		}
 	}
+}
+
+void UMODToolEditorUtilityWidgetCPP::ChangeMap() {
+
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddQuest() {

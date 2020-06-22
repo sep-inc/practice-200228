@@ -425,6 +425,9 @@ public:
 	void AddWave();
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void ChangeMap();
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void AddQuest();
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -672,10 +675,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void SetAllEnemyPrame(int32 wave, int32 index, FEnemyParam var) {
-		//FPrameBase inst = map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search;
-		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].SkippableWait = var.SkippableWait;
-		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].EnemyId = var.EnemyId;
-		//map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search = inst;
+		FPrameBase inst = map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search;
+		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index] = var;
+		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search = inst;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -749,4 +751,5 @@ private:
 
 	int32 quest_num;
 
+	int32 map_num;
 };
