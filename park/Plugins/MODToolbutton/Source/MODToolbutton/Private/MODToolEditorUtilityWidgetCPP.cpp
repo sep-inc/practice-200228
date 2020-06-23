@@ -9,6 +9,9 @@
 
 typedef UMODToolBlueprintFunctionLibrary FuncLib;
 
+#define MAP_ENEMY_SLOT_SIZE1 16
+#define MAP_ENEMY_SLOT_SIZE2 9
+#define MAP_ENEMY_SLOT_SIZE3 24
 
 #include <typeinfo>
 
@@ -592,6 +595,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalWaveMod(FString mod_name) {
 				{
 					TArray<TSharedPtr<FJsonValue>> enemy_JsonArrayObject;
 					for (int enemy_index = 0; enemy_index < map_quest_param[map_index].wave[wave_index].enemy.Num(); enemy_index++) {
+						if (map_quest_param[map_index].wave[wave_index].enemy[enemy_index].EnemyId == "")continue;
 						TSharedPtr<FJsonObject> enemy_JsonObject = MakeShareable(new FJsonObject);
 						if (map_quest_param[map_index].wave[wave_index].enemy[enemy_index].SkippableWait > 0) {
 							FuncLib::SetJsonFieldVal_Num(enemy_JsonObject, TEXT("SkippableWait"), map_quest_param[map_index].wave[wave_index].enemy[enemy_index].SkippableWait);
@@ -609,6 +613,7 @@ void UMODToolEditorUtilityWidgetCPP::CreateLocalWaveMod(FString mod_name) {
 				{
 					TArray<TSharedPtr<FJsonValue>> weapon_JsonArrayObject;
 					for (int weapon_index = 0; weapon_index < map_quest_param[map_index].wave[wave_index].weapon.Num(); weapon_index++) {
+						if (map_quest_param[map_index].wave[wave_index].weapon[weapon_index].SpawnPointActor == "")continue;
 						TSharedPtr<FJsonObject> weapon_JsonObject = MakeShareable(new FJsonObject);
 						FuncLib::SetJsonFieldVal_String(weapon_JsonObject, TEXT("SpawnPointActor"), map_quest_param[map_index].wave[wave_index].weapon[weapon_index].SpawnPointActor);
 						FuncLib::SetJsonFieldVal_String(weapon_JsonObject, TEXT("WeaponClass"), map_quest_param[map_index].wave[wave_index].weapon[weapon_index].WeaponClass);
@@ -807,12 +812,17 @@ void UMODToolEditorUtilityWidgetCPP::AddWeaponPrame(const char* name, const char
 }
 
 void UMODToolEditorUtilityWidgetCPP::AddWave() {
+	int32 slot_size;
+	if (map_type == EMapType::type1) slot_size = MAP_ENEMY_SLOT_SIZE1;
+	else if (map_type == EMapType::type2) slot_size = MAP_ENEMY_SLOT_SIZE2;
+	else if (map_type == EMapType::type3) slot_size = MAP_ENEMY_SLOT_SIZE3;
+
 	map_quest_param[GetQuestIndex()].wave.Add(FMapWaveParam());
 	int32 index_num = map_quest_param[GetQuestIndex()].wave.Num() - 1;
-	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(),16);
-	map_quest_param[GetQuestIndex()].wave[index_num].weapon.Init(FSpawnWeaponParam(), 16);
+	map_quest_param[GetQuestIndex()].wave[index_num].enemy.Init(FEnemyParam(), slot_size);
+	map_quest_param[GetQuestIndex()].wave[index_num].weapon.Init(FSpawnWeaponParam(), slot_size);
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < slot_size; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].start) + map_wave_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[index_num].enemy[i].search.AddVar(
@@ -823,7 +833,7 @@ void UMODToolEditorUtilityWidgetCPP::AddWave() {
 		}
 	}
 
-	for (int i = 0; i < 16; i++) {
+	for (int i = 0; i < slot_size; i++) {
 		for (int j = 0; j < map_wave_weapon_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].start) + map_wave_weapon_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[index_num].weapon[i].search.AddVar(
@@ -845,11 +855,17 @@ void UMODToolEditorUtilityWidgetCPP::AddQuest() {
 }
 
 void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
-	int32 set_index = map_quest_param[GetQuestIndex()].wave.Insert(FMapWaveParam(), index - 1);
-	map_quest_param[GetQuestIndex()].wave[set_index].enemy.Init(FEnemyParam(), 6);
-	map_quest_param[GetQuestIndex()].wave[set_index].weapon.Init(FSpawnWeaponParam(), 6);
+	int32 slot_size;
+	if (map_type == EMapType::type1) slot_size = MAP_ENEMY_SLOT_SIZE1;
+	else if (map_type == EMapType::type2) slot_size = MAP_ENEMY_SLOT_SIZE2;
+	else if (map_type == EMapType::type3) slot_size = MAP_ENEMY_SLOT_SIZE3;
 
-	for (int i = 0; i < 6; i++) {
+
+	int32 set_index = map_quest_param[GetQuestIndex()].wave.Insert(FMapWaveParam(), index - 1);
+	map_quest_param[GetQuestIndex()].wave[set_index].enemy.Init(FEnemyParam(), slot_size);
+	map_quest_param[GetQuestIndex()].wave[set_index].weapon.Init(FSpawnWeaponParam(), slot_size);
+
+	for (int i = 0; i < slot_size; i++) {
 		for (int j = 0; j < map_wave_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[set_index].enemy[i].start) + map_wave_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[set_index].enemy[i].search.AddVar(
@@ -860,7 +876,7 @@ void UMODToolEditorUtilityWidgetCPP::InsertWave(int32 index) {
 		}
 	}
 
-	for (int i = 0; i < 6; i++) {
+	for (int i = 0; i < slot_size; i++) {
 		for (int j = 0; j < map_wave_weapon_param_addres.Num(); j++) {
 			int64 address = (int64)(&map_quest_param[GetQuestIndex()].wave[set_index].weapon[i].start) + map_wave_weapon_param_addres[j].byte_count;
 			map_quest_param[GetQuestIndex()].wave[set_index].weapon[i].search.AddVar(

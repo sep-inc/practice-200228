@@ -571,6 +571,18 @@ public:
 		return var;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	EMapType ChangeMapType() {
+		int32 index = static_cast<int32>(map_type);
+		index++;
+		map_type = static_cast<EMapType>(index);
+		if (map_type == EMapType::MAX) {
+			map_type = EMapType::type1;
+		}
+		return map_type;
+	}
+
+
 	UFUNCTION(BlueprintPure, Category = "EUW")
 	TMap<EPrameType, FPrameBase>GetPrames() {
 		return prames;
@@ -691,7 +703,10 @@ public:
 		map_quest_param[GetQuestIndex()].wave[Wave - 1].enemy[index].id = id;
 	}
 
-
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void RemoveQuest() {
+		map_quest_param[GetQuestIndex()] = FMapQuestParam();
+	}
 	//最大パラメーターゲット
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 	void GetMaxPrame(EPrameType prameType, int32 index, FString& var_type, FVar& var) {
@@ -742,5 +757,5 @@ private:
 
 	int32 quest_num;
 
-	int32 map_num;
+	EMapType map_type;
 };

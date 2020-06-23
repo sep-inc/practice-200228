@@ -362,6 +362,15 @@ enum class ESortType : uint8
 	Type
 };
 
+UENUM(BlueprintType)
+enum class EMapType : uint8
+{
+	type1,
+	type2,
+	type3,
+	MAX
+};
+
 
 UCLASS()
 class MODTOOLBUTTON_API UMODToolBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
