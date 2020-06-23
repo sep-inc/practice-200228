@@ -157,26 +157,6 @@ struct FMapParam {
 };
 
 
-
-USTRUCT(BlueprintType)
-struct FSpawnWeaponParam {
-	GENERATED_USTRUCT_BODY()
-
-		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		FPrameBase search;
-
-	int start;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 id;
-
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	FString SpawnPointActor;
-	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-	FString WeaponClass;
-
-};
-
 USTRUCT(BlueprintType)
 struct FMapWaveParam{
 	GENERATED_USTRUCT_BODY()
@@ -225,7 +205,8 @@ enum class EVarType : uint8
 	GUARD_CRASH,
 	SPECIAL_GAGE_W,
 	TWO_HAND_CORRECTIONS,
-	ARRAY_KNOCKBACKLEVELS
+	ARRAY_KNOCKBACKLEVELS,
+	ENEMY_SLOT_TYPE
 };
 
 
@@ -290,7 +271,8 @@ struct FUnDoLog {
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	TArray<FKnockBackLevels> ARRAY_KNOCKBACKLEVELS_type;
 
-	
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+	EEnemySlotType ENEMY_SLOT_TYPE;
 };
 
 
@@ -581,6 +563,15 @@ public:
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
+		FUnDoLog CreateUnDoLogENEMY_SLOT_TYPE(int32 index, EEnemySlotType in) {
+		FUnDoLog var;
+		var.var_type = EVarType::ENEMY_SLOT_TYPE;
+		var.index = index;
+		var.ENEMY_SLOT_TYPE = in;
+		return var;
+	}
+
+	UFUNCTION(BlueprintPure, Category = "EUW")
 	TMap<EPrameType, FPrameBase>GetPrames() {
 		return prames;
 	}
@@ -664,8 +655,8 @@ public:
 	}
 
 	UFUNCTION(BlueprintPure, Category = "EUW")
-		FString GetMapWaveEnemyId(int32 wave,int32 index) {
-		return map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].EnemyId;
+		EEnemySlotType GetMapWaveEnemyId(int32 wave,int32 index) {
+		return map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].id;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
@@ -696,8 +687,8 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
-		void SetMapWaveEnemyId(int32 Wave, int32 index, FString id) {
-		map_quest_param[GetQuestIndex()].wave[Wave - 1].enemy[index].EnemyId = id;
+		void SetMapWaveEnemyId(int32 Wave, int32 index, EEnemySlotType id) {
+		map_quest_param[GetQuestIndex()].wave[Wave - 1].enemy[index].id = id;
 	}
 
 

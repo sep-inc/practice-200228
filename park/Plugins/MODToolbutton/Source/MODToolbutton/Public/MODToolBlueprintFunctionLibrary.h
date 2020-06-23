@@ -296,6 +296,15 @@ struct FPrameBase {
 	}
 };
 
+UENUM(BlueprintType)
+enum class EEnemySlotType : uint8
+{
+	None,
+	Type1,
+	Type2,
+	Type3,
+	Type4
+};
 
 
 USTRUCT(BlueprintType)
@@ -308,7 +317,7 @@ struct FEnemyParam {
 	int start;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 id;
+		EEnemySlotType id;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 SkippableWait;
@@ -324,6 +333,25 @@ struct FEnemyParam {
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		int32 Limit;
+};
+
+USTRUCT(BlueprintType)
+struct FSpawnWeaponParam {
+	GENERATED_USTRUCT_BODY()
+
+		UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FPrameBase search;
+
+	int start;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		int32 id;
+
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString SpawnPointActor;
+	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
+		FString WeaponClass;
+
 };
 
 
