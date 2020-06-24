@@ -725,6 +725,11 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetDelayTime(int32 Wave, float time) {
+		map_quest_param[GetQuestIndex()].wave[Wave - 1].DelayTime = time;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void RemoveQuest() {
 		map_quest_param[GetQuestIndex()] = FMapQuestParam();
 	}

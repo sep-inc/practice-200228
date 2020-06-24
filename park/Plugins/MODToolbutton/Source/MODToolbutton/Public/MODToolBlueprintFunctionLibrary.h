@@ -300,10 +300,26 @@ UENUM(BlueprintType)
 enum class EEnemySlotType : uint8
 {
 	None,
-	Type1,
-	Type2,
-	Type3,
-	Type4
+	SoldierFigment,
+	SoldierRookie,
+	SoldierVeteran,
+	SoldierGeneral,
+	SoldierElite,
+	SoldierEliteEx,
+	SoldierDefender,
+	SwordsmanVeteran,
+	SwordsmanGeneral,
+	SwordsmanGeneralEx,
+	SmallOne,
+	SmallOneEx,
+	SniperRookie,
+	SniperVeteran,
+	SniperGeneral,
+	TankVeteran,
+	TankGeneral,
+	TankGeneralEx,
+	Gargantua
+
 };
 
 UENUM(BlueprintType)
