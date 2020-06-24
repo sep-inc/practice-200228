@@ -326,10 +326,36 @@ UENUM(BlueprintType)
 enum class EWeaponSlotType : uint8
 {
 	None,
-	Type1,
-	Type2,
-	Type3,
-	Type4
+	SwordLv1,
+	SwordLv2,
+	SwordLv3,
+	RapierLv1,
+	RapierLv2,
+	RapierLv3,
+	MaceLv1,
+	MaceLv2,
+	MaceLv3,
+	ShortSwordLv1,
+	ShortSwordLv2,
+	ShortSwordLv3,
+	MediumSwordLv1,
+	MediumSwordLv2,
+	MediumSwordLv3,
+	LongSwordLv1,
+	LongSwordLv2,
+	LongSwordLv3,
+	AxeLv1,
+	AxeLv2,
+	AxeLv3,
+	DestroyerSwordLv1,
+	DestroyerSwordLv2,
+	DestroyerSwordLv3,
+	BattleAxe,
+	AssassinDagger,
+	Katana,
+	BigHammer,
+	Club,
+	BigSword
 };
 
 USTRUCT(BlueprintType)
