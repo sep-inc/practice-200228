@@ -206,7 +206,8 @@ enum class EVarType : uint8
 	SPECIAL_GAGE_W,
 	TWO_HAND_CORRECTIONS,
 	ARRAY_KNOCKBACKLEVELS,
-	ENEMY_SLOT_TYPE
+	ENEMY_SLOT_TYPE,
+	WEAPON_SLOT_TYPE
 };
 
 
@@ -273,6 +274,8 @@ struct FUnDoLog {
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 	EEnemySlotType ENEMY_SLOT_TYPE;
+
+
 };
 
 
@@ -671,6 +674,11 @@ public:
 		return map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].id;
 	}
 
+	UFUNCTION(BlueprintPure, Category = "EUW")
+		EWeaponSlotType GetMapWaveWeaponId(int32 wave, int32 index) {
+		return map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].id;
+	}
+
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetSpawnWeaponPrame(int32 wave, int32 index, int32 var_num, FVar var) {
 		map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].search.SetPrame(var_num, var);
@@ -682,6 +690,14 @@ public:
 		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index] = var;
 		map_quest_param[GetQuestIndex()].wave[wave - 1].enemy[index].search = inst;
 	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+	void SetAllWeaponPrame(int32 wave, int32 index, FSpawnWeaponParam var) {
+		FPrameBase inst = map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].search;
+		map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index] = var;
+		map_quest_param[GetQuestIndex()].wave[wave - 1].weapon[index].search = inst;
+	}
+
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetEnemyPrame(int32 wave, int32 index, int32 var_num, FVar var) {
@@ -701,6 +717,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EUW")
 		void SetMapWaveEnemyId(int32 Wave, int32 index, EEnemySlotType id) {
 		map_quest_param[GetQuestIndex()].wave[Wave - 1].enemy[index].id = id;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "EUW")
+		void SetMapWaveWeaponId(int32 Wave, int32 index, EWeaponSlotType id) {
+		map_quest_param[GetQuestIndex()].wave[Wave - 1].weapon[index].id = id;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "EUW")

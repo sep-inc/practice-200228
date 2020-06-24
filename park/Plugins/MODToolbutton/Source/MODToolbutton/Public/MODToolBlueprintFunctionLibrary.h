@@ -306,6 +306,15 @@ enum class EEnemySlotType : uint8
 	Type4
 };
 
+UENUM(BlueprintType)
+enum class EWeaponSlotType : uint8
+{
+	None,
+	Type1,
+	Type2,
+	Type3,
+	Type4
+};
 
 USTRUCT(BlueprintType)
 struct FEnemyParam {
@@ -345,7 +354,7 @@ struct FSpawnWeaponParam {
 	int start;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
-		int32 id;
+		EWeaponSlotType id;
 
 	UPROPERTY(EditAnyWhere, BlueprintReadWrite, Category = "Prame")
 		FString SpawnPointActor;
