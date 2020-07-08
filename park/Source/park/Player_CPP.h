@@ -126,6 +126,10 @@ public:
 		Head.pos = head;
 	}
 
+	UFUNCTION(BlueprintCallable, Category = "MOD")
+		AActor* LoadPakFile(const FString pak_file_name);
+
+	void GetAssetsInDirectory(const TSubclassOf<UObject> assetClass, const FString path, const bool bRecursive, TArray<UObject*>&assets);
 private:
 
 	void Move();

@@ -2,6 +2,13 @@
 
 
 #include "Player_CPP.h"
+#include "HAL/PlatformFilemanager.h"
+#include "IPlatformFilePak.h"
+#include "Engine/StreamableManager.h"
+#include "Misc/PackageName.h"
+#include "AssetRegistryModule.h"
+#include "Engine/ObjectLibrary.h"
+#include "Engine/World.h"
 
 // Sets default values
 APlayer_CPP::APlayer_CPP()
@@ -371,3 +378,157 @@ void APlayer_CPP::AimingMotionCheck() {
 		aiming_frag = false;
 	}
 }
+
+AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
+
+	//プラットフォームファイルの生成
+	FPakPlatformFile* PakPlatformFile = nullptr;
+	if (PakPlatformFile == nullptr) {
+		IPlatformFile* exi = FPlatformFileManager::Get().FindPlatformFile(TEXT("PakFile"));
+		//すでに存在する場合そのまま使用できる
+		if (exi) {
+			PakPlatformFile = static_cast<FPakPlatformFile*>(exi);
+		}
+		else {
+			IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+			PakPlatformFile = new FPakPlatformFile();
+			PakPlatformFile->Initialize(&PlatformFile, TEXT(""));
+			PakPlatformFile->InitializeNewAsyncIO();
+			FPlatformFileManager::Get().SetPlatformFile(*PakPlatformFile);
+		}
+	}
+	
+	//名前確認
+	FString pla_name = PakPlatformFile->GetName();
+	UE_LOG(LogClass, Log, TEXT("%s"), *pla_name);
+	
+	//Pakファイル生成
+	FPakFile PakFile(PakPlatformFile->GetLowerLevel(),*pak_file_name, true);
+
+
+	//TArray<FString> ArrAllMountedPakFile;
+	//PakPlatformFile->GetMountedPakFilenames(ArrAllMountedPakFile);
+	//for (int32 i = 0; i < ArrAllMountedPakFile.Num(); i++)
+	//{
+	//	FString PakFileName = ArrAllMountedPakFile[i];
+	//	FString PakFilePathFull = FPaths::ConvertRelativePathToFull(PakFileName);
+	//	FPakFile PakFile(PakPlatformFile->GetLowerLevel(), *PakFilePathFull, false);
+	//	TArray<FString> FileList;
+	//	FString MountPoint = PakFile.GetMountPoint();
+	//	PakPlatformFile->Mount(*PakFilePathFull, 0, *MountPoint);
+	//	PakFile.FindFilesAtPath(FileList, *MountPoint, true, false, true);
+	//	for (int32 j = 0; j < FileList.Num(); j++)
+	//	{
+	//		FString AssetName = FileList[j];
+	//		FString AssetShortName = FPackageName::GetShortName(AssetName);
+	//		FString FileName, FileExt;
+	//		AssetShortName.Split(TEXT("."), &FileName, &FileExt);
+	//		FString NewAssetName = TEXT("/Game/Paks/") + FileName + TEXT(".") + FileName;
+
+	//		FSoftObjectPath StrNewAssetRef = NewAssetName;
+	//		FStreamableManager AssetLoader;
+	//		UObject* NewLoadedObject = AssetLoader.LoadSynchronous(StrNewAssetRef);
+	//		if (NewLoadedObject)
+	//		{
+	//			// do something, cast to compatible type.
+	//			UE_LOG(LogClass, Log, TEXT("Object load Success..."));
+	//		}
+	//		else {
+	//			UE_LOG(LogClass, Error, TEXT("Can't load asset..."));
+	//		}
+	//	}
+	//}
+
+	//マウント
+	FString MountPoint(FPaths::EngineContentDir());
+	PakFile.SetMountPoint(*MountPoint);
+
+
+	//オブジェクト生成
+	if (PakPlatformFile->Mount(*pak_file_name, 0, *MountPoint)) {
+		TArray<FString> FileList;
+	
+
+		PakFile.FindFilesAtPath(FileList, *PakFile.GetMountPoint(), true, false, true);
+		FStreamableManager StreamableManager;
+		FString AssetName = FileList[0];
+	
+		FString AssetShortName = FPackageName::GetShortName(AssetName);
+		FString LeftStr;
+		FString RightStr;
+		AssetShortName.Split(TEXT("."), &LeftStr, &RightStr);
+		AssetName = TEXT("/Engine/Asset/") + LeftStr + TEXT(".") + LeftStr;
+		FStringAssetReference Reference = AssetName;
+
+		TArray<FString> aaaaaa;
+		aaaaaa.Add(AssetName);
+		FAssetRegistryModule& assetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(TEXT("AssetRegistry"));
+		IAssetRegistry& assetRegistry = assetRegistryModule.Get();
+		assetRegistry.ScanPathsSynchronous(aaaaaa, true);
+
+		FString path = "/Engine/Asset/test3d2.test3d2_C"; 
+		TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous(); 
+		if (sc != nullptr)
+		{
+			AActor* a = GetWorld()->SpawnActor<AActor>(sc); // スポーン処理
+			a->SetActorLocation(FVector(1500, 0, 0)); // 確認しやすいように座標を設定
+		}
+
+		//UObject* LoadObject = StreamableManager.LoadSynchronous(Reference);
+		//TArray<UObject*> asset;
+
+		//GetAssetsInDirectory(AActor::StaticClass(), AssetName, true, asset);
+
+		//if (asset.Num() == 0) {
+		//	UE_LOG(LogClass, Error, TEXT("Can't load asset..."));
+		//	return NULL;
+		//}
+		//else {
+		//	UE_LOG(LogClass, Log, TEXT("Object load Success..."));
+		//	return NULL;
+		//}
+
+		//if (LoadObject != nullptr)
+		//{
+		//	UE_LOG(LogClass, Log, TEXT("Object load Success..."));
+		//	AActor* a = (AActor*)LoadObject;
+		//	//AActor* b = GetWorld()->SpawnActor<AActor>(LoadObject->GetClass());
+		//	return a;
+		//}
+		//else
+		//{
+		//	UE_LOG(LogClass, Error, TEXT("Can't load asset..."));
+		//	return NULL;
+		//}
+
+		//終了処理(これがないとUE4がおかしくなる)
+		PakPlatformFile->Unmount(*pak_file_name);
+		FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
+		return NULL;
+	}
+	else
+	{
+		//終了処理(これがないとUE4がおかしくなる)
+		PakPlatformFile->Unmount(*pak_file_name);
+		FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
+		UE_LOG(LogClass, Error, TEXT("Mount failed"));
+		return NULL;
+	}
+}
+
+void APlayer_CPP::GetAssetsInDirectory(const TSubclassOf<UObject> assetClass, const FString path, const bool bRecursive, TArray<UObject*>&assets) {
+	TArray<FAssetData> assetData;
+	TSharedPtr<UObjectLibrary> objectLibrary = MakeShareable(UObjectLibrary::CreateLibrary(assetClass.Get(), false, true));
+	objectLibrary->bRecursivePaths = bRecursive;
+	objectLibrary->LoadAssetDataFromPath(*path);
+	objectLibrary->GetAssetDataList(assetData);
+
+	assets.Reset(assetData.Num());
+
+	for(FAssetData& data : assetData)
+	{
+		assets.Add(data.GetAsset());
+	}
+
+}
+

@@ -8,7 +8,7 @@ public class park : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "DLCTest", "test", "MODToolbutton" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "DLCTest", "test", "MODToolbutton", "PakFile", "AssetRegistry" });
      //   PrivateDependencyModuleNames.AddRange(
      //   new string[]
      //   {
