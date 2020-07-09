@@ -1,9 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+Ôªø// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "IPlatformFilePak.h"
+#include "Engine/SkeletalMesh.h"
 #include "Player_CPP.generated.h"
 
 UENUM(BlueprintType)
@@ -59,7 +61,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void Reset();
 
-	//ÉQÉbÉ^Å[
+	//„Ç≤„ÉÉ„Çø„Éº
 	UFUNCTION(BlueprintPure, Category = "Player")
 	float GetSpeed() { return speed; }
 	UFUNCTION(BlueprintPure, Category = "Player")
@@ -87,7 +89,7 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Player")
 	AnimType GetStandby_anim() { return standby_anim; }
 
-	//ÉZÉbÉ^Å[
+	//„Çª„ÉÉ„Çø„Éº
 	UFUNCTION(BlueprintCallable, Category = "Player")
 	void SetSpeed(float in) {  speed = in; }
 	UFUNCTION(BlueprintCallable, Category = "Player")
@@ -127,7 +129,19 @@ public:
 	}
 
 	UFUNCTION(BlueprintCallable, Category = "MOD")
-		AActor* LoadPakFile(const FString pak_file_name);
+	bool OpenPakFile(const FString pak_file_name);
+
+	UFUNCTION(BlueprintCallable, Category = "MOD")
+	void ClosePakFile(const FString pak_file_name);
+
+	UFUNCTION(BlueprintCallable, Category = "MOD")
+	AActor* LoadPakFile(const FString pak_file_name);
+
+	UFUNCTION(BlueprintCallable, Category = "MOD")
+	AActor* LoadPakFile_Actor(const FString name);
+
+	UFUNCTION(BlueprintCallable, Category = "MOD")
+		USkeletalMesh* LoadPakFile_SkeletalMesh(const FString name);
 
 	void GetAssetsInDirectory(const TSubclassOf<UObject> assetClass, const FString path, const bool bRecursive, TArray<UObject*>&assets);
 private:
@@ -218,6 +232,6 @@ private:
 	MotionControllerMgr M_Con_L;
 	VRHeadGearMgr Head;
 
-
+	FPakPlatformFile* PakPlatformFile = nullptr;
 
 };

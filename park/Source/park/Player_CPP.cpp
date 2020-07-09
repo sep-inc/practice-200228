@@ -1,14 +1,15 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ï»¿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Player_CPP.h"
 #include "HAL/PlatformFilemanager.h"
-#include "IPlatformFilePak.h"
 #include "Engine/StreamableManager.h"
 #include "Misc/PackageName.h"
 #include "AssetRegistryModule.h"
 #include "Engine/ObjectLibrary.h"
+#include "UObject/ConstructorHelpers.h"
 #include "Engine/World.h"
+
 
 // Sets default values
 APlayer_CPP::APlayer_CPP()
@@ -379,13 +380,52 @@ void APlayer_CPP::AimingMotionCheck() {
 	}
 }
 
-AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
-
-	//ƒvƒ‰ƒbƒgƒtƒH[ƒ€ƒtƒ@ƒCƒ‹‚Ì¶¬
-	FPakPlatformFile* PakPlatformFile = nullptr;
+bool APlayer_CPP::OpenPakFile(const FString pak_file_name) {
+	//ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
 	if (PakPlatformFile == nullptr) {
 		IPlatformFile* exi = FPlatformFileManager::Get().FindPlatformFile(TEXT("PakFile"));
-		//‚·‚Å‚É‘¶İ‚·‚éê‡‚»‚Ì‚Ü‚Üg—p‚Å‚«‚é
+		//ã™ã§ã«å­˜åœ¨ã™ã‚‹å ´åˆãã®ã¾ã¾ä½¿ç”¨ã§ãã‚‹
+		if (exi) {
+			PakPlatformFile = static_cast<FPakPlatformFile*>(exi);
+		}
+		else {
+			IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
+			PakPlatformFile = new FPakPlatformFile();
+			PakPlatformFile->Initialize(&PlatformFile, TEXT(""));
+			PakPlatformFile->InitializeNewAsyncIO();
+			FPlatformFileManager::Get().SetPlatformFile(*PakPlatformFile);
+		}
+	}
+
+	//åå‰ç¢ºèª
+	FString pla_name = PakPlatformFile->GetName();
+	UE_LOG(LogClass, Log, TEXT("%s"), *pla_name);
+
+	//Pakãƒ•ã‚¡ã‚¤ãƒ«ç”Ÿæˆ
+	FPakFile PakFile(PakPlatformFile->GetLowerLevel(), *pak_file_name, true);
+
+	//ãƒã‚¦ãƒ³ãƒˆ
+	FString MountPoint(FPaths::EngineContentDir());
+	PakFile.SetMountPoint(*MountPoint);
+
+	if (PakPlatformFile->Mount(*pak_file_name, 0, *MountPoint)) {
+		return true;
+	}
+	return false;
+}
+
+void APlayer_CPP::ClosePakFile(const FString pak_file_name) {
+	PakPlatformFile->Unmount(*pak_file_name);
+	FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
+}
+
+
+AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
+
+	//ãƒ—ãƒ©ãƒƒãƒˆãƒ•ã‚©ãƒ¼ãƒ ãƒ•ã‚¡ã‚¤ãƒ«ã®ç”Ÿæˆ
+	if (PakPlatformFile == nullptr) {
+		IPlatformFile* exi = FPlatformFileManager::Get().FindPlatformFile(TEXT("PakFile"));
+		//ã™ã§ã«å­˜åœ¨ã™ã‚‹å ´åˆãã®ã¾ã¾ä½¿ç”¨ã§ãã‚‹
 		if (exi) {
 			PakPlatformFile = static_cast<FPakPlatformFile*>(exi);
 		}
@@ -398,11 +438,11 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 		}
 	}
 	
-	//–¼‘OŠm”F
+	//åå‰ç¢ºèª
 	FString pla_name = PakPlatformFile->GetName();
 	UE_LOG(LogClass, Log, TEXT("%s"), *pla_name);
 	
-	//Pakƒtƒ@ƒCƒ‹¶¬
+	//Pakãƒ•ã‚¡ã‚¤ãƒ«ç”Ÿæˆ
 	FPakFile PakFile(PakPlatformFile->GetLowerLevel(),*pak_file_name, true);
 
 
@@ -439,12 +479,12 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 	//	}
 	//}
 
-	//ƒ}ƒEƒ“ƒg
+	//ãƒã‚¦ãƒ³ãƒˆ
 	FString MountPoint(FPaths::EngineContentDir());
 	PakFile.SetMountPoint(*MountPoint);
 
 
-	//ƒIƒuƒWƒFƒNƒg¶¬
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	if (PakPlatformFile->Mount(*pak_file_name, 0, *MountPoint)) {
 		TArray<FString> FileList;
 	
@@ -470,8 +510,12 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 		TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous(); 
 		if (sc != nullptr)
 		{
-			AActor* a = GetWorld()->SpawnActor<AActor>(sc); // ƒXƒ|[ƒ“ˆ—
-			a->SetActorLocation(FVector(1500, 0, 0)); // Šm”F‚µ‚â‚·‚¢‚æ‚¤‚ÉÀ•W‚ğİ’è
+			AActor* a = GetWorld()->SpawnActor<AActor>(sc); // ã‚¹ãƒãƒ¼ãƒ³å‡¦ç†
+			a->SetActorLocation(FVector(1500, 0, 0)); // ç¢ºèªã—ã‚„ã™ã„ã‚ˆã†ã«åº§æ¨™ã‚’è¨­å®š
+
+			PakPlatformFile->Unmount(*pak_file_name);
+			FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
+			return a;
 		}
 
 		//UObject* LoadObject = StreamableManager.LoadSynchronous(Reference);
@@ -501,19 +545,44 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 		//	return NULL;
 		//}
 
-		//I—¹ˆ—(‚±‚ê‚ª‚È‚¢‚ÆUE4‚ª‚¨‚©‚µ‚­‚È‚é)
+		//çµ‚äº†å‡¦ç†(ã“ã‚ŒãŒãªã„ã¨UE4ãŒãŠã‹ã—ããªã‚‹)
 		PakPlatformFile->Unmount(*pak_file_name);
 		FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
 		return NULL;
 	}
 	else
 	{
-		//I—¹ˆ—(‚±‚ê‚ª‚È‚¢‚ÆUE4‚ª‚¨‚©‚µ‚­‚È‚é)
+		//çµ‚äº†å‡¦ç†(ã“ã‚ŒãŒãªã„ã¨UE4ãŒãŠã‹ã—ããªã‚‹)
 		PakPlatformFile->Unmount(*pak_file_name);
 		FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
 		UE_LOG(LogClass, Error, TEXT("Mount failed"));
 		return NULL;
 	}
+}
+
+AActor* APlayer_CPP::LoadPakFile_Actor(const FString name) {
+	FString path = "/Engine/Asset/" + name + "." + name + "_C";
+	TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous();
+	if (sc != nullptr)
+	{
+		AActor* a = GetWorld()->SpawnActor<AActor>(sc); // ã‚¹ãƒãƒ¼ãƒ³å‡¦ç†
+		a->SetActorLocation(FVector(1500, 0, 0)); // ç¢ºèªã—ã‚„ã™ã„ã‚ˆã†ã«åº§æ¨™ã‚’è¨­å®š
+		return a;
+	}
+	return NULL;
+}
+
+USkeletalMesh* APlayer_CPP::LoadPakFile_SkeletalMesh(const FString name) {
+	FString path = "/Engine/Asset/" + name + "." + name;
+	//TSubclassOf<class USkeletalMeshComponent> sc = TSoftClassPtr<USkeletalMeshComponent>(FSoftObjectPath(*path)).LoadSynchronous();
+	USkeletalMesh* sc = LoadObject<USkeletalMesh>(this,*path);
+	if (sc != nullptr)
+	{
+		//USkeletalMesh* a = GetWorld()->SpawnActor<AActor>(sc); // ã‚¹ãƒãƒ¼ãƒ³å‡¦ç†
+		//a->SetActorLocation(FVector(1500, 0, 0)); // ç¢ºèªã—ã‚„ã™ã„ã‚ˆã†ã«åº§æ¨™ã‚’è¨­å®š
+		return sc;
+	}
+	return NULL;
 }
 
 void APlayer_CPP::GetAssetsInDirectory(const TSubclassOf<UObject> assetClass, const FString path, const bool bRecursive, TArray<UObject*>&assets) {
