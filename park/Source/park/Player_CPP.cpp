@@ -480,7 +480,7 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 	//}
 
 	//マウント
-	FString MountPoint(FPaths::EngineContentDir());
+	FString MountPoint(FPaths::ProjectContentDir());
 	PakFile.SetMountPoint(*MountPoint);
 
 
@@ -497,7 +497,7 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 		FString LeftStr;
 		FString RightStr;
 		AssetShortName.Split(TEXT("."), &LeftStr, &RightStr);
-		AssetName = TEXT("/Engine/Asset/") + LeftStr + TEXT(".") + LeftStr;
+		AssetName = TEXT("/Game/Asset/") + LeftStr + TEXT(".") + LeftStr;
 		FStringAssetReference Reference = AssetName;
 
 		TArray<FString> aaaaaa;
@@ -506,7 +506,7 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 		IAssetRegistry& assetRegistry = assetRegistryModule.Get();
 		assetRegistry.ScanPathsSynchronous(aaaaaa, true);
 
-		FString path = "/Engine/Asset/test3d2.test3d2_C"; 
+		FString path = "/Game/Asset/test3d2.test3d2_C"; 
 		TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous(); 
 		if (sc != nullptr)
 		{
@@ -562,10 +562,13 @@ AActor* APlayer_CPP::LoadPakFile(const FString pak_file_name) {
 
 AActor* APlayer_CPP::LoadPakFile_Actor(const FString name) {
 	FString path = "/Engine/Asset/" + name + "." + name + "_C";
-	TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous();
+	//TSubclassOf<class AActor> sc = TSoftClassPtr<AActor>(FSoftObjectPath(*path)).LoadSynchronous();
+	UClass* sc = LoadObject<UClass>(this, *("Class'" + path + "'"));
+
 	if (sc != nullptr)
 	{
-		AActor* a = GetWorld()->SpawnActor<AActor>(sc); // スポーン処理
+		//AActor* a = GetWorld()->SpawnActor<AActor>(sc); // スポーン処理
+		AActor* a = GetWorld()->SpawnActor(sc); // スポーン処理
 		a->SetActorLocation(FVector(1500, 0, 0)); // 確認しやすいように座標を設定
 		return a;
 	}
