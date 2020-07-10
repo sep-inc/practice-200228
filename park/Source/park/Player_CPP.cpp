@@ -406,16 +406,24 @@ bool APlayer_CPP::OpenPakFile(const FString pak_file_name) {
 
 	//マウント
 	FString MountPoint(FPaths::EngineContentDir());
+	//FString MountPoint(FPaths::ProjectContentDir());
 	PakFile.SetMountPoint(*MountPoint);
 
 	if (PakPlatformFile->Mount(*pak_file_name, 0, *MountPoint)) {
+		//TArray<FString> FileList;
+		//FileList.Add(TEXT("/Game/Asset/test3d2.uasset"));
+
+		////PakFile.FindFilesAtPath(FileList, *PakFile.GetMountPoint(), true, false, true);
+		//FAssetRegistryModule& assetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>(TEXT("AssetRegistry"));
+		//IAssetRegistry& assetRegistry = assetRegistryModule.Get();
+		//assetRegistry.ScanPathsSynchronous(FileList,true);
 		return true;
 	}
 	return false;
 }
 
 void APlayer_CPP::ClosePakFile(const FString pak_file_name) {
-	PakPlatformFile->Unmount(*pak_file_name);
+	//PakPlatformFile->Unmount(*pak_file_name);
 	FPlatformFileManager::Get().RemovePlatformFile(PakPlatformFile);
 }
 
